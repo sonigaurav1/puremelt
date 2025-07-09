@@ -9,6 +9,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { useState } from "react"
 import { useSearchParams } from "next/navigation"
+import Header from "@/components/layout/Header"
 
 export default function BuyNowPage() {
   const searchParams = useSearchParams()
@@ -17,11 +18,11 @@ export default function BuyNowPage() {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0)
 
   const productImages = [
-    "/placeholder.svg?height=500&width=500&text=Main+Product",
-    "/placeholder.svg?height=500&width=500&text=Ingredients+View",
-    "/placeholder.svg?height=500&width=500&text=Nutrition+Label",
-    "/placeholder.svg?height=500&width=500&text=Lifestyle+Shot",
-    "/placeholder.svg?height=500&width=500&text=Size+Comparison",
+    "/product.webp",
+    "/product.webp",
+    "/product.webp",
+    "/product.webp",
+    "/product.webp",
   ]
 
   const prices = {
@@ -54,48 +55,7 @@ export default function BuyNowPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-amber-100">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-amber-600 to-amber-800 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-lg">P</span>
-              </div>
-              <span className="text-2xl font-bold text-amber-900">PureMelt</span>
-            </Link>
-
-            <nav className="hidden md:flex items-center space-x-8">
-              <Link href="/" className="text-amber-900 hover:text-amber-700 font-medium">
-                Home
-              </Link>
-              <Link href="/product" className="text-amber-900 hover:text-amber-700 font-medium">
-                Our Product
-              </Link>
-              <Link href="/about" className="text-amber-900 hover:text-amber-700 font-medium">
-                About Us
-              </Link>
-              <Link href="/recipes" className="text-amber-900 hover:text-amber-700 font-medium">
-                Recipes
-              </Link>
-              <Link href="/contact" className="text-amber-900 hover:text-amber-700 font-medium">
-                Contact
-              </Link>
-            </nav>
-
-            <div className="flex items-center space-x-4">
-              <Link href="/cart">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="border-amber-200 text-amber-900 hover:bg-amber-50 bg-transparent"
-                >
-                  Cart
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Product Section */}
       <section className="py-12 px-4">
@@ -119,7 +79,7 @@ export default function BuyNowPage() {
 
               {/* Thumbnail Images */}
               <div className="relative">
-                <div className="flex space-x-2 overflow-hidden">
+                <div className="flex space-x-2 px-8 overflow-hidden">
                   {productImages.map((image, index) => (
                     <button
                       key={index}
@@ -169,7 +129,7 @@ export default function BuyNowPage() {
                 </div>
                 <p className="text-amber-700 leading-relaxed">
                   A premium blend of peanuts, almonds, cashews, pistachios, dates, honey & chocolate—crafted into one
-                  irresistible spoon. Healthier. Happier. And Organic.
+                  irresistible spoon. Healthier. Happier. Organic.
                 </p>
               </div>
 

@@ -9,6 +9,7 @@
 
 # production
 /build
+/TODO.md
 
 # debug
 npm-debug.log*

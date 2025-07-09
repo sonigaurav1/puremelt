@@ -13,6 +13,7 @@ import Link from "next/link"
 import { useState } from "react"
 import { useAuth } from "../components/auth-context"
 import { useRouter } from "next/navigation"
+import Header from "@/components/layout/Header"
 
 export default function AccountPage() {
   const { user, orders, wishlist, login, register, logout, updateProfile } = useAuth()
@@ -235,48 +236,7 @@ export default function AccountPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-amber-100">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-amber-600 to-amber-800 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-lg">P</span>
-              </div>
-              <span className="text-2xl font-bold text-amber-900">PureMelt</span>
-            </Link>
-
-            <nav className="hidden md:flex items-center space-x-8">
-              <Link href="/" className="text-amber-900 hover:text-amber-700 font-medium">
-                Home
-              </Link>
-              <Link href="/product" className="text-amber-900 hover:text-amber-700 font-medium">
-                Our Product
-              </Link>
-              <Link href="/about" className="text-amber-900 hover:text-amber-700 font-medium">
-                About Us
-              </Link>
-              <Link href="/recipes" className="text-amber-900 hover:text-amber-700 font-medium">
-                Recipes
-              </Link>
-              <Link href="/contact" className="text-amber-900 hover:text-amber-700 font-medium">
-                Contact
-              </Link>
-            </nav>
-
-            <div className="flex items-center space-x-4">
-              <Link href="/cart">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="border-amber-200 text-amber-900 hover:bg-amber-50 bg-transparent"
-                >
-                  Cart
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Account Dashboard */}
       <section className="py-12 px-4">
@@ -351,7 +311,7 @@ export default function AccountPage() {
                         value={profileData.phone || ""}
                         onChange={(e) => setProfileData({ ...profileData, phone: e.target.value })}
                         className="border-amber-200 focus:border-amber-600"
-                        placeholder="+91 98765 43210"
+                        placeholder="+91 12345 67890"
                       />
                     </div>
 
@@ -364,7 +324,12 @@ export default function AccountPage() {
                           onChange={(e) =>
                             setProfileData({
                               ...profileData,
-                              address: { ...profileData.address, street: e.target.value },
+                              address: {
+                                street: e.target.value,
+                                city: profileData.address?.city || "",
+                                state: profileData.address?.state || "",
+                                pincode: profileData.address?.pincode || "",
+                              },
                             })
                           }
                           className="border-amber-200 focus:border-amber-600"
@@ -378,7 +343,12 @@ export default function AccountPage() {
                             onChange={(e) =>
                               setProfileData({
                                 ...profileData,
-                                address: { ...profileData.address, city: e.target.value },
+                                address: {
+                                  street: profileData.address?.street || "",
+                                  city: e.target.value,
+                                  state: profileData.address?.state || "",
+                                  pincode: profileData.address?.pincode || "",
+                                },
                               })
                             }
                             className="border-amber-200 focus:border-amber-600"
@@ -391,7 +361,12 @@ export default function AccountPage() {
                             onChange={(e) =>
                               setProfileData({
                                 ...profileData,
-                                address: { ...profileData.address, state: e.target.value },
+                                address: {
+                                  street: profileData.address?.street || "",
+                                  city: profileData.address?.city || "",
+                                  state: e.target.value,
+                                  pincode: profileData.address?.pincode || "",
+                                },
                               })
                             }
                             className="border-amber-200 focus:border-amber-600"
@@ -404,7 +379,12 @@ export default function AccountPage() {
                             onChange={(e) =>
                               setProfileData({
                                 ...profileData,
-                                address: { ...profileData.address, pincode: e.target.value },
+                                address: {
+                                  street: profileData.address?.street || "",
+                                  city: profileData.address?.city || "",
+                                  state: profileData.address?.state || "",
+                                  pincode: e.target.value,
+                                },
                               })
                             }
                             className="border-amber-200 focus:border-amber-600"

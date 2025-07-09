@@ -4,58 +4,13 @@ import { Badge } from "@/components/ui/badge"
 import { Star, Leaf, Shield, Award, Heart } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import Header from "@/components/layout/Header"
 
 export default function ProductPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-amber-100">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-amber-600 to-amber-800 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-lg">P</span>
-              </div>
-              <span className="text-2xl font-bold text-amber-900">PureMelt</span>
-            </Link>
-
-            <nav className="hidden md:flex items-center space-x-8">
-              <Link href="/" className="text-amber-900 hover:text-amber-700 font-medium">
-                Home
-              </Link>
-              <Link href="/product" className="text-amber-700 font-medium border-b-2 border-amber-700">
-                Our Product
-              </Link>
-              <Link href="/about" className="text-amber-900 hover:text-amber-700 font-medium">
-                About Us
-              </Link>
-              <Link href="/recipes" className="text-amber-900 hover:text-amber-700 font-medium">
-                Recipes
-              </Link>
-              <Link href="/contact" className="text-amber-900 hover:text-amber-700 font-medium">
-                Contact
-              </Link>
-            </nav>
-
-            <div className="flex items-center space-x-4">
-              <Link href="/cart">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="border-amber-200 text-amber-900 hover:bg-amber-50 bg-transparent"
-                >
-                  Cart
-                </Button>
-              </Link>
-              <Link href="/buy-now">
-                <Button size="sm" className="bg-amber-600 hover:bg-amber-700 text-white">
-                  Buy Now
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Hero Section */}
       <section className="py-20 px-4">
@@ -80,7 +35,7 @@ export default function ProductPage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="relative">
               <Image
-                src="/placeholder.svg?height=600&width=600"
+                src="/cta.webp"
                 alt="PureMelt Premium Nut Butter"
                 width={600}
                 height={600}
@@ -130,6 +85,7 @@ export default function ProductPage() {
 
               <div className="space-y-4">
                 <h3 className="text-2xl font-bold text-amber-900">Available Sizes</h3>
+
                 <div className="grid grid-cols-3 gap-4">
                   <Card className="border-amber-200 hover:shadow-lg transition-shadow">
                     <CardContent className="p-4 text-center">

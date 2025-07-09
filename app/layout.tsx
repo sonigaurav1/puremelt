@@ -9,8 +9,7 @@ const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "PureMelt - Premium Nut Butter",
-  description: "Premium blend of peanuts, almonds, cashews, pistachios, dates, honey & chocolate",
-    generator: 'v0.dev'
+  description: "Premium blend of peanuts, almonds, cashews, pistachios, dates, honey & chocolate"
 }
 
 export default function RootLayout({

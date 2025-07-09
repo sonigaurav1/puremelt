@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { MapPin, Phone, Mail, Clock, MessageCircle, Instagram, Facebook, Twitter } from "lucide-react"
 import Link from "next/link"
 import { useState } from "react"
+import Header from "@/components/layout/Header"
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -35,53 +36,7 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-amber-100">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-amber-600 to-amber-800 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-lg">P</span>
-              </div>
-              <span className="text-2xl font-bold text-amber-900">PureMelt</span>
-            </Link>
-
-            <nav className="hidden md:flex items-center space-x-8">
-              <Link href="/" className="text-amber-900 hover:text-amber-700 font-medium">
-                Home
-              </Link>
-              <Link href="/product" className="text-amber-900 hover:text-amber-700 font-medium">
-                Our Product
-              </Link>
-              <Link href="/about" className="text-amber-900 hover:text-amber-700 font-medium">
-                About Us
-              </Link>
-              <Link href="/recipes" className="text-amber-900 hover:text-amber-700 font-medium">
-                Recipes
-              </Link>
-              <Link href="/contact" className="text-amber-700 font-medium border-b-2 border-amber-700">
-                Contact
-              </Link>
-            </nav>
-
-            <div className="flex items-center space-x-4">
-              <Link href="/cart">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="border-amber-200 text-amber-900 hover:bg-amber-50 bg-transparent"
-                >
-                  Cart
-                </Button>
-              </Link>
-              <Link href="/buy-now">
-                <Button size="sm" className="bg-amber-600 hover:bg-amber-700 text-white">
-                  Buy Now
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Hero Section */}
       <section className="py-20 px-4">
@@ -170,7 +125,7 @@ export default function ContactPage() {
                       <Mail className="w-5 h-5 text-amber-600" />
                       <div>
                         <p className="font-medium text-amber-900">Email</p>
-                        <p className="text-amber-700">hello@puremelt.com</p>
+                        <p className="text-amber-700">support@puremelt.in</p>
                       </div>
                     </div>
 
@@ -178,7 +133,7 @@ export default function ContactPage() {
                       <Phone className="w-5 h-5 text-amber-600" />
                       <div>
                         <p className="font-medium text-amber-900">Phone</p>
-                        <p className="text-amber-700">+91 98765 43210</p>
+                        <p className="text-amber-700">+91 93183 67696</p>
                       </div>
                     </div>
 

@@ -7,9 +7,20 @@ import { Trash2, Plus, Minus, ShoppingBag } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { useState } from "react"
+import Header from "@/components/layout/Header"
+
+type CartItem = {
+  id: number
+  name: string
+  price: number
+  originalPrice: number
+  quantity: number
+  size: string
+  image?: string
+}
 
 export default function CartPage() {
-  const [cartItems, setCartItems] = useState([])
+  const [cartItems, setCartItems] = useState<CartItem[]>([])
 
   const updateQuantity = (id: number, newQuantity: number) => {
     if (newQuantity === 0) {
@@ -32,44 +43,7 @@ export default function CartPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-amber-100">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-amber-600 to-amber-800 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-lg">P</span>
-              </div>
-              <span className="text-2xl font-bold text-amber-900">PureMelt</span>
-            </Link>
-
-            <nav className="hidden md:flex items-center space-x-8">
-              <Link href="/" className="text-amber-900 hover:text-amber-700 font-medium">
-                Home
-              </Link>
-              <Link href="/product" className="text-amber-900 hover:text-amber-700 font-medium">
-                Our Product
-              </Link>
-              <Link href="/about" className="text-amber-900 hover:text-amber-700 font-medium">
-                About Us
-              </Link>
-              <Link href="/recipes" className="text-amber-900 hover:text-amber-700 font-medium">
-                Recipes
-              </Link>
-              <Link href="/contact" className="text-amber-900 hover:text-amber-700 font-medium">
-                Contact
-              </Link>
-            </nav>
-
-            <div className="flex items-center space-x-4">
-              <Link href="/buy-now">
-                <Button size="sm" className="bg-amber-600 hover:bg-amber-700 text-white">
-                  Buy Now
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Cart Content */}
       <section className="py-12 px-4">
