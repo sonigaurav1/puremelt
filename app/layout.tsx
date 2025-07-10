@@ -1,11 +1,23 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Inter, Playfair, Titillium_Web } from "next/font/google"
 import "./globals.css"
 import { CartProvider } from "./components/cart-context"
 import { AuthProvider } from "./components/auth-context"
 
 const inter = Inter({ subsets: ["latin"] })
+
+const tilillium_web = Titillium_Web({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-tilillium_web", // optional for CSS vars
+});
+
+const playfair = Playfair({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-playfair", // optional for CSS vars
+});
 
 export const metadata: Metadata = {
   title: "PureMelt - Premium Nut Butter",
@@ -19,7 +31,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className} ${playfair.variable}`}>
         <AuthProvider>
           <CartProvider>{children}</CartProvider>
         </AuthProvider>

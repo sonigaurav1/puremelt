@@ -21,13 +21,11 @@ import {
   Instagram,
   Facebook,
   Twitter,
-  User,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useCart } from "./components/cart-context";
 import { Input } from "@/components/ui/input";
 import Header from "@/components/layout/Header";
 
@@ -68,34 +66,37 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white">
+    <div className="min-h-screen bg-white">
       {/* Header */}
       <Header />
 
       {/* Hero Section */}
-      <section id="home" className="md:py-10 md:px-8 py-10 px-4">
+      <section
+        id="home"
+        className="md:py-10 border-t-2 border-amber-600 md:px-8 py-10 px-4"
+      >
         <div className="container mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
               <div className="space-y-4">
-                <Badge className="bg-amber-100 text-sm  text-amber-800 hover:bg-amber-200">
-                  India's Finest Nut Butter
+                <Badge className="bg-white border border-black text-lg text-amber-800 hover:bg-amber-200">
+                  <Award size={20} /> India's Finest Nuts Butter
                 </Badge>
-                <h1 className="text-[40px] lg:text-6xl font-bold text-amber-900 leading-tight">
+                <h1 className="text-[45px] font-playfair lg:text-6xl font-bold text-amber-900 leading-tight">
                   All-in-One
-                  <span className="block text-amber-700">Nut Butter</span>
+                  <span className="block text-pista -mt-4">Nuts Butter</span>
                 </h1>
                 <p className="text-xl text-amber-800 leading-relaxed">
                   A premium blend of{" "}
-                  <b>
+                  <b className="text-pista">
                     {" "}
                     peanuts, almonds, cashews, pistachios, dates, honey &
                     chocolate{" "}
                   </b>{" "}
-                  - crafted into one irresistible spoon.
+                  - all blended into one delicious spoonful.
                 </p>
-                <p className="text-lg text-amber-700 font-medium">
-                  Healthier. Happier. Organic.
+                <p className="text-lg text-amber-900 font-medium">
+                  Healthier. Tastier. Organic.
                 </p>
               </div>
 
@@ -108,10 +109,10 @@ export default function HomePage() {
                     value={selectedWeight}
                     onValueChange={setSelectedWeight}
                   >
-                    <SelectTrigger className="w-32 focus:ring-0">
+                    <SelectTrigger className="w-32 font-bold border-amber-800 text-amber-800 focus:ring-0 focus:border-amber-800">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-white text-amber-800 border-amber-800">
                       <SelectItem value="250g">250g</SelectItem>
                       <SelectItem value="500g">500g</SelectItem>
                       <SelectItem value="1kg">1kg</SelectItem>
@@ -122,10 +123,10 @@ export default function HomePage() {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Button
                     size="lg"
-                    className="bg-amber-600 hover:bg-amber-700 text-white px-8 py-3"
+                    className="bg-pista hover:bg-amber-700 text-white px-8 py-3"
                     onClick={handleOrderNow}
                   >
-                    <ShoppingCart className="w-5 h-5 mr-2" />
+                    <ShoppingCart className="w-5 h-5" />
                     Buy Now
                   </Button>
                   <Button
@@ -147,7 +148,7 @@ export default function HomePage() {
                       className="w-5 h-5 fill-amber-400 text-amber-400"
                     />
                   ))}
-                  <span className="ml-2 text-amber-800 font-medium">4.9/5</span>
+                  <span className="ml-2 text-amber-800 font-medium">4.5/5</span>
                 </div>
                 <div className="text-amber-700">
                   <span className="font-semibold">
@@ -168,7 +169,7 @@ export default function HomePage() {
                   className="absolute inset-0 w-full h-full object-cover"
                 />
               </div>
-              <div className="absolute -top-4 -right-4 bg-green-600 text-white px-4 py-2 rounded-full font-semibold">
+              <div className="absolute -top-4 -right-3 bg-pista text-white px-4 py-2 rounded-full font-semibold text-xs">
                 100% Organic
               </div>
             </div>
@@ -177,10 +178,10 @@ export default function HomePage() {
       </section>
 
       {/* Product Spotlight */}
-      <section id="product" className="py-20 bg-white">
+      <section id="product" className="py-12 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-amber-900 mb-4">
+            <h2 className="text-4xl font-bold text-pista mb-4">
               Our Signature Product
             </h2>
             <p className="text-xl text-amber-700 max-w-2xl mx-auto">
@@ -205,33 +206,41 @@ export default function HomePage() {
                   Premium Nut Blend
                 </h3>
                 <p className="text-lg text-amber-700 leading-relaxed">
-                  We carefully blend the finest peanuts, almonds, cashews,
-                  pistachios, dates, honey, and chocolate into one balanced,
-                  nutrient-rich spread. No preservatives, no palm oil, no
-                  refined sugar—just real ingredients.
+                  We carefully blend the finest{" "}
+                  <b className="text-pista">
+                    {" "}
+                    peanuts, almonds, cashews, pistachios, dates, honey, and
+                    chocolate{" "}
+                  </b>
+                  into one balanced, nutrient-rich spread.{" "}
+                  <b className="text-pista">
+                    {" "}
+                    No preservatives, no palm oil, no refined sugar{" "}
+                  </b>{" "}
+                  - just real ingredients.
                 </p>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-amber-50 p-4 rounded-lg">
+                <div className="bg-amber-50 border border-pista p-4 rounded-lg">
                   <h4 className="font-semibold text-amber-900 mb-2">
                     Protein Rich
                   </h4>
                   <p className="text-sm text-amber-700">25g protein per 100g</p>
                 </div>
-                <div className="bg-amber-50 p-4 rounded-lg">
+                <div className="bg-amber-50 border border-pista p-4 rounded-lg">
                   <h4 className="font-semibold text-amber-900 mb-2">
                     Healthy Fats
                   </h4>
                   <p className="text-sm text-amber-700">Omega-3 & Omega-6</p>
                 </div>
-                <div className="bg-amber-50 p-4 rounded-lg">
+                <div className="bg-amber-50 border border-pista p-4 rounded-lg">
                   <h4 className="font-semibold text-amber-900 mb-2">
                     No Preservatives
                   </h4>
                   <p className="text-sm text-amber-700">100% Natural</p>
                 </div>
-                <div className="bg-amber-50 p-4 rounded-lg">
+                <div className="bg-amber-50 border border-pista p-4 rounded-lg">
                   <h4 className="font-semibold text-amber-900 mb-2">
                     Fiber Rich
                   </h4>
@@ -242,7 +251,7 @@ export default function HomePage() {
               <Link href="/buy-now">
                 <Button
                   size="lg"
-                  className="bg-amber-600 hover:bg-amber-700 text-white w-full"
+                  className="bg-pista mt-6 hover:bg-pista-light text-white w-full"
                 >
                   <ShoppingCart className="w-5 h-5 mr-2" />
                   Add to Cart - ₹599
@@ -254,19 +263,19 @@ export default function HomePage() {
       </section>
 
       {/* Ingredients Section */}
-      <section className="py-20 bg-gradient-to-b from-amber-50 to-white">
+      <section className="py-12 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-amber-900 mb-4">
-              Nature's Finest, Blended to Perfection
+              <span className="text-pista">Nature's</span> Finest, Blended to Perfection
             </h2>
             <p className="text-xl text-amber-700">
               Each ingredient is carefully selected for taste, nutrition, and
-              quality
+              quality.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-3 lg:grid-cols-4 grid-cols-2 gap-6">
             {[
               {
                 name: "Peanuts",
@@ -302,7 +311,7 @@ export default function HomePage() {
             ].map((ingredient, index) => (
               <Card
                 key={index}
-                className="border-amber-200 hover:shadow-lg transition-shadow"
+                className="border-pista hover:shadow-lg transition-shadow"
               >
                 <CardContent className="p-6 text-center">
                   <div className="text-4xl mb-4">{ingredient.icon}</div>
@@ -320,18 +329,18 @@ export default function HomePage() {
       </section>
 
       {/* Why PureMelt Section */}
-      <section className="py-20 bg-white">
+      <section className="py-12 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-amber-900 mb-4">
-              Why Choose PureMelt?
+              Why Choose <span className="text-pista">PureMelt?</span>
             </h2>
             <p className="text-xl text-amber-700">
               We're not just another peanut butter. We're a revolution in a jar.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2  lg:grid-cols-3 gap-8">
             {[
               {
                 icon: Shield,
@@ -370,10 +379,10 @@ export default function HomePage() {
             ].map((feature, index) => (
               <Card
                 key={index}
-                className="border-amber-200 hover:shadow-lg transition-shadow"
+                className="border-pista hover:shadow-lg transition-shadow"
               >
                 <CardContent className="p-6 text-center">
-                  <feature.icon className="w-12 h-12 text-amber-600 mx-auto mb-4" />
+                  <feature.icon className="w-12 h-12 text-pista mx-auto mb-4" />
                   <h3 className="font-bold text-amber-900 mb-2">
                     {feature.title}
                   </h3>
@@ -386,14 +395,14 @@ export default function HomePage() {
       </section>
 
       {/* Usage Section */}
-      <section className="py-20 bg-gradient-to-b from-amber-50 to-white">
+      <section className="py-12 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-amber-900 mb-4">
-              How to Enjoy PureMelt
+              How to Enjoy <span className="text-pista">PureMelt</span>
             </h2>
             <p className="text-xl text-amber-700">
-              Versatile, delicious, and perfect for any time of day
+              Versatile, delicious, and perfect for any time of day.
             </p>
           </div>
 
@@ -422,7 +431,7 @@ export default function HomePage() {
             ].map((usage, index) => (
               <Card
                 key={index}
-                className="border-amber-200 hover:shadow-lg transition-shadow"
+                className="border-pista hover:shadow-lg transition-shadow"
               >
                 <CardContent className="p-6 text-center">
                   <div className="text-6xl mb-4">{usage.image}</div>
@@ -449,7 +458,7 @@ export default function HomePage() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 bg-white">
+      <section className="py-12 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-amber-900 mb-4">
@@ -481,7 +490,7 @@ export default function HomePage() {
                 text: "The blend of flavors is unique. I've never tasted anything like this before. Highly recommended!",
               },
             ].map((testimonial, index) => (
-              <Card key={index} className="border-amber-200">
+              <Card key={index} className="border-pista">
                 <CardContent className="p-6">
                   <div className="flex items-center mb-4">
                     {[1, 2, 3, 4, 5].map((star) => (
@@ -510,7 +519,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-amber-800 via-amber-700 to-orange-600 text-white">
+      <section className="py-12 bg-amber-900 text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-4">
             Ready to Experience the Difference?
@@ -647,7 +656,7 @@ export default function HomePage() {
                 </div>
               </div>
               <div className="space-y-2 text-amber-200">
-                <p className="text-sm">Email: support@puremelt.in</p>
+                <p className="text-sm">Email: support@PureMelt.in</p>
                 <p className="text-sm">Phone: +91 93183 67696</p>
               </div>
             </div>
