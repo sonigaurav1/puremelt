@@ -67,7 +67,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#dc0000]">
+    <div className="min-h-screen bg-[#2979ff]">
       {/* Header */}
       <Header />
 
@@ -179,13 +179,13 @@ export default function HomePage() {
       </section>
 
       {/* Product Spotlight */}
-      <section id="product" className="py-12 bg-white">
+      <section id="product" className="py-12 bg-[#dc0000] text-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-pista mb-4">
+            <h2 className="text-4xl font-bold text-white mb-4">
               Our Signature Product
             </h2>
-            <p className="text-xl text-amber-700 max-w-2xl mx-auto">
+            <p className="text-xl text-black max-w-2xl mx-auto">
               One variant. Perfected. Because sometimes, one is enough.
             </p>
           </div>
@@ -203,18 +203,18 @@ export default function HomePage() {
 
             <div className="space-y-8">
               <div>
-                <h3 className="text-3xl font-bold text-amber-900 mb-4">
+                <h3 className="text-3xl font-bold text-white mb-4">
                   Premium Nut Blend
                 </h3>
-                <p className="text-lg text-amber-700 leading-relaxed">
+                <p className="text-lg text-black leading-relaxed">
                   We carefully blend the finest{" "}
-                  <b className="text-pista">
+                  <b className="text-white">
                     {" "}
                     peanuts, almonds, cashews, pistachios, dates, honey, and
                     chocolate{" "}
                   </b>
                   into one balanced, nutrient-rich spread.{" "}
-                  <b className="text-pista">
+                  <b className="text-white">
                     {" "}
                     No preservatives, no palm oil, no refined sugar{" "}
                   </b>{" "}
@@ -223,26 +223,26 @@ export default function HomePage() {
               </div>
 
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-amber-50 border border-pista p-4 rounded-lg">
-                  <h4 className="font-semibold text-amber-900 mb-2">
+                <div className="bg-amber-50 border border-black p-4 rounded-lg">
+                  <h4 className="font-semibold text-black mb-2">
                     Protein Rich
                   </h4>
                   <p className="text-sm text-amber-700">25g protein per 100g</p>
                 </div>
-                <div className="bg-amber-50 border border-pista p-4 rounded-lg">
-                  <h4 className="font-semibold text-amber-900 mb-2">
+                <div className="bg-amber-50 border border-black p-4 rounded-lg">
+                  <h4 className="font-semibold text-black mb-2">
                     Healthy Fats
                   </h4>
                   <p className="text-sm text-amber-700">Omega-3 & Omega-6</p>
                 </div>
-                <div className="bg-amber-50 border border-pista p-4 rounded-lg">
-                  <h4 className="font-semibold text-amber-900 mb-2">
+                <div className="bg-amber-50 border border-black p-4 rounded-lg">
+                  <h4 className="font-semibold text-black mb-2">
                     No Preservatives
                   </h4>
                   <p className="text-sm text-amber-700">100% Natural</p>
                 </div>
-                <div className="bg-amber-50 border border-pista p-4 rounded-lg">
-                  <h4 className="font-semibold text-amber-900 mb-2">
+                <div className="bg-amber-50 border border-black p-4 rounded-lg">
+                  <h4 className="font-semibold text-black mb-2">
                     Fiber Rich
                   </h4>
                   <p className="text-sm text-amber-700">From dates & nuts</p>
@@ -252,7 +252,7 @@ export default function HomePage() {
               <Link href="/buy-now">
                 <Button
                   size="lg"
-                  className="bg-pista mt-6 hover:bg-pista-light text-white w-full"
+                  className="bg-white mt-6 hover:bg-slate-100 text-black w-full"
                 >
                   <ShoppingCart className="w-5 h-5 mr-2" />
                   Add to Cart - ₹599
