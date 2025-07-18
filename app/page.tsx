@@ -28,6 +28,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import Header from "@/components/layout/Header";
+import ImageSlider from "@/components/ImageSlider";
 
 export default function HomePage() {
   const [customerCount, setCustomerCount] = useState(0);
@@ -66,43 +67,43 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#dc0000]">
       {/* Header */}
       <Header />
 
+      <div className="md:pt-[76px]">
+        <ImageSlider />
+      </div>
+
       {/* Hero Section */}
-      <section
-        id="home"
-        className="md:py-10 border-t-2 border-amber-600 md:px-8 py-10 px-4"
-      >
+      <section id="home" className="md:py-10 md:px-8 py-10 px-4">
         <div className="container mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
               <div className="space-y-4">
-                <Badge className="bg-white border border-black text-lg text-amber-800 hover:bg-amber-200">
-                  <Award size={20} /> India's Finest Nuts Butter
-                </Badge>
-                <h1 className="text-[45px] font-playfair lg:text-6xl font-bold text-amber-900 leading-tight">
+                <h1 className="text-[45px] font-playfair lg:text-6xl font-bold text-black leading-tight">
                   All-in-One
-                  <span className="block text-pista -mt-4">Nuts Butter</span>
+                  <span className="block text-white -mt-4 md:-mt-2">
+                    Nuts Butter
+                  </span>
                 </h1>
-                <p className="text-xl text-amber-800 leading-relaxed">
+                <p className="text-xl text-black leading-relaxed">
                   A premium blend of{" "}
-                  <b className="text-pista">
+                  <b className="text-white">
                     {" "}
                     peanuts, almonds, cashews, pistachios, dates, honey &
                     chocolate{" "}
                   </b>{" "}
                   - all blended into one delicious spoonful.
                 </p>
-                <p className="text-lg text-amber-900 font-medium">
+                <p className="text-lg text-white font-medium">
                   Healthier. Tastier. Organic.
                 </p>
               </div>
 
               <div className="space-y-4">
                 <div className="flex items-center space-x-4">
-                  <label className="text-amber-900 font-medium">
+                  <label className="text-black font-medium">
                     Choose Weight:
                   </label>
                   <Select
@@ -123,7 +124,7 @@ export default function HomePage() {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Button
                     size="lg"
-                    className="bg-pista hover:bg-amber-700 text-white px-8 py-3"
+                    className="bg-white hover:bg-pista-light text-black px-8 py-3"
                     onClick={handleOrderNow}
                   >
                     <ShoppingCart className="w-5 h-5" />
@@ -132,7 +133,7 @@ export default function HomePage() {
                   <Button
                     variant="outline"
                     size="lg"
-                    className="border-amber-300 text-amber-900 hover:bg-amber-50 px-8 py-3 bg-transparent"
+                    className="text-black px-8 py-3 bg-transparent"
                     onClick={handleLearnMore}
                   >
                     Learn More
@@ -148,9 +149,9 @@ export default function HomePage() {
                       className="w-5 h-5 fill-amber-400 text-amber-400"
                     />
                   ))}
-                  <span className="ml-2 text-amber-800 font-medium">4.5/5</span>
+                  <span className="ml-2 text-white font-medium">4.5/5</span>
                 </div>
-                <div className="text-amber-700">
+                <div className="text-white">
                   <span className="font-semibold">
                     {isClient ? customerCount.toLocaleString() : "2,500"}+
                   </span>{" "}
@@ -267,7 +268,8 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-amber-900 mb-4">
-              <span className="text-pista">Nature's</span> Finest, Blended to Perfection
+              <span className="text-pista">Nature's</span> Finest, Blended to
+              Perfection
             </h2>
             <p className="text-xl text-amber-700">
               Each ingredient is carefully selected for taste, nutrition, and

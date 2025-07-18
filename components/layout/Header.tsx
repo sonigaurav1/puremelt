@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Menu, ShoppingCart, User, X } from "lucide-react";
 import { useCart } from "@/app/components/cart-context";
@@ -15,11 +15,30 @@ import { usePathname } from "next/navigation";
 
 const Header = () => {
   const { getTotalItems } = useCart();
-
   const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+
+  // Add scroll event listener
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 10;
+      if (isScrolled !== scrolled) {
+        setScrolled(isScrolled);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [scrolled]);
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-amber-100">
+    <header
+      className={`fixed md:bg-white w-full border-b-2 border-amber-600 top-0 z-50 transition-colors duration-300 ${
+        scrolled ? "bg-white shadow-md" : "bg-transparent "
+      }`}
+    >
       <div className="container mx-auto px-4 md:px-12 py-4">
         <div className="flex items-center justify-between">
           {/* Mobile Menu Trigger */}
@@ -117,7 +136,7 @@ const Header = () => {
 
           {/* Desktop Logo */}
           <Link href="/" className="hidden  md:flex flex-col items-center">
-            <span className="text-3xl font-extrabold text-amber-900">
+            <span className="text-3xl font-extrabold text-pista">
               PureMelt
             </span>
             <span className="text-xs text-gray-500 tracking-[2.8px] -mt-2">
