@@ -67,7 +67,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#2979ff]">
+    <div className="min-h-screen bg-[#e7e7e7]">
       {/* Header */}
       <Header />
 
@@ -81,39 +81,39 @@ export default function HomePage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
               <div className="space-y-4">
-                <h1 className="text-[45px] font-playfair lg:text-6xl font-bold text-black leading-tight">
+                <h1 className="text-[45px] font-playfair text-[#232323] lg:text-6xl font-bold leading-tight">
                   All-in-One
-                  <span className="block text-white -mt-4 md:-mt-2">
+                  <span className="block text-[#9f0202] -mt-4 md:-mt-2">
                     Nuts Butter
                   </span>
                 </h1>
-                <p className="text-xl text-black leading-relaxed">
+                <p className="text-xl text-[#232323] leading-relaxed">
                   A premium blend of{" "}
-                  <b className="text-white">
+                  <b className="text-[#9f0202] font-ibm text-[23px]">
                     {" "}
                     peanuts, almonds, cashews, pistachios, dates, honey &
                     chocolate{" "}
                   </b>{" "}
                   - all blended into one delicious spoonful.
                 </p>
-                <p className="text-lg text-white font-medium">
+                <p className="text-lg text-[#9f0202] font-medium font-ibm text-[23px]">
                   Healthier. Tastier. Organic.
                 </p>
               </div>
 
               <div className="space-y-4">
                 <div className="flex items-center space-x-4">
-                  <label className="text-black font-medium">
+                  <label className="text-amber-900 font-medium">
                     Choose Weight:
                   </label>
                   <Select
                     value={selectedWeight}
                     onValueChange={setSelectedWeight}
                   >
-                    <SelectTrigger className="w-32 font-bold border-amber-800 text-amber-800 focus:ring-0 focus:border-amber-800">
+                    <SelectTrigger className="w-32 font-bold bg-[#f2f2f2] border-amber-800 text-amber-800 focus:ring-0 focus:border-amber-800">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-white text-amber-800 border-amber-800">
+                    <SelectContent className=" text-amber-800 border-amber-800">
                       <SelectItem value="250g">250g</SelectItem>
                       <SelectItem value="500g">500g</SelectItem>
                       <SelectItem value="1kg">1kg</SelectItem>
@@ -124,7 +124,7 @@ export default function HomePage() {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Button
                     size="lg"
-                    className="bg-white hover:bg-pista-light text-black px-8 py-3"
+                    className="text-white px-8 py-3 bg-[#9f0202] hover:bg-amber-100/40"
                     onClick={handleOrderNow}
                   >
                     <ShoppingCart className="w-5 h-5" />
@@ -133,7 +133,7 @@ export default function HomePage() {
                   <Button
                     variant="outline"
                     size="lg"
-                    className="text-black px-8 py-3 bg-transparent"
+                    className="text-black px-8 py-3 border-amber-800 bg-transparent hover:bg-white"
                     onClick={handleLearnMore}
                   >
                     Learn More
@@ -179,13 +179,13 @@ export default function HomePage() {
       </section>
 
       {/* Product Spotlight */}
-      <section id="product" className="py-12 bg-[#dc0000] text-white">
+      <section id="product" className="py-12">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">
+            <h2 className="text-4xl font-bold text-pista mb-4">
               Our Signature Product
             </h2>
-            <p className="text-xl text-black max-w-2xl mx-auto">
+            <p className="text-xl text-amber-900 max-w-2xl mx-auto">
               One variant. Perfected. Because sometimes, one is enough.
             </p>
           </div>
@@ -203,18 +203,18 @@ export default function HomePage() {
 
             <div className="space-y-8">
               <div>
-                <h3 className="text-3xl font-bold text-white mb-4">
+                <h3 className="text-3xl font-bold text-pista mb-4">
                   Premium Nut Blend
                 </h3>
-                <p className="text-lg text-black leading-relaxed">
+                <p className="text-lg text-amber-900 leading-relaxed">
                   We carefully blend the finest{" "}
-                  <b className="text-white">
+                  <b className="text-pista">
                     {" "}
                     peanuts, almonds, cashews, pistachios, dates, honey, and
                     chocolate{" "}
                   </b>
                   into one balanced, nutrient-rich spread.{" "}
-                  <b className="text-white">
+                  <b className="text-pista">
                     {" "}
                     No preservatives, no palm oil, no refined sugar{" "}
                   </b>{" "}
@@ -223,26 +223,26 @@ export default function HomePage() {
               </div>
 
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-amber-50 border border-black p-4 rounded-lg">
-                  <h4 className="font-semibold text-black mb-2">
+                <div className="bg-pista-light border border-pista p-4 rounded-lg">
+                  <h4 className="font-semibold text-amber-900 mb-2">
                     Protein Rich
                   </h4>
                   <p className="text-sm text-amber-700">25g protein per 100g</p>
                 </div>
-                <div className="bg-amber-50 border border-black p-4 rounded-lg">
-                  <h4 className="font-semibold text-black mb-2">
+                <div className="bg-pista-light border border-pista p-4 rounded-lg">
+                  <h4 className="font-semibold text-amber-900 mb-2">
                     Healthy Fats
                   </h4>
                   <p className="text-sm text-amber-700">Omega-3 & Omega-6</p>
                 </div>
-                <div className="bg-amber-50 border border-black p-4 rounded-lg">
-                  <h4 className="font-semibold text-black mb-2">
+                <div className="bg-pista-light border border-pista p-4 rounded-lg">
+                  <h4 className="font-semibold text-amber-900 mb-2">
                     No Preservatives
                   </h4>
                   <p className="text-sm text-amber-700">100% Natural</p>
                 </div>
-                <div className="bg-amber-50 border border-black p-4 rounded-lg">
-                  <h4 className="font-semibold text-black mb-2">
+                <div className="bg-pista-light border border-pista p-4 rounded-lg">
+                  <h4 className="font-semibold text-amber-900 mb-2">
                     Fiber Rich
                   </h4>
                   <p className="text-sm text-amber-700">From dates & nuts</p>
@@ -252,7 +252,7 @@ export default function HomePage() {
               <Link href="/buy-now">
                 <Button
                   size="lg"
-                  className="bg-white mt-6 hover:bg-slate-100 text-black w-full"
+                  className=" mt-6 hover:bg-slate-100 border border-pista text-amber-900 bg-pista-light w-full"
                 >
                   <ShoppingCart className="w-5 h-5 mr-2" />
                   Add to Cart - ₹599
@@ -264,7 +264,7 @@ export default function HomePage() {
       </section>
 
       {/* Ingredients Section */}
-      <section className="py-12 bg-white">
+      <section className="py-12 ">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-amber-900 mb-4">
@@ -331,7 +331,7 @@ export default function HomePage() {
       </section>
 
       {/* Why PureMelt Section */}
-      <section className="py-12 bg-white">
+      <section className="py-12 ">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-amber-900 mb-4">
@@ -397,7 +397,7 @@ export default function HomePage() {
       </section>
 
       {/* Usage Section */}
-      <section className="py-12 bg-white">
+      <section className="py-12 ">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-amber-900 mb-4">
@@ -460,7 +460,7 @@ export default function HomePage() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-12 bg-white">
+      <section className="py-12 ">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-amber-900 mb-4">
@@ -534,7 +534,7 @@ export default function HomePage() {
             <Link href="/buy-now">
               <Button
                 size="lg"
-                className="bg-white text-amber-700 hover:bg-amber-50 px-8 py-3"
+                className=" text-amber-700 hover:bg-amber-50 px-8 py-3"
               >
                 <ShoppingCart className="w-5 h-5 mr-2" />
                 Order Now - ₹599
@@ -544,7 +544,7 @@ export default function HomePage() {
               <Button
                 variant="outline"
                 size="lg"
-                className="border-white text-white hover:bg-white hover:text-amber-700 px-8 py-3 bg-transparent"
+                className="border-white text-white hover: hover:text-amber-700 px-8 py-3 bg-transparent"
               >
                 Try Risk-Free
               </Button>
@@ -636,7 +636,7 @@ export default function HomePage() {
                 <Input
                   type="email"
                   placeholder="Enter your email"
-                  className="bg-white/10 border-amber-700 text-white placeholder:text-amber-300"
+                  className="/10 border-amber-700 text-white placeholder:text-amber-300"
                 />
                 <Button className="w-full bg-amber-600 hover:bg-amber-700 text-white">
                   Subscribe

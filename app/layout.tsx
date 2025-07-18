@@ -1,6 +1,6 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter, Playfair, Titillium_Web } from "next/font/google"
+import { IBM_Plex_Sans, Inter, Playfair, Titillium_Web } from "next/font/google"
 import "./globals.css"
 import { CartProvider } from "./components/cart-context"
 import { AuthProvider } from "./components/auth-context"
@@ -19,6 +19,13 @@ const playfair = Playfair({
   variable: "--font-playfair", // optional for CSS vars
 });
 
+const ibmPlexSans = IBM_Plex_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"], // include bold weights
+  variable: "--font-ibmplex", // optional for Tailwind usage
+  display: "swap", // improves performance
+});
+
 export const metadata: Metadata = {
   title: "PureMelt - Premium Nut Butter",
   description: "Premium blend of peanuts, almonds, cashews, pistachios, dates, honey & chocolate"
@@ -31,7 +38,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} ${playfair.variable}`}>
+      <body className={`${inter.className} ${playfair.variable} ${ibmPlexSans.className}`}>
         <AuthProvider>
           <CartProvider>{children}</CartProvider>
         </AuthProvider>

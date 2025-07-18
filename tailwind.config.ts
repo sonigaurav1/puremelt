@@ -16,6 +16,7 @@ const config: Config = {
 				tilillium_web: ['var(--font-tilillium_web)', 'sans-serif'],
 				playfair: ['var(--font-playfair)', 'serif'],
 				inter: ['var(--font-inter)', 'sans-serif'],
+				ibm: ['var(--font-ibmplex)'],
 			},
 			colors: {
 				pista: 'var(--pista)', // Pista Green,

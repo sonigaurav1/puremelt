@@ -35,7 +35,7 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed md:bg-white w-full border-b-2 border-amber-600 top-0 z-50 transition-colors duration-300 ${
+      className={`fixed md:bg-white w-full border-b-2 border-[#232323] top-0 z-50 transition-colors duration-300 ${
         scrolled ? "bg-white shadow-md" : "bg-transparent "
       }`}
     >
@@ -125,7 +125,7 @@ const Header = () => {
           {/* Mobile Logo */}
           <div className="absolute md:hidden left-1/2 -translate-x-1/2 text-center">
             <Link href="/" className="flex flex-col items-center">
-              <span className="text-3xl font-extrabold text-pista">
+              <span className="text-3xl font-extrabold text-[#9f0202]">
                 PureMelt
               </span>
               <span className="text-xs text-gray-500 tracking-[2.8px] -mt-2">
