@@ -45,7 +45,7 @@ const Header = () => {
 
           <Sheet>
             <SheetTrigger asChild>
-              <Menu className="md:hidden size-6 text-amber-900 cursor-pointer" />
+              <Menu className="md:hidden size-6 text-secondary-color cursor-pointer" />
             </SheetTrigger>
 
             <SheetContent
@@ -53,7 +53,7 @@ const Header = () => {
               className="w-64 bg-white/80 backdrop-blur-md [&>[data-state=closed]]:hidden"
             >
               {/* Mobile Navigation Links */}
-              <nav className="flex flex-col gap-5 mt-10 text-amber-900 text-base font-medium">
+              <nav className="flex flex-col gap-5 mt-10 text-secondary-color text-base font-medium">
                 <SheetClose asChild>
                   <Link
                     href="/"
@@ -136,7 +136,7 @@ const Header = () => {
 
           {/* Desktop Logo */}
           <Link href="/" className="hidden  md:flex flex-col items-center">
-            <span className="text-3xl font-extrabold text-pista">
+            <span className="text-3xl font-extrabold text-primary-color">
               PureMelt
             </span>
             <span className="text-xs text-gray-500 tracking-[2.8px] -mt-2">
@@ -148,31 +148,31 @@ const Header = () => {
           <nav className="hidden md:flex items-center space-x-8">
             <Link
               href="/"
-              className="text-amber-900 hover:text-amber-700 font-medium"
+              className="text-secondary-color hover:text-amber-700 font-medium"
             >
               Home
             </Link>
             <Link
               href="/product"
-              className="text-amber-900 hover:text-amber-700 font-medium"
+              className="text-secondary-color hover:text-amber-700 font-medium"
             >
               Our Product
             </Link>
             <Link
               href="/about"
-              className="text-amber-900 hover:text-amber-700 font-medium"
+              className="text-secondary-color hover:text-amber-700 font-medium"
             >
               About Us
             </Link>
             <Link
               href="/recipes"
-              className="text-amber-900 hover:text-amber-700 font-medium"
+              className="text-secondary-color hover:text-amber-700 font-medium"
             >
               Recipes
             </Link>
             <Link
               href="/contact"
-              className="text-amber-900 hover:text-amber-700 font-medium"
+              className="text-secondary-color hover:text-amber-700 font-medium"
             >
               Contact
             </Link>
@@ -184,9 +184,9 @@ const Header = () => {
               <Button
                 variant="ghost"
                 size="sm"
-                className="text-amber-900 px-2 hover:bg-amber-50 bg-transparent relative"
+                className="text-secondary-color px-2 hover:bg-amber-50 bg-transparent relative"
               >
-                <ShoppingCart className="!size-5 text-amber-900 cursor-pointer" />
+                <ShoppingCart className="!size-5 text-secondary-color cursor-pointer" />
                 {getTotalItems() > 0 && (
                   <span className="absolute -top-2 -right-2 bg-amber-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                     {getTotalItems()}
@@ -198,9 +198,9 @@ const Header = () => {
               <Button
                 variant="ghost"
                 size="sm"
-                className="text-amber-900 px-2 hover:bg-amber-50 bg-transparent"
+                className="text-secondary-color px-2 hover:bg-amber-50 bg-transparent"
               >
-                <User className="!size-5 text-amber-900 cursor-pointer" />
+                <User className="!size-5 text-secondary-color cursor-pointer" />
               </Button>
             </Link>
           </div>

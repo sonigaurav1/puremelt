@@ -21,6 +21,12 @@ const config: Config = {
 			colors: {
 				pista: 'var(--pista)', // Pista Green,
 				'pista-light': 'var(--pista-light)', // Light Pista Green
+				'primary-color': 'var(--primary-color)', // Primary Red
+				'primary-light': 'var(--primary-light)', // Light Primary Red
+				'primary-dark': 'var(--primary-dark)', // Dark Primary Red
+				'secondary-color': 'var(--secondary-color)', // Secondary Color
+				'secondary-light': 'var(--secondary-light)', // Light Secondary Color
+				'sub-heading': 'var(--sub-heading)', // Sub-heading Color
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				card: {

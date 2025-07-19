@@ -50,6 +50,15 @@ body {
 
     --pista: #7DAE4C; /* Pista Green */
     --pista-light: #DDEBCC; /* Light Pista Green */
+
+    --primary-color: #9f0202; /* Primary Red */
+    --primary-light: #b43939; /* Light Primary Red */
+    --primary-dark: #b82b2b; /* Dark Primary Red */
+
+    --secondary-color: #232323; /* Secondary Color */
+    --secondary-light: #3c3c3c; /* Light Secondary Color */
+
+    --sub-heading: #78350f; /* Sub-heading Color */
   }
   .dark {
     --background: 0 0% 3.9%;

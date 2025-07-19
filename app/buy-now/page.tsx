@@ -1,21 +1,38 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
-import { ChevronLeft, ChevronRight, ShoppingCart, Heart, Star, Truck, Shield, RotateCcw } from "lucide-react"
-import Link from "next/link"
-import Image from "next/image"
-import { useState } from "react"
-import { useSearchParams } from "next/navigation"
-import Header from "@/components/layout/Header"
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import {
+  ChevronLeft,
+  ChevronRight,
+  ShoppingCart,
+  Heart,
+  Star,
+  Truck,
+  Shield,
+  RotateCcw,
+} from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
+import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import Header from "@/components/layout/Header";
 
 export default function BuyNowPage() {
-  const searchParams = useSearchParams()
-  const [selectedWeight, setSelectedWeight] = useState(searchParams.get("weight") || "500g")
-  const [quantity, setQuantity] = useState(1)
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0)
+  const searchParams = useSearchParams();
+  const [selectedWeight, setSelectedWeight] = useState(
+    searchParams.get("weight") || "500g"
+  );
+  const [quantity, setQuantity] = useState(1);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
   const productImages = [
     "/product.webp",
@@ -23,34 +40,42 @@ export default function BuyNowPage() {
     "/product.webp",
     "/product.webp",
     "/product.webp",
-  ]
+  ];
 
   const prices = {
     "250g": { original: 349, discounted: 299 },
     "500g": { original: 699, discounted: 599 },
     "1kg": { original: 1299, discounted: 1099 },
-  }
+  };
 
-  const currentPrice = prices[selectedWeight as keyof typeof prices]
-  const discount = Math.round(((currentPrice.original - currentPrice.discounted) / currentPrice.original) * 100)
+  const currentPrice = prices[selectedWeight as keyof typeof prices];
+  const discount = Math.round(
+    ((currentPrice.original - currentPrice.discounted) /
+      currentPrice.original) *
+      100
+  );
 
   const nextImage = () => {
-    setSelectedImageIndex((prev) => (prev + 1) % productImages.length)
-  }
+    setSelectedImageIndex((prev) => (prev + 1) % productImages.length);
+  };
 
   const prevImage = () => {
-    setSelectedImageIndex((prev) => (prev - 1 + productImages.length) % productImages.length)
-  }
+    setSelectedImageIndex(
+      (prev) => (prev - 1 + productImages.length) % productImages.length
+    );
+  };
 
   const addToCart = () => {
     // Add to cart logic here
-    alert(`Added ${quantity} x PureMelt ${selectedWeight} to cart!`)
-  }
+    alert(`Added ${quantity} x PureMelt ${selectedWeight} to cart!`);
+  };
 
   const buyNow = () => {
     // Buy now logic here
-    alert(`Proceeding to checkout with ${quantity} x PureMelt ${selectedWeight}`)
-  }
+    alert(
+      `Proceeding to checkout with ${quantity} x PureMelt ${selectedWeight}`
+    );
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white">
@@ -73,7 +98,9 @@ export default function BuyNowPage() {
                   className="w-full h-96 object-cover"
                 />
                 <div className="absolute top-4 right-4">
-                  <Badge className="bg-green-500 text-white">100% Organic</Badge>
+                  <Badge className="bg-green-500 text-white">
+                    100% Organic
+                  </Badge>
                 </div>
               </div>
 
@@ -85,7 +112,9 @@ export default function BuyNowPage() {
                       key={index}
                       onClick={() => setSelectedImageIndex(index)}
                       className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
-                        selectedImageIndex === index ? "border-amber-600" : "border-amber-200"
+                        selectedImageIndex === index
+                          ? "border-amber-600"
+                          : "border-amber-200"
                       }`}
                     >
                       <Image
@@ -118,35 +147,54 @@ export default function BuyNowPage() {
             {/* Right - Product Details */}
             <div className="space-y-6">
               <div>
-                <h1 className="text-3xl font-bold text-amber-900 mb-2">PureMelt Premium Nut Butter</h1>
+                <h1 className="text-3xl font-bold text-secondary-color mb-2">
+                  PureMelt Premium Nut Butter
+                </h1>
                 <div className="flex items-center space-x-2 mb-4">
                   <div className="flex items-center">
                     {[1, 2, 3, 4, 5].map((star) => (
-                      <Star key={star} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                      <Star
+                        key={star}
+                        className="w-4 h-4 fill-amber-400 text-amber-400"
+                      />
                     ))}
                   </div>
                   <span className="text-amber-700">(2,500+ reviews)</span>
                 </div>
                 <p className="text-amber-700 leading-relaxed">
-                  A premium blend of peanuts, almonds, cashews, pistachios, dates, honey & chocolate—crafted into one
-                  irresistible spoon. Healthier. Happier. Organic.
+                  A premium blend of peanuts, almonds, cashews, pistachios,
+                  dates, honey & chocolate—crafted into one irresistible spoon.
+                  Healthier. Happier. Organic.
                 </p>
               </div>
 
               {/* Price */}
               <div className="space-y-2">
                 <div className="flex items-center space-x-4">
-                  <span className="text-3xl font-bold text-amber-900">₹{currentPrice.discounted}</span>
-                  <span className="text-xl text-gray-500 line-through">₹{currentPrice.original}</span>
-                  <Badge className="bg-green-100 text-green-800">{discount}% OFF</Badge>
+                  <span className="text-3xl font-bold text-secondary-color">
+                    ₹{currentPrice.discounted}
+                  </span>
+                  <span className="text-xl text-gray-500 line-through">
+                    ₹{currentPrice.original}
+                  </span>
+                  <Badge className="bg-green-100 text-green-800">
+                    {discount}% OFF
+                  </Badge>
                 </div>
-                <p className="text-sm text-amber-600">Inclusive of all taxes • Free shipping on orders above ₹500</p>
+                <p className="text-sm text-amber-600">
+                  Inclusive of all taxes • Free shipping on orders above ₹500
+                </p>
               </div>
 
               {/* Size Selection */}
               <div className="space-y-2">
-                <label className="text-amber-900 font-medium">Choose Size:</label>
-                <Select value={selectedWeight} onValueChange={setSelectedWeight}>
+                <label className="text-secondary-color font-medium">
+                  Choose Size:
+                </label>
+                <Select
+                  value={selectedWeight}
+                  onValueChange={setSelectedWeight}
+                >
                   <SelectTrigger className="w-full">
                     <SelectValue />
                   </SelectTrigger>
@@ -160,7 +208,9 @@ export default function BuyNowPage() {
 
               {/* Quantity */}
               <div className="space-y-2">
-                <label className="text-amber-900 font-medium">Quantity:</label>
+                <label className="text-secondary-color font-medium">
+                  Quantity:
+                </label>
                 <div className="flex items-center space-x-4">
                   <Button
                     variant="outline"
@@ -170,7 +220,9 @@ export default function BuyNowPage() {
                   >
                     -
                   </Button>
-                  <span className="text-xl font-medium text-amber-900 min-w-[2rem] text-center">{quantity}</span>
+                  <span className="text-xl font-medium text-secondary-color min-w-[2rem] text-center">
+                    {quantity}
+                  </span>
                   <Button
                     variant="outline"
                     size="sm"
@@ -184,19 +236,27 @@ export default function BuyNowPage() {
 
               {/* Action Buttons */}
               <div className="space-y-3">
-                <Button size="lg" className="w-full bg-amber-600 hover:bg-amber-700 text-white" onClick={buyNow}>
+                <Button
+                  size="lg"
+                  className="w-full bg-amber-600 hover:bg-amber-700 text-white"
+                  onClick={buyNow}
+                >
                   Buy Now - ₹{currentPrice.discounted * quantity}
                 </Button>
                 <Button
                   variant="outline"
                   size="lg"
-                  className="w-full border-amber-300 text-amber-900 hover:bg-amber-50 bg-transparent"
+                  className="w-full border-amber-300 text-secondary-color hover:bg-amber-50 bg-transparent"
                   onClick={addToCart}
                 >
                   <ShoppingCart className="w-5 h-5 mr-2" />
                   Add to Cart
                 </Button>
-                <Button variant="ghost" size="lg" className="w-full text-amber-700 hover:bg-amber-50">
+                <Button
+                  variant="ghost"
+                  size="lg"
+                  className="w-full text-amber-700 hover:bg-amber-50"
+                >
                   <Heart className="w-5 h-5 mr-2" />
                   Add to Wishlist
                 </Button>
@@ -222,34 +282,49 @@ export default function BuyNowPage() {
 
               {/* Product Description */}
               <div className="space-y-4">
-                <h3 className="text-xl font-bold text-amber-900">Product Description</h3>
+                <h3 className="text-xl font-bold text-secondary-color">
+                  Product Description
+                </h3>
                 <div className="space-y-3 text-amber-700">
                   <p>
-                    PureMelt is not just another peanut butter. It's a carefully crafted blend of seven premium
-                    ingredients that creates a unique taste experience unlike anything else in the market.
+                    PureMelt is not just another peanut butter. It's a carefully
+                    crafted blend of seven premium ingredients that creates a
+                    unique taste experience unlike anything else in the market.
                   </p>
                   <p>
-                    Our signature blend includes roasted peanuts for crunch, smooth almonds for creaminess, rich cashews
-                    for indulgence, premium pistachios for luxury, natural dates for sweetness, pure honey for golden
-                    flavor, and dark chocolate for that perfect finish.
+                    Our signature blend includes roasted peanuts for crunch,
+                    smooth almonds for creaminess, rich cashews for indulgence,
+                    premium pistachios for luxury, natural dates for sweetness,
+                    pure honey for golden flavor, and dark chocolate for that
+                    perfect finish.
                   </p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 mt-4">
                   <div className="bg-amber-50 p-3 rounded-lg">
-                    <h4 className="font-semibold text-amber-900 mb-1">Protein Rich</h4>
-                    <p className="text-sm text-amber-700">25g protein per 100g</p>
+                    <h4 className="font-semibold text-secondary-color mb-1">
+                      Protein Rich
+                    </h4>
+                    <p className="text-sm text-amber-700">
+                      25g protein per 100g
+                    </p>
                   </div>
                   <div className="bg-amber-50 p-3 rounded-lg">
-                    <h4 className="font-semibold text-amber-900 mb-1">No Preservatives</h4>
+                    <h4 className="font-semibold text-secondary-color mb-1">
+                      No Preservatives
+                    </h4>
                     <p className="text-sm text-amber-700">100% Natural</p>
                   </div>
                   <div className="bg-amber-50 p-3 rounded-lg">
-                    <h4 className="font-semibold text-amber-900 mb-1">Healthy Fats</h4>
+                    <h4 className="font-semibold text-secondary-color mb-1">
+                      Healthy Fats
+                    </h4>
                     <p className="text-sm text-amber-700">Omega-3 & Omega-6</p>
                   </div>
                   <div className="bg-amber-50 p-3 rounded-lg">
-                    <h4 className="font-semibold text-amber-900 mb-1">Fiber Rich</h4>
+                    <h4 className="font-semibold text-secondary-color mb-1">
+                      Fiber Rich
+                    </h4>
                     <p className="text-sm text-amber-700">From dates & nuts</p>
                   </div>
                 </div>
@@ -259,5 +334,5 @@ export default function BuyNowPage() {
         </div>
       </section>
     </div>
-  )
+  );
 }

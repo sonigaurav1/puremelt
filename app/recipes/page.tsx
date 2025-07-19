@@ -150,7 +150,7 @@ export default function RecipesPage() {
       {/* Hero Section */}
       <section className="py-20 px-4">
         <div className="container mx-auto text-center">
-          <h1 className="text-5xl font-bold text-amber-900 mb-6">
+          <h1 className="text-5xl font-bold text-secondary-color mb-6">
             PureMelt Recipes
           </h1>
           <p className="text-xl text-amber-700 max-w-3xl mx-auto leading-relaxed">
@@ -202,7 +202,7 @@ export default function RecipesPage() {
                 </div>
 
                 <CardContent className="p-6">
-                  <h3 className="text-xl font-bold text-amber-900 mb-2">
+                  <h3 className="text-xl font-bold text-secondary-color mb-2">
                     {recipe.title}
                   </h3>
                   <p className="text-amber-700 mb-4">{recipe.description}</p>
@@ -224,7 +224,7 @@ export default function RecipesPage() {
 
                   <div className="space-y-4">
                     <div>
-                      <h4 className="font-semibold text-amber-900 mb-2">
+                      <h4 className="font-semibold text-secondary-color mb-2">
                         Ingredients:
                       </h4>
                       <ul className="text-sm text-amber-700 space-y-1">
@@ -235,7 +235,7 @@ export default function RecipesPage() {
                     </div>
 
                     <div>
-                      <h4 className="font-semibold text-amber-900 mb-2">
+                      <h4 className="font-semibold text-secondary-color mb-2">
                         Instructions:
                       </h4>
                       <ol className="text-sm text-amber-700 space-y-1">
@@ -262,7 +262,7 @@ export default function RecipesPage() {
       <section className="py-20 bg-gradient-to-b from-amber-50 to-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-amber-900 mb-4">
+            <h2 className="text-4xl font-bold text-secondary-color mb-4">
               Pro Tips for Cooking with PureMelt
             </h2>
             <p className="text-xl text-amber-700">
@@ -315,7 +315,9 @@ export default function RecipesPage() {
               >
                 <CardContent className="p-6 text-center">
                   <div className="text-4xl mb-4">{tip.icon}</div>
-                  <h3 className="font-bold text-amber-900 mb-2">{tip.title}</h3>
+                  <h3 className="font-bold text-secondary-color mb-2">
+                    {tip.title}
+                  </h3>
                   <p className="text-amber-700">{tip.description}</p>
                 </CardContent>
               </Card>

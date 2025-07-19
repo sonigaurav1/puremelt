@@ -79,14 +79,26 @@ export default function HomePage() {
       <section id="home" className="md:py-10 md:px-8 py-10 px-4">
         <div className="container mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8">
+            <div className="space-y-8 relative">
               <div className="space-y-4">
+                <Badge className="bg-amber-100/50 border border-primary-color text-xl text-amber-800 hover:bg-amber-200">
+                  <Award size={20} /> India's Finest Nut Butter
+                </Badge>
                 <h1 className="text-[45px] font-playfair text-[#232323] lg:text-6xl font-bold leading-tight">
                   All-in-One
                   <span className="block text-[#9f0202] -mt-4 md:-mt-2">
                     Nuts Butter
                   </span>
                 </h1>
+                <div className="absolute top-4 right-8 -rotate-45 md:hidden">
+                  <Image
+                    src="/hero-butter.webp"
+                    alt="PureMelt Jar with ingredients"
+                    width={100}
+                    height={100}
+                    className="w-20 rounded-2xl"
+                  />
+                </div>
                 <p className="text-xl text-[#232323] leading-relaxed">
                   A premium blend of{" "}
                   <b className="text-[#9f0202] font-ibm text-[23px]">
@@ -96,24 +108,24 @@ export default function HomePage() {
                   </b>{" "}
                   - all blended into one delicious spoonful.
                 </p>
-                <p className="text-lg text-[#9f0202] font-medium font-ibm text-[23px]">
+                <p className="text-lg text-[#9f0202] font-medium font-ibm text-[24px]">
                   Healthier. Tastier. Organic.
                 </p>
               </div>
 
               <div className="space-y-4">
                 <div className="flex items-center space-x-4">
-                  <label className="text-amber-900 font-medium">
+                  <label className="text-secondary-color font-medium">
                     Choose Weight:
                   </label>
                   <Select
                     value={selectedWeight}
                     onValueChange={setSelectedWeight}
                   >
-                    <SelectTrigger className="w-32 font-bold bg-[#f2f2f2] border-amber-800 text-amber-800 focus:ring-0 focus:border-amber-800">
+                    <SelectTrigger className="w-32 font-bold bg-[#f2f2f2] border-primary-color text-primary-color focus:ring-0 focus:border-primary-color">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className=" text-amber-800 border-amber-800">
+                    <SelectContent className=" text-primary-color borderprimary-color">
                       <SelectItem value="250g">250g</SelectItem>
                       <SelectItem value="500g">500g</SelectItem>
                       <SelectItem value="1kg">1kg</SelectItem>
@@ -149,9 +161,9 @@ export default function HomePage() {
                       className="w-5 h-5 fill-amber-400 text-amber-400"
                     />
                   ))}
-                  <span className="ml-2 text-white font-medium">4.5/5</span>
+                  <span className="ml-2 font-medium">4.5/5</span>
                 </div>
-                <div className="text-white">
+                <div className="">
                   <span className="font-semibold">
                     {isClient ? customerCount.toLocaleString() : "2,500"}+
                   </span>{" "}
@@ -182,10 +194,10 @@ export default function HomePage() {
       <section id="product" className="py-12">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-pista mb-4">
+            <h2 className="text-4xl font-bold text-primary-color mb-4">
               Our Signature Product
             </h2>
-            <p className="text-xl text-amber-900 max-w-2xl mx-auto">
+            <p className="text-xl text-sub-heading max-w-2xl mx-auto">
               One variant. Perfected. Because sometimes, one is enough.
             </p>
           </div>
@@ -203,18 +215,18 @@ export default function HomePage() {
 
             <div className="space-y-8">
               <div>
-                <h3 className="text-3xl font-bold text-pista mb-4">
+                <h3 className="text-3xl font-bold text-primary-color mb-4">
                   Premium Nut Blend
                 </h3>
-                <p className="text-lg text-amber-900 leading-relaxed">
+                <p className="text-lg text-secondary-color leading-relaxed">
                   We carefully blend the finest{" "}
-                  <b className="text-pista">
+                  <b className="text-primary-color">
                     {" "}
                     peanuts, almonds, cashews, pistachios, dates, honey, and
                     chocolate{" "}
                   </b>
                   into one balanced, nutrient-rich spread.{" "}
-                  <b className="text-pista">
+                  <b className="text-primary-color">
                     {" "}
                     No preservatives, no palm oil, no refined sugar{" "}
                   </b>{" "}
@@ -223,26 +235,26 @@ export default function HomePage() {
               </div>
 
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-pista-light border border-pista p-4 rounded-lg">
-                  <h4 className="font-semibold text-amber-900 mb-2">
+                <div className="bg-white border border-primary-color p-4 rounded-lg">
+                  <h4 className="font-semibold text-secondary-color mb-2">
                     Protein Rich
                   </h4>
                   <p className="text-sm text-amber-700">25g protein per 100g</p>
                 </div>
-                <div className="bg-pista-light border border-pista p-4 rounded-lg">
-                  <h4 className="font-semibold text-amber-900 mb-2">
+                <div className="bg-white border border-primary-color p-4 rounded-lg">
+                  <h4 className="font-semibold text-secondary-color mb-2">
                     Healthy Fats
                   </h4>
                   <p className="text-sm text-amber-700">Omega-3 & Omega-6</p>
                 </div>
-                <div className="bg-pista-light border border-pista p-4 rounded-lg">
-                  <h4 className="font-semibold text-amber-900 mb-2">
+                <div className="bg-white border border-primary-color p-4 rounded-lg">
+                  <h4 className="font-semibold text-secondary-color mb-2">
                     No Preservatives
                   </h4>
                   <p className="text-sm text-amber-700">100% Natural</p>
                 </div>
-                <div className="bg-pista-light border border-pista p-4 rounded-lg">
-                  <h4 className="font-semibold text-amber-900 mb-2">
+                <div className="bg-white border border-primary-color p-4 rounded-lg">
+                  <h4 className="font-semibold text-secondary-color mb-2">
                     Fiber Rich
                   </h4>
                   <p className="text-sm text-amber-700">From dates & nuts</p>
@@ -252,7 +264,7 @@ export default function HomePage() {
               <Link href="/buy-now">
                 <Button
                   size="lg"
-                  className=" mt-6 hover:bg-slate-100 border border-pista text-amber-900 bg-pista-light w-full"
+                  className=" mt-6 hover:bg-slate-100 border border-primary-color text-secondary-color bg-white w-full"
                 >
                   <ShoppingCart className="w-5 h-5 mr-2" />
                   Add to Cart - ₹599
@@ -267,11 +279,11 @@ export default function HomePage() {
       <section className="py-12 ">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-amber-900 mb-4">
-              <span className="text-pista">Nature's</span> Finest, Blended to
-              Perfection
+            <h2 className="text-4xl font-bold text-secondary-color mb-4">
+              <span className="text-primary-color">Nature's</span> Finest,
+              Blended to Perfection
             </h2>
-            <p className="text-xl text-amber-700">
+            <p className="text-xl text-sub-heading">
               Each ingredient is carefully selected for taste, nutrition, and
               quality.
             </p>
@@ -313,11 +325,11 @@ export default function HomePage() {
             ].map((ingredient, index) => (
               <Card
                 key={index}
-                className="border-pista hover:shadow-lg transition-shadow"
+                className="border-primary-color hover:shadow-lg transition-shadow"
               >
                 <CardContent className="p-6 text-center">
                   <div className="text-4xl mb-4">{ingredient.icon}</div>
-                  <h3 className="font-bold text-amber-900 mb-2">
+                  <h3 className="font-bold text-secondary-color mb-2">
                     {ingredient.name}
                   </h3>
                   <p className="text-sm text-amber-700">
@@ -334,10 +346,10 @@ export default function HomePage() {
       <section className="py-12 ">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-amber-900 mb-4">
-              Why Choose <span className="text-pista">PureMelt?</span>
+            <h2 className="text-4xl font-bold text-secondary-color mb-4">
+              Why Choose <span className="text-primary-color">PureMelt?</span>
             </h2>
-            <p className="text-xl text-amber-700">
+            <p className="text-xl text-sub-heading">
               We're not just another peanut butter. We're a revolution in a jar.
             </p>
           </div>
@@ -381,11 +393,11 @@ export default function HomePage() {
             ].map((feature, index) => (
               <Card
                 key={index}
-                className="border-pista hover:shadow-lg transition-shadow"
+                className="border-primary-color hover:shadow-lg transition-shadow"
               >
                 <CardContent className="p-6 text-center">
-                  <feature.icon className="w-12 h-12 text-pista mx-auto mb-4" />
-                  <h3 className="font-bold text-amber-900 mb-2">
+                  <feature.icon className="w-12 h-12 text-primary-color mx-auto mb-4" />
+                  <h3 className="font-bold text-secondary-color mb-2">
                     {feature.title}
                   </h3>
                   <p className="text-amber-700">{feature.description}</p>
@@ -400,10 +412,10 @@ export default function HomePage() {
       <section className="py-12 ">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-amber-900 mb-4">
-              How to Enjoy <span className="text-pista">PureMelt</span>
+            <h2 className="text-4xl font-bold text-secondary-color mb-4">
+              How to Enjoy <span className="text-primary-color">PureMelt</span>
             </h2>
-            <p className="text-xl text-amber-700">
+            <p className="text-xl text-sub-heading">
               Versatile, delicious, and perfect for any time of day.
             </p>
           </div>
@@ -433,11 +445,11 @@ export default function HomePage() {
             ].map((usage, index) => (
               <Card
                 key={index}
-                className="border-pista hover:shadow-lg transition-shadow"
+                className="border-primary-color hover:shadow-lg transition-shadow"
               >
                 <CardContent className="p-6 text-center">
                   <div className="text-6xl mb-4">{usage.image}</div>
-                  <h3 className="font-bold text-amber-900 mb-2">
+                  <h3 className="font-bold text-secondary-color mb-2">
                     {usage.title}
                   </h3>
                   <p className="text-amber-700">{usage.description}</p>
@@ -450,7 +462,7 @@ export default function HomePage() {
             <Link href="/recipes">
               <Button
                 variant="outline"
-                className="border-amber-300 text-amber-900 hover:bg-amber-50 bg-transparent"
+                className="border-primary-color text-secondary-color hover:bg-amber-50 bg-transparent"
               >
                 View All Recipes
               </Button>
@@ -463,10 +475,10 @@ export default function HomePage() {
       <section className="py-12 ">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-amber-900 mb-4">
+            <h2 className="text-4xl font-bold text-secondary-color mb-4">
               What Our Customers Say
             </h2>
-            <p className="text-xl text-amber-700">
+            <p className="text-xl text-sub-heading">
               Join thousands of satisfied customers
             </p>
           </div>
@@ -492,7 +504,7 @@ export default function HomePage() {
                 text: "The blend of flavors is unique. I've never tasted anything like this before. Highly recommended!",
               },
             ].map((testimonial, index) => (
-              <Card key={index} className="border-pista">
+              <Card key={index} className="border-primary-color">
                 <CardContent className="p-6">
                   <div className="flex items-center mb-4">
                     {[1, 2, 3, 4, 5].map((star) => (
@@ -506,7 +518,7 @@ export default function HomePage() {
                     "{testimonial.text}"
                   </p>
                   <div>
-                    <p className="font-semibold text-amber-900">
+                    <p className="font-semibold text-secondary-color">
                       {testimonial.name}
                     </p>
                     <p className="text-sm text-amber-600">
@@ -521,7 +533,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-12 bg-amber-900 text-white">
+      <section className="py-12 bg-primary-dark text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-4">
             Ready to Experience the Difference?
@@ -534,7 +546,7 @@ export default function HomePage() {
             <Link href="/buy-now">
               <Button
                 size="lg"
-                className=" text-amber-700 hover:bg-amber-50 px-8 py-3"
+                className="bg-white text-amber-700 hover:bg-amber-50 px-8 py-3"
               >
                 <ShoppingCart className="w-5 h-5 mr-2" />
                 Order Now - ₹599
@@ -554,7 +566,7 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gradient-to-br from-amber-900 via-amber-800 to-orange-900 text-white pt-16 pb-6">
+      <footer className="bg-primary-color text-white pt-16 pb-6">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-5 gap-8">
             <div>
@@ -564,20 +576,20 @@ export default function HomePage() {
                 </div>
                 <span className="text-xl font-bold">PureMelt</span>
               </Link>
-              <p className="text-amber-200 mb-4">
+              <p className="text-white mb-4">
                 Premium nut butter crafted for the health-conscious,
                 flavor-seeking consumer.
               </p>
               <div className="flex space-x-4">
-                <Instagram className="w-5 h-5 text-amber-300 hover:text-white cursor-pointer" />
-                <Facebook className="w-5 h-5 text-amber-300 hover:text-white cursor-pointer" />
-                <Twitter className="w-5 h-5 text-amber-300 hover:text-white cursor-pointer" />
+                <Instagram className="w-5 h-5 text-white hover:text-white cursor-pointer" />
+                <Facebook className="w-5 h-5 text-white hover:text-white cursor-pointer" />
+                <Twitter className="w-5 h-5 text-white hover:text-white cursor-pointer" />
               </div>
             </div>
 
             <div>
               <h3 className="font-bold mb-4">Quick Links</h3>
-              <ul className="space-y-2 text-amber-200">
+              <ul className="space-y-2 text-white">
                 <li>
                   <Link href="/about" className="hover:text-white">
                     Our Story
@@ -603,7 +615,7 @@ export default function HomePage() {
 
             <div>
               <h3 className="font-bold mb-4">Support</h3>
-              <ul className="space-y-2 text-amber-200">
+              <ul className="space-y-2 text-white">
                 <li>
                   <Link href="/contact" className="hover:text-white">
                     Contact Us
@@ -629,14 +641,14 @@ export default function HomePage() {
 
             <div>
               <h3 className="font-bold mb-4">Newsletter</h3>
-              <p className="text-amber-200 text-sm mb-4">
+              <p className="text-white text-sm mb-4">
                 Get recipes, health tips, and exclusive offers!
               </p>
               <div className="space-y-2">
                 <Input
                   type="email"
                   placeholder="Enter your email"
-                  className="/10 border-amber-700 text-white placeholder:text-amber-300"
+                  className="border-amber-700 text-white placeholder:text-slate-400"
                 />
                 <Button className="w-full bg-amber-600 hover:bg-amber-700 text-white">
                   Subscribe
@@ -657,14 +669,14 @@ export default function HomePage() {
                   />
                 </div>
               </div>
-              <div className="space-y-2 text-amber-200">
+              <div className="space-y-2 text-white">
                 <p className="text-sm">Email: support@PureMelt.in</p>
                 <p className="text-sm">Phone: +91 93183 67696</p>
               </div>
             </div>
           </div>
 
-          <div className="border-t border-amber-800 mt-12 pt-8 text-center text-amber-300">
+          <div className="border-t border-amber-800 mt-12 pt-8 text-center text-white">
             <p>
               &copy; 2025 PureMelt. All rights reserved. | Privacy Policy |
               Terms of Service
