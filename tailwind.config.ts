@@ -17,6 +17,7 @@ const config: Config = {
 				playfair: ['var(--font-playfair)', 'serif'],
 				inter: ['var(--font-inter)', 'sans-serif'],
 				ibm: ['var(--font-ibmplex)'],
+				parisienne: ['var(--font-parisienne)', 'cursive']
 			},
 			colors: {
 				pista: 'var(--pista)', // Pista Green,
@@ -27,6 +28,8 @@ const config: Config = {
 				'secondary-color': 'var(--secondary-color)', // Secondary Color
 				'secondary-light': 'var(--secondary-light)', // Light Secondary Color
 				'sub-heading': 'var(--sub-heading)', // Sub-heading Color
+				'page': 'var(--page)', // Page Background Color
+				'page-light': 'var(--page-light)', // Light Page Background Color'
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				card: {

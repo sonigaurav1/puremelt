@@ -125,10 +125,10 @@ const Header = () => {
           {/* Mobile Logo */}
           <div className="absolute md:hidden left-1/2 -translate-x-1/2 text-center">
             <Link href="/" className="flex flex-col items-center">
-              <span className="text-3xl font-extrabold text-[#9f0202]">
-                PureMelt
+              <span className="text-3xl font-extrabold text-primary-color">
+                {process.env.NEXT_PUBLIC_BRAND_NAME}
               </span>
-              <span className="text-xs text-gray-500 tracking-[2.8px] -mt-2">
+              <span className="text-[11.3px] text-gray-500 tracking-[2.8px] -mt-2">
                 Taste the Finest
               </span>
             </Link>
@@ -137,7 +137,7 @@ const Header = () => {
           {/* Desktop Logo */}
           <Link href="/" className="hidden  md:flex flex-col items-center">
             <span className="text-3xl font-extrabold text-primary-color">
-              PureMelt
+              {process.env.NEXT_PUBLIC_BRAND_NAME}
             </span>
             <span className="text-xs text-gray-500 tracking-[2.8px] -mt-2">
               Taste the finest

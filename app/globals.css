@@ -12,6 +12,14 @@ body {
   }
 }
 
+@font-face {
+  font-family: 'Magnolia Script';
+  src: url('/fonts/MagnoliaScript.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -51,14 +59,17 @@ body {
     --pista: #7DAE4C; /* Pista Green */
     --pista-light: #DDEBCC; /* Light Pista Green */
 
-    --primary-color: #9f0202; /* Primary Red */
+    --primary-color: #cd0000; /* Primary Red */
     --primary-light: #b43939; /* Light Primary Red */
     --primary-dark: #b82b2b; /* Dark Primary Red */
 
     --secondary-color: #232323; /* Secondary Color */
     --secondary-light: #3c3c3c; /* Light Secondary Color */
 
-    --sub-heading: #78350f; /* Sub-heading Color */
+    --sub-heading: #674ebc; /* Sub-heading Color */
+
+    --page-background: #e7e7e7; /* Page Background Color */
+    --page-background-light: #f5f5f5; /* Light Page Background Color */
   }
   .dark {
     --background: 0 0% 3.9%;

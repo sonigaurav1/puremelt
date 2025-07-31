@@ -4,20 +4,22 @@ import { Badge } from "@/components/ui/badge";
 import { Clock, Users, ChefHat } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+
+import Head from "next/head";
 import Header from "@/components/layout/Header";
 
 export default function RecipesPage() {
   const recipes = [
     {
       id: 1,
-      title: "PureMelt Power Smoothie",
+      title: `${process.env.NEXT_PUBLIC_BRAND_NAME} Power Smoothie`,
       description: "Start your day with this protein-packed smoothie",
       time: "5 mins",
       serves: "1",
       difficulty: "Easy",
       image: "/placeholder.svg?height=300&width=400&text=Power+Smoothie",
       ingredients: [
-        "2 tbsp PureMelt",
+        `2 tbsp ${process.env.NEXT_PUBLIC_BRAND_NAME} Nuts Butter`,
         "1 banana",
         "1 cup almond milk",
         "1 tbsp honey",
@@ -31,14 +33,14 @@ export default function RecipesPage() {
     },
     {
       id: 2,
-      title: "PureMelt Energy Balls",
+      title: `${process.env.NEXT_PUBLIC_BRAND_NAME} Energy Balls`,
       description: "Perfect pre-workout snack packed with nutrients",
       time: "15 mins",
       serves: "12",
       difficulty: "Easy",
       image: "/placeholder.svg?height=300&width=400&text=Energy+Balls",
       ingredients: [
-        "1/2 cup PureMelt",
+        `1/2 cup ${process.env.NEXT_PUBLIC_BRAND_NAME} Nuts Butter`,
         "1 cup oats",
         "1/4 cup honey",
         "1/4 cup dark chocolate chips",
@@ -52,7 +54,7 @@ export default function RecipesPage() {
     },
     {
       id: 3,
-      title: "PureMelt Toast Deluxe",
+      title: `${process.env.NEXT_PUBLIC_BRAND_NAME} Toast Deluxe`,
       description: "Elevate your breakfast toast game",
       time: "10 mins",
       serves: "2",
@@ -60,21 +62,21 @@ export default function RecipesPage() {
       image: "/placeholder.svg?height=300&width=400&text=Toast+Deluxe",
       ingredients: [
         "2 slices whole grain bread",
-        "3 tbsp PureMelt",
+        `3 tbsp ${process.env.NEXT_PUBLIC_BRAND_NAME} Nuts Butter`,
         "1 banana sliced",
         "Berries",
         "Honey drizzle",
       ],
       instructions: [
         "Toast bread to golden brown",
-        "Spread PureMelt generously",
+        `Spread ${process.env.NEXT_PUBLIC_BRAND_NAME} Nuts Butter generously`,
         "Top with banana slices and berries",
         "Drizzle with honey and serve",
       ],
     },
     {
       id: 4,
-      title: "PureMelt Protein Pancakes",
+      title: `${process.env.NEXT_PUBLIC_BRAND_NAME} Protein Pancakes`,
       description: "Fluffy pancakes with a protein boost",
       time: "20 mins",
       serves: "4",
@@ -84,7 +86,7 @@ export default function RecipesPage() {
         "1 cup flour",
         "2 eggs",
         "1 cup milk",
-        "3 tbsp PureMelt",
+        `3 tbsp ${process.env.NEXT_PUBLIC_BRAND_NAME} Nuts Butter`,
         "1 tsp baking powder",
         "Pinch of salt",
       ],
@@ -92,19 +94,19 @@ export default function RecipesPage() {
         "Mix dry ingredients in a bowl",
         "Whisk wet ingredients separately",
         "Combine and cook on griddle",
-        "Serve with extra PureMelt on top",
+        `Serve with extra ${process.env.NEXT_PUBLIC_BRAND_NAME} Nuts Butter on top`,
       ],
     },
     {
       id: 5,
-      title: "PureMelt Chocolate Cookies",
+      title: `${process.env.NEXT_PUBLIC_BRAND_NAME} Chocolate Cookies`,
       description: "Indulgent cookies with a healthy twist",
       time: "30 mins",
       serves: "24",
       difficulty: "Medium",
       image: "/placeholder.svg?height=300&width=400&text=Chocolate+Cookies",
       ingredients: [
-        "1/2 cup PureMelt",
+        `1/2 cup ${process.env.NEXT_PUBLIC_BRAND_NAME} Nuts Butter`,
         "1/4 cup brown sugar",
         "1 egg",
         "1 cup flour",
@@ -113,14 +115,14 @@ export default function RecipesPage() {
       ],
       instructions: [
         "Preheat oven to 350°F",
-        "Mix PureMelt, sugar, and egg",
+        `Mix ${process.env.NEXT_PUBLIC_BRAND_NAME} Nuts Butter, sugar, and egg`,
         "Add dry ingredients and chocolate chips",
         "Bake for 12-15 minutes",
       ],
     },
     {
       id: 6,
-      title: "PureMelt Overnight Oats",
+      title: `${process.env.NEXT_PUBLIC_BRAND_NAME} Overnight Oats`,
       description: "Prepare tonight, enjoy tomorrow morning",
       time: "5 mins prep",
       serves: "1",
@@ -128,13 +130,13 @@ export default function RecipesPage() {
       image: "/placeholder.svg?height=300&width=400&text=Overnight+Oats",
       ingredients: [
         "1/2 cup oats",
-        "2 tbsp PureMelt",
+        `2 tbsp ${process.env.NEXT_PUBLIC_BRAND_NAME} Nuts Butter`,
         "1/2 cup milk",
         "1 tbsp chia seeds",
         "Fruits for topping",
       ],
       instructions: [
-        "Mix oats, PureMelt, and milk",
+        `Mix oats, ${process.env.NEXT_PUBLIC_BRAND_NAME} Nuts Butter, and milk`,
         "Add chia seeds and stir",
         "Refrigerate overnight",
         "Top with fruits before serving",
@@ -143,206 +145,237 @@ export default function RecipesPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white">
-      {/* Header */}
-      <Header />
+    <>
+      <Head>
+        <title>Healthy Peanut Butter Recipes | Puremelt</title>
+        <meta name="description" content="Discover delicious and healthy peanut butter recipes with Puremelt. From smoothies to cookies, enjoy premium nuts butter in every meal." />
+        <meta name="keywords" content="peanut butter recipes, healthy peanut butter, puremelt recipes, nuts butter recipes, protein recipes, breakfast, snacks, desserts" />
+        <link rel="canonical" href={(process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") + "/recipes"} />
+        {/* Recipes Page Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "CollectionPage",
+              "name": "Healthy Peanut Butter Recipes | Puremelt",
+              "description": "Discover delicious and healthy peanut butter recipes with Puremelt. From smoothies to cookies, enjoy premium nuts butter in every meal.",
+              "url": (process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") + "/recipes",
+              "publisher": {
+                "@type": "Organization",
+                "name": process.env.NEXT_PUBLIC_BRAND_NAME || "Puremelt"
+              }
+            })
+          }}
+        />
+      </Head>
+      
+      <div className="min-h-screen bg-white">
+        {/* Header */}
+        <Header />
 
-      {/* Hero Section */}
-      <section className="py-20 px-4">
-        <div className="container mx-auto text-center">
-          <h1 className="text-5xl font-bold text-secondary-color mb-6">
-            PureMelt Recipes
-          </h1>
-          <p className="text-xl text-amber-700 max-w-3xl mx-auto leading-relaxed">
-            Discover delicious ways to enjoy PureMelt. From quick breakfast
-            ideas to indulgent treats, these recipes will transform your daily
-            nutrition into something extraordinary.
-          </p>
-        </div>
-      </section>
-
-      {/* Recipe Categories */}
-      <section className="py-12 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            <Badge className="bg-amber-100 text-amber-800 hover:bg-amber-200 px-4 py-2 cursor-pointer">
-              All Recipes
-            </Badge>
-            <Badge className="bg-amber-50 text-amber-700 hover:bg-amber-100 px-4 py-2 cursor-pointer">
-              Breakfast
-            </Badge>
-            <Badge className="bg-amber-50 text-amber-700 hover:bg-amber-100 px-4 py-2 cursor-pointer">
-              Snacks
-            </Badge>
-            <Badge className="bg-amber-50 text-amber-700 hover:bg-amber-100 px-4 py-2 cursor-pointer">
-              Desserts
-            </Badge>
-            <Badge className="bg-amber-50 text-amber-700 hover:bg-amber-100 px-4 py-2 cursor-pointer">
-              Smoothies
-            </Badge>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {recipes.map((recipe) => (
-              <Card
-                key={recipe.id}
-                className="border-amber-200 hover:shadow-lg transition-shadow overflow-hidden"
-              >
-                <div className="relative">
-                  <Image
-                    src={recipe.image || "/placeholder.svg"}
-                    alt={recipe.title}
-                    width={400}
-                    height={300}
-                    className="w-full h-48 object-cover"
-                  />
-                  <Badge className="absolute top-4 right-4 bg-amber-600 text-white">
-                    {recipe.difficulty}
-                  </Badge>
-                </div>
-
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-bold text-secondary-color mb-2">
-                    {recipe.title}
-                  </h3>
-                  <p className="text-amber-700 mb-4">{recipe.description}</p>
-
-                  <div className="flex items-center space-x-4 mb-4 text-sm text-amber-600">
-                    <div className="flex items-center space-x-1">
-                      <Clock className="w-4 h-4" />
-                      <span>{recipe.time}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Users className="w-4 h-4" />
-                      <span>Serves {recipe.serves}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <ChefHat className="w-4 h-4" />
-                      <span>{recipe.difficulty}</span>
-                    </div>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div>
-                      <h4 className="font-semibold text-secondary-color mb-2">
-                        Ingredients:
-                      </h4>
-                      <ul className="text-sm text-amber-700 space-y-1">
-                        {recipe.ingredients.map((ingredient, index) => (
-                          <li key={index}>• {ingredient}</li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div>
-                      <h4 className="font-semibold text-secondary-color mb-2">
-                        Instructions:
-                      </h4>
-                      <ol className="text-sm text-amber-700 space-y-1">
-                        {recipe.instructions.map((instruction, index) => (
-                          <li key={index}>
-                            {index + 1}. {instruction}
-                          </li>
-                        ))}
-                      </ol>
-                    </div>
-                  </div>
-
-                  <Button className="w-full mt-4 bg-amber-600 hover:bg-amber-700 text-white">
-                    Try This Recipe
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Recipe Tips */}
-      <section className="py-20 bg-gradient-to-b from-amber-50 to-white">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-secondary-color mb-4">
-              Pro Tips for Cooking with PureMelt
-            </h2>
-            <p className="text-xl text-amber-700">
-              Get the most out of your PureMelt experience
+        {/* Hero Section */}
+        <section className="py-20 px-4">
+          <div className="container mx-auto text-center">
+            <h1 className="text-5xl font-bold font-playfair text-secondary-color mb-6">
+              {process.env.NEXT_PUBLIC_BRAND_NAME}{" "}
+              <span className="text-primary-color">Recipes</span>
+            </h1>
+            <p className="text-xl text-secondary-color max-w-3xl mx-auto leading-relaxed">
+              Discover delicious ways to enjoy{" "}
+              <span className="text-primary-color font-semibold">
+                {process.env.NEXT_PUBLIC_BRAND_NAME}
+              </span>
+              . From quick breakfast ideas to indulgent treats, these recipes will
+              transform your daily nutrition into something extraordinary.
             </p>
           </div>
+        </section>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Room Temperature is Best",
-                description:
-                  "Let PureMelt come to room temperature for easier spreading and mixing",
-                icon: "🌡️",
-              },
-              {
-                title: "Mix Well Before Use",
-                description:
-                  "Natural separation is normal. Give it a good stir for perfect consistency",
-                icon: "🥄",
-              },
-              {
-                title: "Store Properly",
-                description:
-                  "Keep in a cool, dry place. Refrigeration extends shelf life",
-                icon: "🏠",
-              },
-              {
-                title: "Measure by Weight",
-                description:
-                  "For baking, weighing PureMelt gives more consistent results",
-                icon: "⚖️",
-              },
-              {
-                title: "Warm for Drizzling",
-                description:
-                  "Gently warm PureMelt for easy drizzling over desserts",
-                icon: "🍯",
-              },
-              {
-                title: "Pair with Fruits",
-                description:
-                  "PureMelt complements apples, bananas, and berries perfectly",
-                icon: "🍎",
-              },
-            ].map((tip, index) => (
-              <Card
-                key={index}
-                className="border-amber-200 hover:shadow-lg transition-shadow"
-              >
-                <CardContent className="p-6 text-center">
-                  <div className="text-4xl mb-4">{tip.icon}</div>
-                  <h3 className="font-bold text-secondary-color mb-2">
-                    {tip.title}
-                  </h3>
-                  <p className="text-amber-700">{tip.description}</p>
-                </CardContent>
-              </Card>
-            ))}
+        {/* Recipe Categories */}
+        <section className="py-12 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-wrap justify-center gap-4 mb-12">
+              <Badge className="bg-[#69b31e] hover:bg-[#69b31e] text-white px-4 py-2 cursor-pointer">
+                All Recipes
+              </Badge>
+              <Badge className="bg-white border-[.1px] border-primary-color text-primary-color hover:bg-red-50 px-4 py-2 cursor-pointer">
+                Breakfast
+              </Badge>
+              <Badge className="bg-white border-[.1px] border-primary-color text-primary-color hover:bg-red-50 px-4 py-2 cursor-pointer">
+                Snacks
+              </Badge>
+              <Badge className="bg-white border-[.1px] border-primary-color text-primary-color hover:bg-red-50 px-4 py-2 cursor-pointer">
+                Desserts
+              </Badge>
+              <Badge className="bg-white border-[.1px] border-primary-color text-primary-color hover:bg-red-50 px-4 py-2 cursor-pointer">
+                Smoothies
+              </Badge>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {recipes.map((recipe) => (
+                <Card
+                  key={recipe.id}
+                  className="border-[.1px] border-primary-color hover:shadow-lg transition-shadow overflow-hidden"
+                >
+                  <div className="relative">
+                    <Image
+                      src={recipe.image || "/placeholder.svg"}
+                      alt={recipe.title}
+                      width={400}
+                      height={300}
+                      className="w-full h-48 object-cover"
+                    />
+                    <Badge className="absolute top-4 right-4 bg-primary-color text-white">
+                      {recipe.difficulty}
+                    </Badge>
+                  </div>
+
+                  <CardContent className="p-6">
+                    <h3 className="text-xl font-bold text-secondary-color mb-2">
+                      {recipe.title}
+                    </h3>
+                    <p className="text-[#bd0000] mb-4">{recipe.description}</p>
+
+                    <div className="flex items-center space-x-4 mb-4 text-sm text-primary-color">
+                      <div className="flex items-center space-x-1">
+                        <Clock className="w-4 h-4" />
+                        <span>{recipe.time}</span>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                        <Users className="w-4 h-4" />
+                        <span>Serves {recipe.serves}</span>
+                      </div>
+                      <div className="flex items-center space-x-1">
+                        <ChefHat className="w-4 h-4" />
+                        <span>{recipe.difficulty}</span>
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="font-semibold text-secondary-color mb-2">
+                          Ingredients:
+                        </h4>
+                        <ul className="text-sm text-secondary-color space-y-1">
+                          {recipe.ingredients.map((ingredient, index) => (
+                            <li key={index}>• {ingredient}</li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h4 className="font-semibold text-secondary-color mb-2">
+                          Instructions:
+                        </h4>
+                        <ol className="text-sm text-secondary-color space-y-1">
+                          {recipe.instructions.map((instruction, index) => (
+                            <li key={index}>
+                              {index + 1}. {instruction}
+                            </li>
+                          ))}
+                        </ol>
+                      </div>
+                    </div>
+
+                    <Button className="w-full mt-4 bg-[#ff0000] hover:bg-[#b82b2b] text-white">
+                      Try This Recipe
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-amber-800 via-amber-700 to-orange-600 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-4">Ready to Start Cooking?</h2>
-          <p className="text-xl mb-8 opacity-90">
-            Get your PureMelt today and start creating delicious, healthy meals
-          </p>
-          <Link href="/buy-now">
-            <Button
-              size="lg"
-              className="bg-white text-amber-700 hover:bg-amber-50 px-8 py-3"
-            >
-              Order PureMelt Now
-            </Button>
-          </Link>
-        </div>
-      </section>
-    </div>
+        {/* Recipe Tips */}
+        <section className="py-20 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold text-secondary-color mb-4">
+                Pro Tips for Cooking with{" "}
+                <span className="text-primary-color">
+                  {process.env.NEXT_PUBLIC_BRAND_NAME}
+                </span>
+              </h2>
+              <p className="text-xl text-sub-heading">
+                Get the most out of your {process.env.NEXT_PUBLIC_BRAND_NAME}{" "}
+                experience
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[
+                {
+                  title: "Room Temperature is Best",
+                  description: `Let ${process.env.NEXT_PUBLIC_BRAND_NAME} come to room temperature for easier spreading and mixing`,
+                  icon: "🌡️",
+                },
+                {
+                  title: "Mix Well Before Use",
+                  description:
+                    "Natural separation is normal. Give it a good stir for perfect consistency",
+                  icon: "🥄",
+                },
+                {
+                  title: "Store Properly",
+                  description:
+                    "Keep in a cool, dry place. Refrigeration extends shelf life",
+                  icon: "🏠",
+                },
+                {
+                  title: "Measure by Weight",
+                  description: `For baking, weighing ${process.env.NEXT_PUBLIC_BRAND_NAME} gives more consistent results`,
+                  icon: "⚖️",
+                },
+                {
+                  title: "Warm for Drizzling",
+                  description: `Gently warm ${process.env.NEXT_PUBLIC_BRAND_NAME} for easy drizzling over desserts`,
+                  icon: "🍯",
+                },
+                {
+                  title: "Pair with Fruits",
+                  description: `${process.env.NEXT_PUBLIC_BRAND_NAME} complements apples, bananas, and berries perfectly`,
+                  icon: "🍎",
+                },
+              ].map((tip, index) => (
+                <Card
+                  key={index}
+                  className="border-[.1px] border-primary-color hover:shadow-lg transition-shadow"
+                >
+                  <CardContent className="p-6 text-center">
+                    <div className="text-4xl mb-4">{tip.icon}</div>
+                    <h3 className="font-bold text-secondary-color mb-2">
+                      {tip.title}
+                    </h3>
+                    <p className="text-primary-color">{tip.description}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="py-20 bg-primary-dark text-white">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="text-4xl font-bold mb-4">Ready to Start Cooking?</h2>
+            <p className="text-xl mb-8 opacity-90">
+              Get your {process.env.NEXT_PUBLIC_BRAND_NAME} today and start
+              creating delicious, healthy meals
+            </p>
+            <Link href="/buy-now">
+              <Button
+                size="lg"
+                className="bg-white text-amber-700 hover:bg-amber-50 px-8 py-3"
+              >
+                Order {process.env.NEXT_PUBLIC_BRAND_NAME} Now
+              </Button>
+            </Link>
+          </div>
+        </section>
+      </div>
+    </>
   );
 }

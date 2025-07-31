@@ -69,7 +69,7 @@ export default function CartPage() {
                 Your cart is empty
               </h2>
               <p className="text-amber-700 mb-8">
-                Add some delicious PureMelt to get started!
+                Add some delicious {process.env.NEXT_PUBLIC_BRAND_NAME} to get started!
               </p>
               <Link href="/buy-now">
                 <Button className="bg-amber-600 hover:bg-amber-700 text-white">
@@ -220,7 +220,7 @@ export default function CartPage() {
 
                     <div className="mt-6 p-4 bg-amber-50 rounded-lg">
                       <h4 className="font-semibold text-secondary-color mb-2">
-                        Why Choose PureMelt?
+                        Why Choose {process.env.NEXT_PUBLIC_BRAND_NAME}?
                       </h4>
                       <ul className="text-sm text-amber-700 space-y-1">
                         <li>• 100% Natural & Organic</li>

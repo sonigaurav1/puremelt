@@ -101,7 +101,7 @@ export default function AccountPage() {
                   <span className="text-white font-bold text-lg">P</span>
                 </div>
                 <span className="text-2xl font-bold text-secondary-color">
-                  PureMelt
+                  {process.env.NEXT_PUBLIC_BRAND_NAME}
                 </span>
               </Link>
 
@@ -225,7 +225,9 @@ export default function AccountPage() {
                       <h2 className="text-2xl font-bold text-secondary-color">
                         Create Account
                       </h2>
-                      <p className="text-amber-700">Join the PureMelt family</p>
+                      <p className="text-amber-700">
+                        Join the {process.env.NEXT_PUBLIC_BRAND_NAME} family
+                      </p>
                     </div>
 
                     <form onSubmit={handleRegister} className="space-y-4">
