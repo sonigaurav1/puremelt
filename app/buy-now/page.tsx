@@ -349,8 +349,7 @@ const BuyNowPage = () => {
                       Our signature blend includes roasted peanuts for crunch,
                       smooth almonds for creaminess, rich cashews for indulgence,
                       premium pistachios for luxury, natural dates for sweetness,
-                      pure honey for golden flavor, and dark chocolate for that
-                      perfect finish.
+                      and pure honey for golden flavor.
                     </p>
                   </div>
 

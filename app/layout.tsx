@@ -1,11 +1,6 @@
 import type React from "react";
 import type { Metadata } from "next";
-import {
-  IBM_Plex_Sans,
-  Inter,
-  Parisienne,
-  Playfair,
-} from "next/font/google";
+import { IBM_Plex_Sans, Inter, Parisienne, Playfair } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "./components/cart-context";
 import { AuthProvider } from "./components/auth-context";
@@ -35,7 +30,7 @@ const parisienne = Parisienne({
 export const metadata: Metadata = {
   title: `${process.env.NEXT_PUBLIC_BRAND_NAME} | Premium Peanut Butter & Healthy Nuts Butters`,
   description:
-    "Premium healthy peanut butter and nuts butters: blend of peanuts, almonds, cashews, pistachios, dates, honey & chocolate. No preservatives, no palm oil, no refined sugar. Healthier, tastier, organic.",
+    "Premium healthy peanut butter and nuts butters: blend of peanuts, almonds, cashews, pistachios, dates & honey. No preservatives, no palm oil, no refined sugar. Healthier, tastier, organic.",
   keywords: [
     "peanut butter",
     "healthy peanut butter",
@@ -51,12 +46,17 @@ export const metadata: Metadata = {
     "almond butter",
     "pistachio butter",
     "dates honey peanut butter",
-    "chocolate peanut butter",
+    "peanut butter",
+    "puremelt peanut butter",
+    "best peanut butter in india",
+    "natural peanut butter",
+    "organic peanut butter india",
+    "buy peanut butter online",
   ],
   openGraph: {
     title: `${process.env.NEXT_PUBLIC_BRAND_NAME} | Premium Peanut Butter & Healthy Nuts Butters`,
     description:
-      "Premium healthy peanut butter and nuts butters: blend of peanuts, almonds, cashews, pistachios, dates, honey & chocolate. Healthier, tastier, organic.",
+      "Premium healthy peanut butter and nuts butters: blend of peanuts, almonds, cashews, pistachios, dates & honey. Healthier, tastier, organic.",
     url: process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in",
     siteName: process.env.NEXT_PUBLIC_BRAND_NAME || "Puremelt",
     images: [
@@ -76,7 +76,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${process.env.NEXT_PUBLIC_BRAND_NAME} | Premium Peanut Butter & Healthy Nuts Butters`,
     description:
-      "Premium healthy peanut butter and nuts butters: blend of peanuts, almonds, cashews, pistachios, dates, honey & chocolate. Healthier, tastier, organic.",
+      "Premium healthy peanut butter and nuts butters: blend of peanuts, almonds, cashews, pistachios, dates & honey. Healthier, tastier, organic.",
     images: [
       (process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") +
         "/hero-butter.webp",
@@ -110,27 +110,31 @@ export default function RootLayout({
               "@type": "Organization",
               name: process.env.NEXT_PUBLIC_BRAND_NAME || "Puremelt",
               url: process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in",
-              logo: (process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") + "/placeholder-logo.png",
+              logo:
+                (process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") +
+                "/placeholder-logo.png",
               sameAs: [
                 "https://www.instagram.com/puremeltin/",
                 "https://www.facebook.com/puremeltin/",
-                "https://twitter.com/puremeltin"
+                "https://twitter.com/puremeltin",
               ],
-              contactPoint: [{
-                "@type": "ContactPoint",
-                telephone: "+91 93183 67696",
-                contactType: "customer support",
-                email: "support@puremelt.in"
-              }],
+              contactPoint: [
+                {
+                  "@type": "ContactPoint",
+                  telephone: "+91 93183 67696",
+                  contactType: "customer support",
+                  email: "support@puremelt.in",
+                },
+              ],
               address: {
                 "@type": "PostalAddress",
                 streetAddress: "Humayunpur Chowk",
                 addressLocality: "South Delhi",
                 addressRegion: "Delhi",
                 postalCode: "110029",
-                addressCountry: "IN"
-              }
-            })
+                addressCountry: "IN",
+              },
+            }),
           }}
         />
       </head>

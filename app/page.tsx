@@ -70,21 +70,48 @@ export default function HomePage() {
     <>
       {/* SEO Meta Tags */}
       <head>
-        <title>Puremelt Peanut Butter | Best Organic, Healthy, Chocolate Peanut Butter in India</title>
-        <meta name="description" content="Buy Puremelt's premium, organic, and healthy peanut butter. India's best chocolate peanut butter for fitness, gym, and health. No palm oil, no refined sugar, only real ingredients!" />
-        <meta name="keywords" content="peanut butter, puremelt peanut butter, organic peanut butter, healthy peanut butter, chocolate peanut butter, best peanut butter, india peanut butter, premium peanut butter, fitness peanut butter, gym peanut butter, nuts butter, natural peanut butter, protein peanut butter" />
+        <title>
+          Puremelt Peanut Butter | Best Organic, Healthy Peanut
+          Butter in India
+        </title>
+        <meta
+          name="description"
+          content="Buy Puremelt's premium, organic, and healthy peanut butter. India's best peanut butter for fitness, gym, and health. No palm oil, no refined sugar, only real ingredients!"
+        />
+        <meta
+          name="keywords"
+          content="peanut butter, puremelt peanut butter, organic peanut butter, healthy peanut butter, best peanut butter, india peanut butter, premium peanut butter, fitness peanut butter, gym peanut butter, nuts butter, natural peanut butter, protein peanut butter"
+        />
         <meta name="robots" content="index, follow" />
         {/* Open Graph Tags */}
-        <meta property="og:title" content="Puremelt Peanut Butter | Best Organic, Healthy, Chocolate Peanut Butter in India" />
-        <meta property="og:description" content="Buy Puremelt's premium, organic, and healthy peanut butter. India's best chocolate peanut butter for fitness, gym, and health. No palm oil, no refined sugar, only real ingredients!" />
+        <meta
+          property="og:title"
+          content="Puremelt Peanut Butter | Best Organic, Healthy Peanut Butter in India"
+        />
+        <meta
+          property="og:description"
+          content="Buy Puremelt's premium, organic, and healthy peanut butter. India's best peanut butter for fitness, gym, and health. No palm oil, no refined sugar, only real ingredients!"
+        />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://puremelt.in/" />
-        <meta property="og:image" content="https://puremelt.in/hero-butter.webp" />
+        <meta
+          property="og:image"
+          content="https://puremelt.in/hero-butter.webp"
+        />
         {/* Twitter Card Tags */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Puremelt Peanut Butter | Best Organic, Healthy, Chocolate Peanut Butter in India" />
-        <meta name="twitter:description" content="Buy Puremelt's premium, organic, and healthy peanut butter. India's best chocolate peanut butter for fitness, gym, and health. No palm oil, no refined sugar, only real ingredients!" />
-        <meta name="twitter:image" content="https://puremelt.in/hero-butter.webp" />
+        <meta
+          name="twitter:title"
+          content="Puremelt Peanut Butter | Best Organic, Healthy Peanut Butter in India"
+        />
+        <meta
+          name="twitter:description"
+          content="Buy Puremelt's premium, organic, and healthy peanut butter. India's best peanut butter for fitness, gym, and health. No palm oil, no refined sugar, only real ingredients!"
+        />
+        <meta
+          name="twitter:image"
+          content="https://puremelt.in/hero-butter.webp"
+        />
       </head>
       {/* JSON-LD Structured Data for Product SEO */}
       <script
@@ -103,7 +130,7 @@ export default function HomePage() {
                 "/cta.webp",
             ],
             description:
-              "Premium healthy peanut butter and nuts butters: blend of peanuts, almonds, cashews, pistachios, dates, honey & chocolate. No preservatives, no palm oil, no refined sugar. Healthier, tastier, organic.",
+              "Premium healthy peanut butter and nuts butters: blend of peanuts, almonds, cashews, pistachios, dates & honey. No preservatives, no palm oil, no refined sugar. Healthier, tastier, organic.",
             brand: {
               "@type": "Brand",
               name: process.env.NEXT_PUBLIC_BRAND_NAME || "Puremelt",
@@ -134,128 +161,104 @@ export default function HomePage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "FAQPage",
-            "mainEntity": [
+            mainEntity: [
               {
                 "@type": "Question",
-                "name": "What makes Puremelt the best healthy peanut butter in India?",
-                "acceptedAnswer": {
+                name: "What makes Puremelt the best healthy peanut butter in India?",
+                acceptedAnswer: {
                   "@type": "Answer",
-                  "text": "Puremelt uses only premium, natural ingredients: peanuts, almonds, cashews, pistachios, dates, honey, and chocolate. No palm oil, no preservatives, and no refined sugar. Our peanut butter is protein-rich, organic, and delicious!"
-                }
+                  text: "Puremelt uses only premium, natural ingredients: peanuts, almonds, cashews, pistachios, dates and honey. No palm oil, no preservatives, and no refined sugar. Our peanut butter is protein-rich, organic, and delicious!",
+                },
               },
               {
                 "@type": "Question",
-                "name": "Is your peanut butter suitable for fitness and weight loss?",
-                "acceptedAnswer": {
+                name: "Is your peanut butter suitable for fitness and weight loss?",
+                acceptedAnswer: {
                   "@type": "Answer",
-                  "text": "Yes! Our healthy peanut butter is high in protein and healthy fats, making it perfect for fitness enthusiasts, athletes, and anyone looking for a nutritious snack or post-workout meal."
-                }
+                  text: "Yes! Our healthy peanut butter is high in protein and healthy fats, making it perfect for fitness enthusiasts, athletes, and anyone looking for a nutritious snack or post-workout meal.",
+                },
               },
               {
                 "@type": "Question",
-                "name": "Do you use palm oil or refined sugar?",
-                "acceptedAnswer": {
+                name: "Do you use palm oil or refined sugar?",
+                acceptedAnswer: {
                   "@type": "Answer",
-                  "text": "Never. We use only natural sweeteners like dates and honey, and never add palm oil or refined sugar. This makes our nuts butter healthier and tastier."
-                }
+                  text: "Never. We use only natural sweeteners like dates and honey, and never add palm oil or refined sugar. This makes our nuts butter healthier and tastier.",
+                },
               },
               {
                 "@type": "Question",
-                "name": "Is Puremelt peanut butter organic?",
-                "acceptedAnswer": {
+                name: "Is Puremelt peanut butter organic?",
+                acceptedAnswer: {
                   "@type": "Answer",
-                  "text": "Yes, we use certified organic ingredients wherever possible, ensuring a clean, healthy, and safe product for you and your family."
-                }
+                  text: "Yes, we use certified organic ingredients wherever possible, ensuring a clean, healthy, and safe product for you and your family.",
+                },
               },
               {
                 "@type": "Question",
-                "name": "How can I use your peanut butter?",
-                "acceptedAnswer": {
+                name: "How can I use your peanut butter?",
+                acceptedAnswer: {
                   "@type": "Answer",
-                  "text": "Spread it on bread, add to shakes, pair with fruits, or drizzle on desserts. Check out our healthy peanut butter recipes for more ideas!"
-                }
-              }
-            ]
-          })
+                  text: "Spread it on bread, add to shakes, pair with fruits, or drizzle on desserts. Check out our healthy peanut butter recipes for more ideas!",
+                },
+              },
+            ],
+          }),
         }}
       />
 
-      <div className="min-h-screen bg-white">
-        {/* Header */}
-        <Header />
+      <div className="min-h-screen !bg-black !text-white">
+        <main className="">
+          {/* Header */}
+          <Header />
 
-        <main className="md:pt-[76px]">
-          <ImageSlider />
-        </main>
+          <div className="md:pt-[76px]">
+            <ImageSlider />
+          </div>
 
-        {/* Hero Section */}
-        <section id="home" className="md:py-10 md:px-8 pt-10 px-4">
-          <div className="container mx-auto">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="space-y-8 relative">
-                <div className="space-y-4">
-                  <Badge className="bg-[#69b31e] hover:bg-[#69b31e] text-lg text-white">
-                    <Award size={20} className="mr-1" /> India's Finest Nuts
-                    Butter
-                  </Badge>
-                  <h1 className="text-[45px] font-playfair text-[#232323] lg:text-6xl font-bold leading-tight">
-                    All-in-One
-                    <span className="block text-primary-color -mt-4 md:-mt-2">
-                      Nuts Butter
-                    </span>
-                  </h1>
-                  <div className="absolute top-4 right-8 -rotate-45 md:hidden">
+          {/* Hero Section */}
+          <section id="home" className="md:py-10 md:px-8 pt-10 px-4">
+            <div className="container mx-auto">
+              <div className="grid lg:grid-cols-2 gap-12 items-center">
+                <div className="space-y-8 relative">
+                  <div className="space-y-4">
+                    <Badge className="bg-[#90caf9] border-[#64b5f6] border hover:bg-[#69b31e] text-lg text-white">
+                      <Award size={20} className="mr-1" /> India's Finest Nuts
+                      Butter
+                    </Badge>
+                    <h1 className="text-[45px] font-playfair text-white lg:text-6xl font-bold leading-tight">
+                      All-in-One
+                      <span className="block text-primary-color -mt-4 md:-mt-2">
+                        Nuts Butter
+                      </span>
+                    </h1>
+                    <p className="text-xl text-white leading-1">
+                      <span className="text-xl">A premium blend of </span>
+                      <b className="text-primary-color text-[21px]">
+                        {" "}
+                        Peanuts, Almonds, Cashews, Pistachios, Dates, Raisins & Honey{" "}
+                      </b>{" "}
+                      <span className="text-xl">
+                        - all blended into one delicious spoonful.
+                      </span>
+                    </p>
+                    <p className="text-xl text-[#9e6924] font-medium font-ibm text-[24px]">
+                      Healthier. Tastier. Organic.
+                    </p>
+                  </div>
+
+                  <div className="relative">
                     <Image
-                      src="/hero-butter.webp"
-                      alt="Premium healthy peanut butter jar with ingredients - Puremelt, best organic healthy peanut butter in India"
-                      width={100}
-                      height={100}
-                      className="w-20 rounded-2xl"
-                      priority
+                      src="/cta.webp"
+                      alt="Healthy peanut butter and nuts butter jar - Puremelt premium blend, organic peanut butter India"
+                      width={500}
+                      height={500}
+                      className="w-full h-auto rounded-2xl"
+                      loading="lazy"
                     />
                   </div>
-                  <p className="text-xl text-[#232323] leading-1">
-                    <span className="text-xl">A premium blend of </span>
-                    <b
-                      style={{ fontFamily: "Magnolia Script" }}
-                      className="text-primary-color font-ibm text-[23px]"
-                    >
-                      {" "}
-                      Peanuts, Almonds, Cashews, Pistachios, Dates, Raisins,
-                      Honey & Chocolate{" "}
-                    </b>{" "}
-                    <span className="text-xl">
-                      - all blended into one delicious spoonful.
-                    </span>
-                  </p>
-                  <p className="text-xl text-[#69b31e] font-medium font-ibm text-[24px]">
-                    Healthier. Tastier. Organic.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Product Spotlight */}
-        <section id="product" className="py-12">
-          <div className="container mx-auto px-4">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="relative">
-                <Image
-                  src="/cta.webp"
-                  alt="Healthy peanut butter and nuts butter jar - Puremelt premium blend, organic chocolate peanut butter India"
-                  width={500}
-                  height={500}
-                  className="w-full h-auto rounded-2xl"
-                  loading="lazy"
-                />
-              </div>
-
-              <div className="space-y-8">
-                <div className="space-y-4">
                   <div className="flex items-center space-x-4">
-                    <label className="text-secondary-color font-medium">
+                    <label className="text-white font-medium">
                       Choose Weight:
                     </label>
                     <Select
@@ -273,10 +276,10 @@ export default function HomePage() {
                     </Select>
                   </div>
 
-                  <div className="flex flex-col sm:flex-row gap-4">
+                  <div className="flex flex-col sm:flex-row gap-4 pb-8">
                     <Button
                       size="lg"
-                      className="text-white px-8 py-3 bg-[#ff0000]"
+                      className="text-white px-8 py-3 bg-[#daa520]"
                       onClick={handleOrderNow}
                     >
                       <ShoppingCart className="w-5 h-5" />
@@ -292,20 +295,30 @@ export default function HomePage() {
                       </Button>
                     </Link>
                   </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
 
+        {/* Product Spotlight */}
+        <section id="product" className="pb-10 my-16 bg-black text-white">
+          <div className="container mx-auto px-4">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div className="space-y-8">
+                <div className="space-y-4">
                   <h3 className="text-3xl pt-10 font-bold text-primary-color">
                     Premium Nuts Blend
                   </h3>
 
-                  <p className="text-lg text-secondary-color leading-relaxed">
+                  <p className="text-lg text-white leading-relaxed">
                     We carefully blend the finest{" "}
-                    <b className="text-[#674ebc] text-xl">
+                    <b className="text-primary-color text-xl">
                       {" "}
-                      peanuts, almonds, cashews, pistachios, raisins, honey, and
-                      chocolate{" "}
+                      peanuts, almonds, cashews, pistachios, raisins and honey{" "}
                     </b>
                     into one balanced, nutrient-rich spread.{" "}
-                    <b className="text-[#674ebc] text-xl">
+                    <b className="text-[#d8b26f] text-xl">
                       {" "}
                       No preservatives, no palm oil, no refined sugar{" "}
                     </b>{" "}
@@ -339,7 +352,7 @@ export default function HomePage() {
                       <h4 className="font-semibold text-secondary-color mb-2">
                         {item.title}
                       </h4>
-                      <p className="text-sm text-[#bd0000]">
+                      <p className="text-sm text-primary-color">
                         {item.description}
                       </p>
                     </div>
@@ -372,7 +385,7 @@ export default function HomePage() {
         <section className="pb-12">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-secondary-color mb-4">
+              <h2 className="text-4xl font-bold text-white mb-4">
                 <span className="text-primary-color">Nature's</span> Finest,
                 Blended to Perfection
               </h2>
@@ -418,12 +431,7 @@ export default function HomePage() {
                   name: "Honey",
                   description: "Natural sweetness",
                   icon: "https://images.unsplash.com/photo-1654515722385-c684c5331c04?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGhvbmV5fGVufDB8fDB8fHww",
-                },
-                {
-                  name: "Dark Chocolate",
-                  description: "Indulgent & rich",
-                  icon: "https://images.unsplash.com/photo-1575377427642-087cf684f29d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZGFyayUyMGNob2NvbGF0ZXxlbnwwfHwwfHx8MA%3D%3D",
-                },
+                }
               ].map((ingredient, index) => (
                 <Card
                   key={index}
@@ -443,7 +451,7 @@ export default function HomePage() {
                     <h3 className="font-bold text-secondary-color mb-2">
                       {ingredient.name}
                     </h3>
-                    <p className="text-sm text-[#bd0000]">
+                    <p className="text-sm text-primary-color">
                       {ingredient.description}
                     </p>
                   </CardContent>
@@ -457,7 +465,7 @@ export default function HomePage() {
         <section className="py-12">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-secondary-color mb-4">
+              <h2 className="text-4xl font-bold text-white mb-4">
                 Why Choose{" "}
                 <span className="text-primary-color">
                   {process.env.NEXT_PUBLIC_BRAND_NAME}
@@ -528,7 +536,7 @@ export default function HomePage() {
         <section className="py-12">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-secondary-color mb-4">
+              <h2 className="text-4xl font-bold text-white mb-4">
                 How to Enjoy{" "}
                 <span className="text-primary-color">
                   {process.env.NEXT_PUBLIC_BRAND_NAME}
@@ -581,7 +589,7 @@ export default function HomePage() {
               <Link href="/recipes">
                 <Button
                   variant="outline"
-                  className="border-primary-color text-secondary-color hover:bg-amber-50 bg-transparent"
+                  className="border-primary-color text-white hover:bg-amber-50 bg-transparent"
                 >
                   View All Recipes
                 </Button>
@@ -594,7 +602,7 @@ export default function HomePage() {
         <section className="py-12">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-secondary-color mb-4">
+              <h2 className="text-4xl font-bold text-white mb-4">
                 What Our Customers Say
               </h2>
               <p className="text-xl text-sub-heading">
@@ -652,7 +660,7 @@ export default function HomePage() {
         </section>
 
         {/* FAQ Section for SEO */}
-        <section className="py-12 bg-amber-50" id="faq">
+        <section className="py-12 bg-white" id="faq">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <h2 className="text-4xl font-bold text-secondary-color mb-4">
@@ -670,7 +678,7 @@ export default function HomePage() {
                 </h3>
                 <p className="text-secondary-color">
                   Puremelt uses only premium, natural ingredients: peanuts,
-                  almonds, cashews, pistachios, dates, honey, and chocolate. No
+                  almonds, cashews, pistachios, dates and honey. No
                   palm oil, no preservatives, and no refined sugar. Our peanut
                   butter is protein-rich, organic, and delicious!
                 </p>
@@ -726,7 +734,7 @@ export default function HomePage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-12 bg-primary-dark text-white">
+        <section className="py-12 bg-[#000] text-white">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-4xl font-bold mb-4">
               Ready to Experience the Difference?
@@ -749,7 +757,7 @@ export default function HomePage() {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="border-white text-white hover:bg-white hover:text-amber-700 px-8 py-3 bg-transparent"
+                  className="border-white text-amber-700 bg-white hover:bg-white hover:text-amber-700 px-8 py-3"
                 >
                   Try Risk-Free
                 </Button>
@@ -759,7 +767,7 @@ export default function HomePage() {
         </section>
 
         {/* Footer */}
-        <footer className="bg-primary-color text-white pt-16 pb-6">
+        <footer className="bg-black text-white pt-16 pb-6">
           <div className="container mx-auto px-4">
             <div className="grid md:grid-cols-5 gap-8">
               <div>

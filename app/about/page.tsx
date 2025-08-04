@@ -71,7 +71,7 @@ export default function AboutPage() {
                   That question led to the creation of our signature and only
                   product: a premium nuts butter unlike anything else on the
                   market. We carefully blend peanuts, almonds, cashews,
-                  pistachios, dates, honey, and chocolate into one balanced,
+                  pistachios, dates and honey into one balanced,
                   nutrient-rich spread.
                 </p>
                 <p>

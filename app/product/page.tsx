@@ -12,10 +12,24 @@ export default function ProductPage() {
   return (
     <>
       <Head>
-        <title>Premium Healthy Peanut Butter & Nuts Butter | Puremelt Product</title>
-        <meta name="description" content="Discover Puremelt's premium healthy peanut butter and nuts butter. Made with peanuts, almonds, cashews, pistachios, dates, honey & chocolate. No preservatives, no palm oil, no refined sugar." />
-        <meta name="keywords" content="peanut butter, healthy peanut butter, premium nuts butter, organic peanut butter, puremelt product, best peanut butter India, protein peanut butter" />
-        <link rel="canonical" href={(process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") + "/product"} />
+        <title>
+          Premium Healthy Peanut Butter & Nuts Butter | Puremelt Product
+        </title>
+        <meta
+          name="description"
+          content="Discover Puremelt's premium healthy peanut butter and nuts butter. Made with peanuts, almonds, cashews, pistachios, dates, honey & . No preservatives, no palm oil, no refined sugar."
+        />
+        <meta
+          name="keywords"
+          content="peanut butter, healthy peanut butter, premium nuts butter, organic peanut butter, puremelt product, best peanut butter India, protein peanut butter"
+        />
+        <link
+          rel="canonical"
+          href={
+            (process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") +
+            "/product"
+          }
+        />
         {/* Product Page Structured Data */}
         <script
           type="application/ld+json"
@@ -23,19 +37,26 @@ export default function ProductPage() {
             __html: JSON.stringify({
               "@context": "https://schema.org/",
               "@type": "Product",
-              name: (process.env.NEXT_PUBLIC_BRAND_NAME || "Puremelt") + " Premium Peanut Butter",
+              name:
+                (process.env.NEXT_PUBLIC_BRAND_NAME || "Puremelt") +
+                " Premium Peanut Butter",
               image: [
-                (process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") + "/hero-butter.webp",
-                (process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") + "/cta.webp",
+                (process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") +
+                  "/hero-butter.webp",
+                (process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") +
+                  "/cta.webp",
               ],
-              description: "Premium healthy peanut butter and nuts butters: blend of peanuts, almonds, cashews, pistachios, dates, honey & chocolate. No preservatives, no palm oil, no refined sugar. Healthier, tastier, organic.",
+              description:
+                "Premium healthy peanut butter and nuts butters: blend of peanuts, almonds, cashews, pistachios, dates, honey & . No preservatives, no palm oil, no refined sugar. Healthier, tastier, organic.",
               brand: {
                 "@type": "Brand",
                 name: process.env.NEXT_PUBLIC_BRAND_NAME || "Puremelt",
               },
               offers: {
                 "@type": "Offer",
-                url: (process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") + "/buy-now",
+                url:
+                  (process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") +
+                  "/buy-now",
                 priceCurrency: "INR",
                 price: "599",
                 availability: "https://schema.org/InStock",
@@ -46,11 +67,11 @@ export default function ProductPage() {
                 ratingValue: "4.5",
                 reviewCount: "2500",
               },
-            })
+            }),
           }}
         />
       </Head>
-      
+
       <div className="min-h-screen bg-white">
         {/* Header */}
         <Header />
@@ -103,10 +124,9 @@ export default function ProductPage() {
                     Your All-in-One Premium Nuts Butter
                   </h2>
                   <p className="text-lg text-secondary-color leading-relaxed mb-6">
-                    In a market saturated with single-note spreads, we stand apart
-                    by offering a one-of-a-kind, premium nuts butter that blends
-                    peanuts, almonds, cashews, pistachios, dates, honey, and
-                    chocolate—all in one spoon.
+                    In a market saturated with single-note spreads, we stand
+                    apart by offering a one-of-a-kind, premium nuts butter that
+                    blends peanuts, almonds, cashews, pistachios, dates and honey all in one spoon.
                   </p>
                   <div className="flex items-center space-x-2 mb-6">
                     <div className="flex items-center">
@@ -164,7 +184,9 @@ export default function ProductPage() {
                         <p className="text-2xl font-bold text-secondary-color mb-1">
                           ₹299
                         </p>
-                        <p className="text-sm text-gray-500 line-through">₹349</p>
+                        <p className="text-sm text-gray-500 line-through">
+                          ₹349
+                        </p>
                         <Badge className="bg-green-100 text-green-800 mt-2">
                           14% OFF
                         </Badge>
@@ -181,7 +203,9 @@ export default function ProductPage() {
                         <p className="text-2xl font-bold text-secondary-color mb-1">
                           ₹599
                         </p>
-                        <p className="text-sm text-gray-500 line-through">₹699</p>
+                        <p className="text-sm text-gray-500 line-through">
+                          ₹699
+                        </p>
                         <Badge className="bg-green-100 text-green-800 mt-2">
                           14% OFF
                         </Badge>
@@ -274,13 +298,7 @@ export default function ProductPage() {
                     "Raw, unprocessed honey for natural golden sweetness",
                   icon: "🍯",
                   benefits: "Antioxidants, enzymes, natural energy",
-                },
-                {
-                  name: "Dark Chocolate",
-                  description: "Premium cocoa for that perfect indulgent finish",
-                  icon: "🍫",
-                  benefits: "Antioxidants, mood enhancer, iron",
-                },
+                }
               ].map((ingredient, index) => (
                 <Card
                   key={index}

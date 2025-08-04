@@ -128,7 +128,7 @@ const Header = () => {
               <span className="text-3xl font-extrabold text-primary-color">
                 {process.env.NEXT_PUBLIC_BRAND_NAME}
               </span>
-              <span className="text-[11.3px] text-gray-500 tracking-[2.8px] -mt-2">
+              <span className="text-[11.3px] text-gray-500 tracking-[1.5px] -mt-2">
                 Taste the Finest
               </span>
             </Link>
