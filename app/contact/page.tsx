@@ -49,18 +49,21 @@ const ContactPage = () => {
   return (
     <>
       <Head>
-        <title>Contact Puremelt | Healthy Peanut Butter Brand India</title>
-        <meta 
-          name="description" 
-          content="Contact Puremelt for queries about our premium healthy peanut butter and nuts butter. Get in touch for support, bulk orders, or feedback." 
+        <title>Contact Penova | Healthy Peanut Butter Brand India</title>
+        <meta
+          name="description"
+          content="Contact Penova for queries about our premium healthy peanut butter and nuts butter. Get in touch for support, bulk orders, or feedback."
         />
-        <meta 
-          name="keywords" 
-          content="contact puremelt, peanut butter support, healthy peanut butter India, puremelt contact, nuts butter customer service" 
+        <meta
+          name="keywords"
+          content="contact penova, peanut butter support, healthy peanut butter India, penova contact, nuts butter customer service"
         />
-        <link 
-          rel="canonical" 
-          href={(process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") + "/contact"} 
+        <link
+          rel="canonical"
+          href={
+            (process.env.NEXT_PUBLIC_SITE_URL || "https://penova.in") +
+            "/contact"
+          }
         />
         {/* Contact Page Structured Data */}
         <script
@@ -69,18 +72,21 @@ const ContactPage = () => {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "ContactPage",
-              "name": "Contact Puremelt",
-              "description": "Contact Puremelt for queries about our premium healthy peanut butter and nuts butter. Get in touch for support, bulk orders, or feedback.",
-              "url": (process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") + "/contact",
-              "publisher": {
+              name: "Contact Penova",
+              description:
+                "Contact Penova for queries about our premium healthy peanut butter and nuts butter. Get in touch for support, bulk orders, or feedback.",
+              url:
+                (process.env.NEXT_PUBLIC_SITE_URL || "https://penova.in") +
+                "/contact",
+              publisher: {
                 "@type": "Organization",
-                "name": process.env.NEXT_PUBLIC_BRAND_NAME || "Puremelt"
-              }
-            })
+                name: process.env.NEXT_PUBLIC_BRAND_NAME || "Penova",
+              },
+            }),
           }}
         />
       </Head>
-      
+
       <div className="min-h-screen bg-white">
         {/* Header */}
         <Header />
@@ -305,8 +311,8 @@ const ContactPage = () => {
                           What's the shelf life?
                         </p>
                         <p className="text-[#bd0000] text-sm">
-                          {process.env.NEXT_PUBLIC_BRAND_NAME} stays fresh for 12
-                          months when stored properly in a cool, dry place.
+                          {process.env.NEXT_PUBLIC_BRAND_NAME} stays fresh for
+                          12 months when stored properly in a cool, dry place.
                         </p>
                       </div>
                       <div>

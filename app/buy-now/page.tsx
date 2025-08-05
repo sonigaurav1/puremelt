@@ -19,6 +19,7 @@ import {
   Truck,
   Shield,
   RotateCcw,
+  Leaf,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -77,18 +78,21 @@ const BuyNowPage = () => {
   return (
     <>
       <Head>
-        <title>Buy Healthy Peanut Butter Online | Puremelt</title>
-        <meta 
-          name="description" 
-          content="Buy Puremelt premium healthy peanut butter and nuts butter online. 100% natural, organic, no preservatives, no palm oil, no refined sugar. Fast delivery in India." 
+        <title>Buy Healthy Peanut Butter Online | Penova</title>
+        <meta
+          name="description"
+          content="Buy Penova premium healthy peanut butter and nuts butter online. 100% natural, organic, no preservatives, no palm oil, no refined sugar. Fast delivery in India."
         />
-        <meta 
-          name="keywords" 
-          content="buy peanut butter, buy healthy peanut butter, buy nuts butter, puremelt online, order peanut butter India, premium peanut butter" 
+        <meta
+          name="keywords"
+          content="buy peanut butter, buy healthy peanut butter, buy nuts butter, penova online, order peanut butter India, premium peanut butter"
         />
-        <link 
-          rel="canonical" 
-          href={(process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") + "/buy-now"} 
+        <link
+          rel="canonical"
+          href={
+            (process.env.NEXT_PUBLIC_SITE_URL || "https://penova.in") +
+            "/buy-now"
+          }
         />
         {/* Buy Now Page Structured Data */}
         <script
@@ -97,18 +101,24 @@ const BuyNowPage = () => {
             __html: JSON.stringify({
               "@context": "https://schema.org/",
               "@type": "Product",
-              name: (process.env.NEXT_PUBLIC_BRAND_NAME || "Puremelt") + " Premium Peanut Butter",
+              name:
+                (process.env.NEXT_PUBLIC_BRAND_NAME || "Penova") +
+                " Premium Peanut Butter",
               image: [
-                (process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") + "/product.webp"
+                (process.env.NEXT_PUBLIC_SITE_URL || "https://penova.in") +
+                  "/product.webp",
               ],
-              description: "Buy Puremelt premium healthy peanut butter and nuts butter online. 100% natural, organic, no preservatives, no palm oil, no refined sugar. Fast delivery in India.",
+              description:
+                "Buy Penova premium healthy peanut butter and nuts butter online. 100% natural, organic, no preservatives, no palm oil, no refined sugar. Fast delivery in India.",
               brand: {
                 "@type": "Brand",
-                name: process.env.NEXT_PUBLIC_BRAND_NAME || "Puremelt",
+                name: process.env.NEXT_PUBLIC_BRAND_NAME || "Penova",
               },
               offers: {
                 "@type": "Offer",
-                url: (process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") + "/buy-now",
+                url:
+                  (process.env.NEXT_PUBLIC_SITE_URL || "https://penova.in") +
+                  "/buy-now",
                 priceCurrency: "INR",
                 price: "599",
                 availability: "https://schema.org/InStock",
@@ -119,17 +129,17 @@ const BuyNowPage = () => {
                 ratingValue: "4.5",
                 reviewCount: "2500",
               },
-            })
+            }),
           }}
         />
       </Head>
-      
-      <div className="min-h-screen bg-page-backgroud">
+
+      <div className="min-h-screen bg-black text-white">
         {/* Header */}
         <Header />
 
         {/* Product Section */}
-        <section className="pb-12 pt-24 px-4">
+        <section className="pb-12 pt-24 px-4 text-white bg-black">
           <div className="container mx-auto">
             <div className="grid lg:grid-cols-2 gap-12">
               {/* Left - Product Images */}
@@ -137,7 +147,9 @@ const BuyNowPage = () => {
                 {/* Main Image */}
                 <div className="relative bg-white rounded-2xl overflow-hidden border border-black/40 shadow-lg">
                   <Image
-                    src={productImages[selectedImageIndex] || "/placeholder.svg"}
+                    src={
+                      productImages[selectedImageIndex] || "/placeholder.svg"
+                    }
                     alt={`${process.env.NEXT_PUBLIC_BRAND_NAME} Product`}
                     width={500}
                     height={500}
@@ -177,13 +189,13 @@ const BuyNowPage = () => {
                   {/* Navigation Arrows */}
                   <button
                     onClick={prevImage}
-                    className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 bg-white rounded-full p-2 shadow-lg border border-[#674ebc] hover:bg-amber-50"
+                    className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 bg-white rounded-full p-2 shadow-lg border border-[#f8d87d] hover:bg-amber-50"
                   >
                     <ChevronLeft className="w-4 h-4 text-black" />
                   </button>
                   <button
                     onClick={nextImage}
-                    className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 bg-white rounded-full p-2 shadow-lg border border-[#674ebc] hover:bg-amber-50"
+                    className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 bg-white rounded-full p-2 shadow-lg border border-[#f8d87d] hover:bg-amber-50"
                   >
                     <ChevronRight className="w-4 h-4 text-black" />
                   </button>
@@ -194,8 +206,9 @@ const BuyNowPage = () => {
               <div className="space-y-6">
                 {/* Product Title and Rating */}
                 <div className="space-y-2">
-                  <h1 className="text-3xl font-bold text-secondary-color">
-                    {process.env.NEXT_PUBLIC_BRAND_NAME || "Puremelt"} Premium All-in-One Nuts Butter ({selectedWeight})
+                  <h1 className="text-3xl text-primary-color font-bold">
+                    {process.env.NEXT_PUBLIC_BRAND_NAME || "Penova"} Premium
+                    All-in-One Nuts Butter ({selectedWeight})
                   </h1>
                   <div className="flex items-center space-x-2">
                     <div className="flex items-center">
@@ -206,17 +219,17 @@ const BuyNowPage = () => {
                         />
                       ))}
                     </div>
-                    <span className="text-sm text-gray-600">(2,500+ reviews)</span>
+                    <span className="text-sm">(2,500+ reviews)</span>
                   </div>
                 </div>
 
                 {/* Price */}
                 <div className="space-y-2">
                   <div className="flex items-center space-x-4">
-                    <span className="text-3xl font-bold text-secondary-color">
+                    <span className="text-3xl font-bold">
                       ₹{currentPrice.discounted}
                     </span>
-                    <span className="text-xl text-[#674ebc] line-through">
+                    <span className="text-xl text-[#f8d87d] line-through">
                       ₹{currentPrice.original}
                     </span>
                     <Badge className="bg-green-100 text-green-800">
@@ -228,14 +241,12 @@ const BuyNowPage = () => {
 
                 {/* Size Selection */}
                 <div className="space-y-2">
-                  <label className="text-secondary-color font-medium">
-                    Choose Size:
-                  </label>
+                  <label className="text-white font-medium">Choose Size:</label>
                   <Select
                     value={selectedWeight}
                     onValueChange={setSelectedWeight}
                   >
-                    <SelectTrigger className="w-full">
+                    <SelectTrigger className="w-full text-black">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -248,26 +259,24 @@ const BuyNowPage = () => {
 
                 {/* Quantity */}
                 <div className="space-y-2">
-                  <label className="text-secondary-color font-medium">
-                    Quantity:
-                  </label>
+                  <label className="text-white font-medium">Quantity:</label>
                   <div className="flex items-center space-x-4">
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="border-[#674ebc]"
+                      className="border-[#f8d87d] text-black"
                     >
                       -
                     </Button>
-                    <span className="text-xl font-medium text-secondary-color min-w-[2rem] text-center">
+                    <span className="text-xl font-medium text-white min-w-[2rem] text-center">
                       {quantity}
                     </span>
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => setQuantity(quantity + 1)}
-                      className="border-[#674ebc]"
+                      className="border-[#f8d87d] text-black"
                     >
                       +
                     </Button>
@@ -278,7 +287,7 @@ const BuyNowPage = () => {
                 <div className="space-y-3">
                   <Button
                     size="lg"
-                    className="w-full bg-[#E50914] hover:bg-primary-dark text-white"
+                    className="w-full bg-[#EEFF00] text-black font-bold"
                     onClick={buyNow}
                   >
                     Buy Now - ₹{currentPrice.discounted * quantity}
@@ -286,7 +295,7 @@ const BuyNowPage = () => {
                   <Button
                     variant="outline"
                     size="lg"
-                    className="w-full border-primary-color text-secondary-color bg-transparent"
+                    className="w-full border-primary-color text-white bg-transparent"
                     onClick={addToCart}
                   >
                     <ShoppingCart className="w-5 h-5 mr-2" />
@@ -326,7 +335,9 @@ const BuyNowPage = () => {
                   ].map((feature, idx) => (
                     <div className="text-center" key={feature.label}>
                       {feature.icon}
-                      <p className="text-xs text-primary-color">{feature.label}</p>
+                      <p className="text-xs text-primary-color">
+                        {feature.label}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -340,46 +351,59 @@ const BuyNowPage = () => {
                   </h3>
                   <div className="space-y-3">
                     <p>
-                      {process.env.NEXT_PUBLIC_BRAND_NAME || "Puremelt"} is not just another
-                      peanut butter. It's a carefully crafted blend of seven
-                      premium ingredients that creates a unique taste experience
-                      unlike anything else in the market.
+                      {process.env.NEXT_PUBLIC_BRAND_NAME || "Penova"} is not
+                      just another nuts butter. It's a carefully crafted blend
+                      of seven premium ingredients that creates a unique taste
+                      experience unlike anything else in the market.
                     </p>
                     <p>
                       Our signature blend includes roasted peanuts for crunch,
-                      smooth almonds for creaminess, rich cashews for indulgence,
-                      premium pistachios for luxury, natural dates for sweetness,
-                      and pure honey for golden flavor.
+                      smooth almonds for creaminess, rich cashews for
+                      indulgence, premium pistachios for luxury, natural dates
+                      for sweetness, and pure honey for golden flavor.
                     </p>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4">
+                  {/* Features with icons */}
+                  <div className="grid grid-cols-2 gap-4 w-full">
                     {[
                       {
+                        icon: (
+                          <Star className="w-6 h-6 text-[#e3ef26] mx-auto mb-1" />
+                        ), // protein
                         title: "Protein Rich",
                         description: "25g protein per 100g",
                       },
                       {
+                        icon: (
+                          <Leaf className="w-6 h-6 text-[#e3ef26] mx-auto mb-1" />
+                        ), // healthy fats
                         title: "Healthy Fats",
                         description: "Omega-3 & Omega-6",
                       },
                       {
+                        icon: (
+                          <Shield className="w-6 h-6 text-[#e3ef26] mx-auto mb-1" />
+                        ), // no preservatives
                         title: "No Preservatives",
                         description: "100% Natural",
                       },
                       {
+                        icon: (
+                          <Heart className="w-6 h-6 text-[#e3ef26] mx-auto mb-1" />
+                        ), // fiber
                         title: "Fiber Rich",
                         description: "From dates & nuts",
                       },
-                    ].map((item, idx) => (
+                    ].map((item) => (
                       <div
                         key={item.title}
-                        className="bg-white border-[.1px] border-primary-color p-4 rounded-lg"
+                        className="bg-[#181818] flex flex-col items-center text-center border-[.5px] border-[#f8d87d] p-4 py-6 rounded-xl shadow-sm"
                       >
-                        <h4 className="font-semibold text-secondary-color mb-2">
+                        <h4 className="font-bold text-base mb-1 text-primary-color">
                           {item.title}
                         </h4>
-                        <p className="text-sm text-[#bd0000]">
+                        <p className="text-xs text-white opacity-80">
                           {item.description}
                         </p>
                       </div>

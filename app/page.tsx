@@ -21,6 +21,7 @@ import {
   Instagram,
   Facebook,
   Twitter,
+  Package,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -66,51 +67,87 @@ export default function HomePage() {
     router.push("/about");
   };
 
+  // Function to render stars based on rating
+  const renderStars = (rating: number) => {
+    const stars = [];
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 !== 0;
+
+    // Render full stars
+    for (let i = 0; i < fullStars; i++) {
+      stars.push(
+        <Star
+          key={`full-${i}`}
+          className="w-5 h-5 fill-amber-400 text-amber-400"
+        />
+      );
+    }
+
+    // Render half star if needed
+    if (hasHalfStar) {
+      stars.push(
+        <div key="half" className="relative">
+          <Star className="w-5 h-5 text-amber-400" />
+          <div className="absolute inset-0 overflow-hidden w-1/2">
+            <Star className="w-5 h-5 fill-amber-400 text-amber-400" />
+          </div>
+        </div>
+      );
+    }
+
+    // Fill remaining stars up to 5 (empty stars)
+    const remainingStars = 5 - Math.ceil(rating);
+    for (let i = 0; i < remainingStars; i++) {
+      stars.push(<Star key={`empty-${i}`} className="w-5 h-5 text-gray-400" />);
+    }
+
+    return stars;
+  };
+
   return (
     <>
       {/* SEO Meta Tags */}
       <head>
         <title>
-          Puremelt Peanut Butter | Best Organic, Healthy Peanut
-          Butter in India
+          Penova Peanut Butter | Best Organic, Healthy Peanut Butter in India
         </title>
         <meta
           name="description"
-          content="Buy Puremelt's premium, organic, and healthy peanut butter. India's best peanut butter for fitness, gym, and health. No palm oil, no refined sugar, only real ingredients!"
+          content="Buy Penova's premium, organic, and healthy peanut butter. India's best peanut butter for fitness, gym, and health. No palm oil, no refined sugar, only real ingredients!"
         />
         <meta
           name="keywords"
-          content="peanut butter, puremelt peanut butter, organic peanut butter, healthy peanut butter, best peanut butter, india peanut butter, premium peanut butter, fitness peanut butter, gym peanut butter, nuts butter, natural peanut butter, protein peanut butter"
+          content="peanut butter, penova peanut butter, organic peanut butter, healthy peanut butter, best peanut butter, india peanut butter, premium peanut butter, fitness peanut butter, gym peanut butter, nuts butter, natural peanut butter, protein peanut butter"
         />
         <meta name="robots" content="index, follow" />
         {/* Open Graph Tags */}
         <meta
           property="og:title"
-          content="Puremelt Peanut Butter | Best Organic, Healthy Peanut Butter in India"
+          content="Penova Peanut Butter | Best Organic, Healthy Peanut Butter in India"
         />
         <meta
           property="og:description"
-          content="Buy Puremelt's premium, organic, and healthy peanut butter. India's best peanut butter for fitness, gym, and health. No palm oil, no refined sugar, only real ingredients!"
+          content="Buy Penova's premium, organic, and healthy peanut butter. India's best peanut butter for fitness, gym, and health. No palm oil, no refined sugar, only real ingredients!"
         />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://puremelt.in/" />
+        <meta property="og:url" content="https://penova.in/" />
         <meta
           property="og:image"
-          content="https://puremelt.in/hero-butter.webp"
+          content="https://penova.in/hero-butter.webp"
         />
         {/* Twitter Card Tags */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:title"
-          content="Puremelt Peanut Butter | Best Organic, Healthy Peanut Butter in India"
+          content="Penova Peanut Butter | Best Organic, Healthy Peanut Butter in India"
         />
         <meta
           name="twitter:description"
-          content="Buy Puremelt's premium, organic, and healthy peanut butter. India's best peanut butter for fitness, gym, and health. No palm oil, no refined sugar, only real ingredients!"
+          content="Buy Penova's premium, organic, and healthy peanut butter. India's best peanut butter for fitness, gym, and health. No palm oil, no refined sugar, only real ingredients!"
         />
         <meta
           name="twitter:image"
-          content="https://puremelt.in/hero-butter.webp"
+          content="https://penova.in/hero-butter.webp"
         />
       </head>
       {/* JSON-LD Structured Data for Product SEO */}
@@ -121,24 +158,24 @@ export default function HomePage() {
             "@context": "https://schema.org/",
             "@type": "Product",
             name:
-              (process.env.NEXT_PUBLIC_BRAND_NAME || "Puremelt") +
+              (process.env.NEXT_PUBLIC_BRAND_NAME || "Penova") +
               " Premium Peanut Butter",
             image: [
-              (process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") +
+              (process.env.NEXT_PUBLIC_SITE_URL || "https://penova.in") +
                 "/hero-butter.webp",
-              (process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") +
+              (process.env.NEXT_PUBLIC_SITE_URL || "https://penova.in") +
                 "/cta.webp",
             ],
             description:
               "Premium healthy peanut butter and nuts butters: blend of peanuts, almonds, cashews, pistachios, dates & honey. No preservatives, no palm oil, no refined sugar. Healthier, tastier, organic.",
             brand: {
               "@type": "Brand",
-              name: process.env.NEXT_PUBLIC_BRAND_NAME || "Puremelt",
+              name: process.env.NEXT_PUBLIC_BRAND_NAME || "Penova",
             },
             offers: {
               "@type": "Offer",
               url:
-                (process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") +
+                (process.env.NEXT_PUBLIC_SITE_URL || "https://penova.in") +
                 "/buy-now",
               priceCurrency: "INR",
               price: "599",
@@ -164,10 +201,10 @@ export default function HomePage() {
             mainEntity: [
               {
                 "@type": "Question",
-                name: "What makes Puremelt the best healthy peanut butter in India?",
+                name: "What makes Penova the best healthy peanut butter in India?",
                 acceptedAnswer: {
                   "@type": "Answer",
-                  text: "Puremelt uses only premium, natural ingredients: peanuts, almonds, cashews, pistachios, dates and honey. No palm oil, no preservatives, and no refined sugar. Our peanut butter is protein-rich, organic, and delicious!",
+                  text: "Penova uses only premium, natural ingredients: peanuts, almonds, cashews, pistachios, dates and honey. No palm oil, no preservatives, and no refined sugar. Our peanut butter is protein-rich, organic, and delicious!",
                 },
               },
               {
@@ -188,7 +225,7 @@ export default function HomePage() {
               },
               {
                 "@type": "Question",
-                name: "Is Puremelt peanut butter organic?",
+                name: "Is Penova peanut butter organic?",
                 acceptedAnswer: {
                   "@type": "Answer",
                   text: "Yes, we use certified organic ingredients wherever possible, ensuring a clean, healthy, and safe product for you and your family.",
@@ -236,7 +273,8 @@ export default function HomePage() {
                       <span className="text-xl">A premium blend of </span>
                       <b className="text-primary-color text-[21px]">
                         {" "}
-                        Peanuts, Almonds, Cashews, Pistachios, Dates, Raisins & Honey{" "}
+                        Peanuts, Almonds, Cashews, Pistachios, Dates, Raisins &
+                        Honey{" "}
                       </b>{" "}
                       <span className="text-xl">
                         - all blended into one delicious spoonful.
@@ -250,7 +288,7 @@ export default function HomePage() {
                   <div className="relative">
                     <Image
                       src="/cta.webp"
-                      alt="Healthy peanut butter and nuts butter jar - Puremelt premium blend, organic peanut butter India"
+                      alt="Healthy peanut butter and nuts butter jar - Penova premium blend, organic peanut butter India"
                       width={500}
                       height={500}
                       className="w-full h-auto rounded-2xl"
@@ -279,10 +317,9 @@ export default function HomePage() {
                   <div className="flex flex-col sm:flex-row gap-4 pb-8">
                     <Button
                       size="lg"
-                      className="text-white px-8 py-3 bg-[#daa520]"
+                      className="text-black text-lg px-8 py-3 bg-[#EEFF00]"
                       onClick={handleOrderNow}
                     >
-                      <ShoppingCart className="w-5 h-5" />
                       Buy Now
                     </Button>
                     <Link href="/buy-now">
@@ -294,6 +331,25 @@ export default function HomePage() {
                         Add to Cart - ₹599
                       </Button>
                     </Link>
+
+                    {/* Trust badge & rating */}
+                    <div className="flex flex-col items-center space-y-2 pt-2">
+                      <div className="flex items-center space-x-1">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <Star
+                            key={star}
+                            className="w-5 h-5 fill-amber-400 text-amber-400"
+                          />
+                        ))}
+                        <span className="ml-2 font-medium">4.5/5</span>
+                      </div>
+                      <div className="text-sm text-white opacity-80">
+                        <span className="font-semibold">
+                          {isClient ? customerCount.toLocaleString() : "2,500"}+
+                        </span>{" "}
+                        Happy Customers
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -304,78 +360,70 @@ export default function HomePage() {
         {/* Product Spotlight */}
         <section id="product" className="pb-10 my-16 bg-black text-white">
           <div className="container mx-auto px-4">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className="space-y-8">
-                <div className="space-y-4">
-                  <h3 className="text-3xl pt-10 font-bold text-primary-color">
-                    Premium Nuts Blend
-                  </h3>
+            <div className="max-w-xl mx-auto flex flex-col space-y-8 items-center">
+              {/* Tagline */}
+              <div className="flex flex-col items-center space-y-2 pt-8">
+                <h3 className="text-3xl font-bold text-primary-color text-center">
+                  Premium Nuts Blend
+                </h3>
+                <p className="text-lg text-white leading-relaxed text-center">
+                  <span className="">All-in-One Superfood Spread</span> crafted
+                  from{" "}
+                  <span className="text-primary-color font-bold text-xl">
+                    peanuts, almonds, cashews, pistachios, raisins & honey
+                  </span>
+                  . 100% natural,{" "}
+                  <span className="font-bold text-[#d8d26f]">
+                    no preservatives, no palm oil, no refined sugar
+                  </span>
+                  .
+                </p>
+              </div>
 
-                  <p className="text-lg text-white leading-relaxed">
-                    We carefully blend the finest{" "}
-                    <b className="text-primary-color text-xl">
-                      {" "}
-                      peanuts, almonds, cashews, pistachios, raisins and honey{" "}
-                    </b>
-                    into one balanced, nutrient-rich spread.{" "}
-                    <b className="text-[#d8b26f] text-xl">
-                      {" "}
-                      No preservatives, no palm oil, no refined sugar{" "}
-                    </b>{" "}
-                    - just real ingredients.
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  {[
-                    {
-                      title: "Protein Rich",
-                      description: "25g protein per 100g",
-                    },
-                    {
-                      title: "Healthy Fats",
-                      description: "Omega-3 & Omega-6",
-                    },
-                    {
-                      title: "No Preservatives",
-                      description: "100% Natural",
-                    },
-                    {
-                      title: "Fiber Rich",
-                      description: "From dates & nuts",
-                    },
-                  ].map((item, idx) => (
-                    <div
-                      key={item.title}
-                      className="bg-white border-[.1px] border-primary-color p-4 rounded-lg"
-                    >
-                      <h4 className="font-semibold text-secondary-color mb-2">
-                        {item.title}
-                      </h4>
-                      <p className="text-sm text-primary-color">
-                        {item.description}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="flex items-center space-x-6 pt-4">
-                  <div className="flex items-center space-x-1">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <Star
-                        key={star}
-                        className="w-5 h-5 fill-amber-400 text-amber-400"
-                      />
-                    ))}
-                    <span className="ml-2 font-medium">4.5/5</span>
+              {/* Features with icons */}
+              <div className="grid grid-cols-2 gap-4 w-full">
+                {[
+                  {
+                    icon: (
+                      <Star className="w-6 h-6 text-[#e3ef26] mx-auto mb-1" />
+                    ), // protein
+                    title: "Protein Rich",
+                    description: "25g protein per 100g",
+                  },
+                  {
+                    icon: (
+                      <Leaf className="w-6 h-6 text-[#e3ef26] mx-auto mb-1" />
+                    ), // healthy fats
+                    title: "Healthy Fats",
+                    description: "Omega-3 & Omega-6",
+                  },
+                  {
+                    icon: (
+                      <Shield className="w-6 h-6 text-[#e3ef26] mx-auto mb-1" />
+                    ), // no preservatives
+                    title: "No Preservatives",
+                    description: "100% Natural",
+                  },
+                  {
+                    icon: (
+                      <Heart className="w-6 h-6 text-[#e3ef26] mx-auto mb-1" />
+                    ), // fiber
+                    title: "Fiber Rich",
+                    description: "From dates & nuts",
+                  },
+                ].map((item) => (
+                  <div
+                    key={item.title}
+                    className="bg-[#181818] flex flex-col items-center text-center border-[.5px] border-[#f8d87d] p-4 py-6 rounded-xl shadow-sm"
+                  >
+                    <h4 className="font-bold text-base mb-1 text-primary-color">
+                      {item.title}
+                    </h4>
+                    <p className="text-xs text-white opacity-80">
+                      {item.description}
+                    </p>
                   </div>
-                  <div className="">
-                    <span className="font-semibold">
-                      {isClient ? customerCount.toLocaleString() : "2,500"}+
-                    </span>{" "}
-                    Happy Customers
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
@@ -384,18 +432,18 @@ export default function HomePage() {
         {/* Ingredients Section */}
         <section className="pb-12">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-white mb-4">
-                <span className="text-primary-color">Nature's</span> Finest,
-                Blended to Perfection
+            <div className="flex flex-col items-center mb-10">
+              <h2 className="text-3xl font-bold text-center mb-2">
+                Nature's Finest, Blended to Perfection
               </h2>
-              <p className="text-xl text-sub-heading">
-                Each ingredient is carefully selected for taste, nutrition, and
-                quality.
+              <p className="text-lg text-primary-color text-center max-w-md">
+                Each ingredient is{" "}
+                <span className="font-semibold">handpicked</span> for taste,
+                nutrition, and quality.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 lg:grid-cols-4 grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 gap-4 max-w-xl mx-auto">
               {[
                 {
                   name: "Peanuts",
@@ -431,31 +479,29 @@ export default function HomePage() {
                   name: "Honey",
                   description: "Natural sweetness",
                   icon: "https://images.unsplash.com/photo-1654515722385-c684c5331c04?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGhvbmV5fGVufDB8fDB8fHww",
-                }
-              ].map((ingredient, index) => (
-                <Card
-                  key={index}
-                  className="border-[.1px] border-primary-color hover:shadow-lg transition-shadow"
+                },
+              ].map((ingredient, idx) => (
+                <div
+                  key={ingredient.name}
+                  className="flex flex-col items-center bg-[#181818] rounded-xl p-4 border-[.5px] border-[#f8d87d] shadow-sm text-center min-h-[140px]"
                 >
-                  <CardContent className="p-6 text-center">
-                    <div className="text-4xl size-24 rounded-full flex justify-center items-center mx-auto mb-4 overflow-hidden">
-                      <Image
-                        src={ingredient.icon}
-                        alt={`Ingredient: ${ingredient.name} for healthy peanut butter, organic peanut butter, best peanut butter in India`}
-                        width={50}
-                        height={50}
-                        className="size-full object-cover"
-                        loading="lazy"
-                      />
-                    </div>
-                    <h3 className="font-bold text-secondary-color mb-2">
-                      {ingredient.name}
-                    </h3>
-                    <p className="text-sm text-primary-color">
-                      {ingredient.description}
-                    </p>
-                  </CardContent>
-                </Card>
+                  <div className="size-20 rounded-full flex justify-center items-center mb-2 overflow-hidden bg-black">
+                    <Image
+                      src={ingredient.icon}
+                      alt={`Ingredient: ${ingredient.name} for healthy peanut butter, organic peanut butter, best peanut butter in India`}
+                      width={60}
+                      height={60}
+                      className="size-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                  <h3 className="font-bold text-base text-primary-color mb-1">
+                    {ingredient.name}
+                  </h3>
+                  <p className="text-xs text-white opacity-80">
+                    {ingredient.description}
+                  </p>
+                </div>
               ))}
             </div>
           </div>
@@ -464,69 +510,79 @@ export default function HomePage() {
         {/* Why Choose Section */}
         <section className="py-12">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-white mb-4">
-                Why Choose{" "}
-                <span className="text-primary-color">
-                  {process.env.NEXT_PUBLIC_BRAND_NAME}
-                </span>
-                ?
+            <div className="flex flex-col items-center mb-10">
+              <h2 className="text-3xl font-bold px-4 py-1 mb-3">
+                Why Choose Us?
               </h2>
-              <p className="text-xl text-sub-heading">
-                We're not just another peanut butter. We're a revolution in a
-                jar.
+              <p className="text-lg text-primary-color text-center max-w-md">
+                Not just another nuts butter -{" "}
+                <span className="text-primary-color font-semibold">
+                  a revolution in a jar
+                </span>
+                .<br />
+                <span className="text-[#f8d87d] font-bold">
+                  Taste. Health. Purity.
+                </span>
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-2 gap-4 max-w-xl mx-auto">
               {[
                 {
-                  icon: Shield,
+                  icon: (
+                    <Shield className="w-7 h-7 text-[#f8d87d] mb-1 mx-auto" />
+                  ),
                   title: "No Preservatives",
-                  description:
-                    "100% natural ingredients with no artificial preservatives",
+                  description: "100% natural, no artificial junk",
                 },
                 {
-                  icon: Leaf,
+                  icon: (
+                    <Leaf className="w-7 h-7 text-[#f8d87d] mb-1 mx-auto" />
+                  ),
                   title: "No Palm Oil",
-                  description:
-                    "We use only the finest nuts oils for better health",
+                  description: "Only the finest nuts oils",
                 },
                 {
-                  icon: Heart,
+                  icon: (
+                    <Heart className="w-7 h-7 text-[#f8d87d] mb-1 mx-auto" />
+                  ),
                   title: "No Refined Sugar",
-                  description: "Sweetened naturally with dates and honey",
+                  description: "Sweetened with dates & honey",
                 },
                 {
-                  icon: Award,
+                  icon: (
+                    <Award className="w-7 h-7 text-[#f8d87d] mb-1 mx-auto" />
+                  ),
                   title: "Organic Product",
-                  description:
-                    "Certified organic ingredients sourced responsibly",
+                  description: "Certified organic ingredients",
                 },
                 {
-                  icon: Star,
+                  icon: (
+                    <Star className="w-7 h-7 text-[#f8d87d] mb-1 mx-auto" />
+                  ),
                   title: "Unique Flavor",
-                  description:
-                    "Best flavor profile in the market - one of a kind",
+                  description: "One-of-a-kind taste profile",
                 },
                 {
-                  icon: Users,
+                  icon: (
+                    <Package className="w-7 h-7 text-[#f8d87d] mb-1 mx-auto" />
+                  ),
                   title: "All Nuts in One",
-                  description: "7 premium ingredients in every spoonful",
+                  description: "7 premium ingredients in every spoon",
                 },
-              ].map((feature, index) => (
-                <Card
-                  key={index}
-                  className="border-primary-color border-[.1px] hover:shadow-lg transition-shadow"
+              ].map((feature, idx) => (
+                <div
+                  key={feature.title}
+                  className="flex flex-col items-center bg-[#181818] rounded-xl p-4 border-[.5px] border-[#f8d87d] shadow-sm text-center min-h-[140px]"
                 >
-                  <CardContent className="p-6 text-center">
-                    <feature.icon className="w-12 h-12 text-primary-color mx-auto mb-4" />
-                    <h3 className="font-bold text-secondary-color mb-2">
-                      {feature.title}
-                    </h3>
-                    <p className="text-primary-color">{feature.description}</p>
-                  </CardContent>
-                </Card>
+                  {feature.icon}
+                  <h3 className="font-bold text-base text-primary-color mb-1">
+                    {feature.title}
+                  </h3>
+                  <p className="text-xs text-white opacity-80">
+                    {feature.description}
+                  </p>
+                </div>
               ))}
             </div>
           </div>
@@ -535,19 +591,20 @@ export default function HomePage() {
         {/* Usage Section */}
         <section className="py-12">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-white mb-4">
-                How to Enjoy{" "}
-                <span className="text-primary-color">
-                  {process.env.NEXT_PUBLIC_BRAND_NAME}
-                </span>
+            <div className="flex flex-col items-center mb-10">
+              <h2 className="text-3xl text-center font-bold px-4 py-1 mb-3">
+                How to Enjoy our nuts butter?
               </h2>
-              <p className="text-xl text-sub-heading">
-                Versatile, delicious, and perfect for any time of day.
+              <p className="text-lg text-primary-color text-center max-w-md">
+                Versatile, delicious, and{" "}
+                <span className=" font-semibold">
+                  perfect for any time of day
+                </span>
+                .
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 gap-4 max-w-xl mx-auto">
               {[
                 {
                   title: "Spread on Bread",
@@ -569,23 +626,23 @@ export default function HomePage() {
                   description: "Elevate your desserts and treats",
                   image: "🧁",
                 },
-              ].map((usage, index) => (
-                <Card
-                  key={index}
-                  className="border-primary-color border-[.1px] hover:shadow-lg transition-shadow"
+              ].map((usage, idx) => (
+                <div
+                  key={usage.title}
+                  className="flex flex-col items-center bg-[#181818] rounded-xl p-4 border-[.5px] border-[#f8d87d] shadow-sm text-center min-h-[120px]"
                 >
-                  <CardContent className="p-6 text-center">
-                    <div className="text-6xl mb-4">{usage.image}</div>
-                    <h3 className="font-bold text-secondary-color mb-2">
-                      {usage.title}
-                    </h3>
-                    <p className="text-amber-700">{usage.description}</p>
-                  </CardContent>
-                </Card>
+                  <div className="text-4xl mb-2">{usage.image}</div>
+                  <h3 className="font-bold text-base text-primary-color mb-1">
+                    {usage.title}
+                  </h3>
+                  <p className="text-xs text-white opacity-80">
+                    {usage.description}
+                  </p>
+                </div>
               ))}
             </div>
 
-            <div className="text-center mt-12">
+            <div className="text-center mt-10">
               <Link href="/recipes">
                 <Button
                   variant="outline"
@@ -601,59 +658,58 @@ export default function HomePage() {
         {/* Testimonials */}
         <section className="py-12">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-white mb-4">
+            <div className="flex flex-col items-center mb-10">
+              <h2 className="text-3xl font-bold text-center mb-2">
                 What Our Customers Say
               </h2>
-              <p className="text-xl text-sub-heading">
-                Join thousands of satisfied customers
+              <p className="text-lg text-primary-color text-center max-w-md">
+                <span className="font-semibold">
+                  Join thousands of happy customers
+                </span>{" "}
+                who love Penova.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 gap-4 max-w-xl mx-auto">
               {[
                 {
-                  name: "Priya Sharma",
+                  name: "Gaurav Soni",
                   location: "Mumbai",
                   rating: 5,
                   text: "Finally, a nuts butter that tastes amazing and is actually healthy! My kids love it too.",
                 },
                 {
-                  name: "Rahul Gupta",
+                  name: "Pradip Saroj",
                   location: "Delhi",
-                  rating: 5,
+                  rating: 4.5,
                   text: "As a fitness enthusiast, this is perfect for my post-workout meals. The taste is incredible!",
                 },
                 {
-                  name: "Anita Patel",
+                  name: "Riya Sharma",
                   location: "Bangalore",
-                  rating: 5,
+                  rating: 4.5,
                   text: "The blend of flavors is unique. I've never tasted anything like this before. Highly recommended!",
                 },
-              ].map((testimonial, index) => (
-                <Card key={index} className="border-primary-color">
-                  <CardContent className="p-6">
-                    <div className="flex items-center mb-4">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <Star
-                          key={star}
-                          className="w-4 h-4 fill-amber-400 text-amber-400"
-                        />
-                      ))}
-                    </div>
-                    <p className="text-amber-700 mb-4 italic">
-                      "{testimonial.text}"
+              ].map((testimonial, idx) => (
+                <div
+                  key={testimonial.name}
+                  className="flex flex-col items-center bg-[#181818] rounded-xl p-6 border-[.5px] border-[#f8d87d] shadow-sm text-center min-h-[140px]"
+                >
+                  <div className="flex items-center justify-center mb-2 gap-1">
+                    {renderStars(testimonial.rating)}
+                  </div>
+                  <p className="mb-3 italic text-base text-white">
+                    "{testimonial.text}"
+                  </p>
+                  <div>
+                    <p className="font-semibold text-[#f8d87d]">
+                      {testimonial.name}
                     </p>
-                    <div>
-                      <p className="font-semibold text-secondary-color">
-                        {testimonial.name}
-                      </p>
-                      <p className="text-sm text-amber-600">
-                        {testimonial.location}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
+                    <p className="text-xs text-white opacity-70">
+                      {testimonial.location}
+                    </p>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
@@ -662,106 +718,109 @@ export default function HomePage() {
         {/* FAQ Section for SEO */}
         <section className="py-12 bg-white" id="faq">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold text-secondary-color mb-4">
-                Frequently Asked Questions about Peanut Butter
+            <div className="flex flex-col items-center mb-10">
+              <h2 className="text-4xl font-bold text-primary-color text-center mb-2">
+                FAQ
               </h2>
-              <p className="text-xl text-sub-heading">
-                Everything you want to know about healthy peanut butter, nuts
-                butters, and our premium blend.
+              <p className="text-lg text-secondary-color text-center max-w-md">
+                Everything you want to know about{" "}
+                <span className="text-primary-color font-semibold">
+                  healthy peanut butter
+                </span>{" "}
+                and our premium blend.
               </p>
             </div>
-            <div className="max-w-3xl mx-auto space-y-8">
-              <div>
-                <h3 className="font-semibold text-lg text-primary-color mb-2">
-                  What makes Puremelt the best healthy peanut butter in India?
-                </h3>
-                <p className="text-secondary-color">
-                  Puremelt uses only premium, natural ingredients: peanuts,
-                  almonds, cashews, pistachios, dates and honey. No
-                  palm oil, no preservatives, and no refined sugar. Our peanut
-                  butter is protein-rich, organic, and delicious!
-                </p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg text-primary-color mb-2">
-                  Is your peanut butter suitable for fitness and weight loss?
-                </h3>
-                <p className="text-secondary-color">
-                  Yes! Our healthy peanut butter is high in protein and healthy
-                  fats, making it perfect for fitness enthusiasts, athletes, and
-                  anyone looking for a nutritious snack or post-workout meal.
-                </p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg text-primary-color mb-2">
-                  Do you use palm oil or refined sugar?
-                </h3>
-                <p className="text-secondary-color">
-                  Never. We use only natural sweeteners like dates and honey,
-                  and never add palm oil or refined sugar. This makes our nuts
-                  butter healthier and tastier.
-                </p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg text-primary-color mb-2">
-                  Is Puremelt peanut butter organic?
-                </h3>
-                <p className="text-secondary-color">
-                  Yes, we use certified organic ingredients wherever possible,
-                  ensuring a clean, healthy, and safe product for you and your
-                  family.
-                </p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg text-primary-color mb-2">
-                  How can I use your peanut butter?
-                </h3>
-                <p className="text-secondary-color">
-                  Spread it on bread, add to shakes, pair with fruits, or
-                  drizzle on desserts. Check out our{" "}
-                  <Link
-                    href="/recipes"
-                    className="text-primary-color underline"
-                  >
-                    healthy peanut butter recipes
-                  </Link>{" "}
-                  for more ideas!
-                </p>
-              </div>
+
+            <div className="max-w-2xl mx-auto flex flex-col gap-4">
+              {[
+                {
+                  question:
+                    "What makes Penova the best healthy nuts butter in India?",
+                  answer:
+                    "Penova uses only premium, natural ingredients: peanuts, almonds, cashews, pistachios, dates and honey. No palm oil, no preservatives, and no refined sugar. Our nuts butter is protein-rich, organic, and delicious!",
+                },
+                {
+                  question:
+                    "Is your nuts butter suitable for fitness and weight loss?",
+                  answer:
+                    "Yes! Our healthy nuts butter is high in protein and healthy fats, making it perfect for fitness enthusiasts, athletes, and anyone looking for a nutritious snack or post-workout meal.",
+                },
+                {
+                  question: "Do you use palm oil or refined sugar?",
+                  answer:
+                    "Never. We use only natural sweeteners like dates and honey, and never add palm oil or refined sugar. This makes our nuts butter healthier and tastier.",
+                },
+                {
+                  question: "Is Penova nuts butter organic?",
+                  answer:
+                    "Yes, we use certified organic ingredients wherever possible, ensuring a clean, healthy, and safe product for you and your family.",
+                },
+                {
+                  question: "How can I use your nuts butter?",
+                  answer: (
+                    <span>
+                      Spread it on bread, add to shakes, pair with fruits, or
+                      drizzle on desserts. Check out our{" "}
+                      <Link
+                        href="/recipes"
+                        className="text-primary-color underline"
+                      >
+                        healthy nuts butter recipes
+                      </Link>{" "}
+                      for more ideas!
+                    </span>
+                  ),
+                },
+              ].map((faq, idx) => (
+                <div
+                  key={faq.question}
+                  className="bg-black rounded-xl p-5 shadow-sm"
+                >
+                  <h3 className="font-semibold text-lg text-primary-color mb-2 flex items-center">
+                    <span className="mr-2">Q{idx + 1}.</span> {faq.question}
+                  </h3>
+                  <div className="text-white text-base pl-6">{faq.answer}</div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
         {/* CTA Section */}
         <section className="py-12 bg-[#000] text-white">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="text-4xl font-bold mb-4">
-              Ready to Experience the Difference?
-            </h2>
-            <p className="text-xl mb-8 opacity-90">
-              Join thousands of customers who've made the switch to premium
-              nutrition
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/buy-now">
-                <Button
-                  size="lg"
-                  className="bg-white text-amber-700 hover:bg-amber-50 px-8 py-3"
-                >
-                  <ShoppingCart className="w-5 h-5 mr-2" />
-                  Order Now - ₹599
-                </Button>
-              </Link>
-              <Link href="/about">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="border-white text-amber-700 bg-white hover:bg-white hover:text-amber-700 px-8 py-3"
-                >
-                  Try Risk-Free
-                </Button>
-              </Link>
+          <div className="container mx-auto px-4 flex justify-center">
+            <div className="w-full max-w-xl bg-[#181818] rounded-2xl shadow-lg p-8 flex flex-col items-center border border-[#f8d87d]">
+              <Badge className="bg-[#f8d87d] text-black text-base font-bold px-4 py-1 mb-4 border-none">
+                Limited Time Offer
+              </Badge>
+              <h2 className="text-3xl sm:text-4xl text-primary-color font-bold mb-3 text-center">
+                Ready to Experience the Difference?
+              </h2>
+              <p className="text-lg sm:text-xl mb-8 opacity-90 text-center max-w-md">
+                Join <span className="font-bold">thousands</span> of customers
+                who've made the switch to{" "}
+                <span className="font-semibold">premium nutrition</span>.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
+                <Link href="/buy-now" className="w-full sm:w-auto">
+                  <Button
+                    size="lg"
+                    className="w-full sm:w-auto bg-[#EEFF00] text-black font-bold px-8 py-3 shadow-md hover:bg-[#d4e000] text-lg rounded-xl"
+                  >
+                    <ShoppingCart className="w-5 h-5 mr-2" />
+                    Order Now - ₹599
+                  </Button>
+                </Link>
+                <Link href="/about" className="w-full sm:w-auto">
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="w-full sm:w-auto border-[#f8d87d] bg-black hover:bg-[#222] hover:text-[#e3ef26] px-8 py-3 font-bold rounded-xl"
+                  >
+                    Try Risk-Free
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </section>
@@ -773,7 +832,6 @@ export default function HomePage() {
               <div>
                 <Link href="/" className="flex items-center space-x-2 mb-4">
                   <div className="w-8 h-8 bg-amber-600 rounded-full flex items-center justify-center">
-                    
                     <span className="text-white font-bold">P</span>
                   </div>
                   <span className="text-xl font-bold">
@@ -866,7 +924,7 @@ export default function HomePage() {
                   <div className="rounded text-center">
                     <Image
                       src="/upi.webp"
-                      alt="UPI Payment for healthy peanut butter purchase, Puremelt India"
+                      alt="UPI Payment for healthy peanut butter purchase, Penova India"
                       width={100}
                       height={100}
                       className="w-full h-auto"

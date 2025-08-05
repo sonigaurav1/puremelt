@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     "pistachio butter",
     "dates honey peanut butter",
     "peanut butter",
-    "puremelt peanut butter",
+    "penova peanut butter",
     "best peanut butter in india",
     "natural peanut butter",
     "organic peanut butter india",
@@ -57,12 +57,12 @@ export const metadata: Metadata = {
     title: `${process.env.NEXT_PUBLIC_BRAND_NAME} | Premium Peanut Butter & Healthy Nuts Butters`,
     description:
       "Premium healthy peanut butter and nuts butters: blend of peanuts, almonds, cashews, pistachios, dates & honey. Healthier, tastier, organic.",
-    url: process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in",
-    siteName: process.env.NEXT_PUBLIC_BRAND_NAME || "Puremelt",
+    url: process.env.NEXT_PUBLIC_SITE_URL || "https://penova.in",
+    siteName: process.env.NEXT_PUBLIC_BRAND_NAME || "Penova",
     images: [
       {
         url:
-          (process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") +
+          (process.env.NEXT_PUBLIC_SITE_URL || "https://penova.in") +
           "/hero-butter.webp",
         width: 1200,
         height: 630,
@@ -78,13 +78,13 @@ export const metadata: Metadata = {
     description:
       "Premium healthy peanut butter and nuts butters: blend of peanuts, almonds, cashews, pistachios, dates & honey. Healthier, tastier, organic.",
     images: [
-      (process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") +
+      (process.env.NEXT_PUBLIC_SITE_URL || "https://penova.in") +
         "/hero-butter.webp",
     ],
     site: "@puremeltin",
   },
   alternates: {
-    canonical: process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in",
+    canonical: process.env.NEXT_PUBLIC_SITE_URL || "https://penova.in",
   },
 };
 
@@ -99,7 +99,7 @@ export default function RootLayout({
         {/* Canonical tag for SEO */}
         <link
           rel="canonical"
-          href={process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in"}
+          href={process.env.NEXT_PUBLIC_SITE_URL || "https://penova.in"}
         />
         {/* Organization Structured Data for SEO */}
         <script
@@ -108,10 +108,10 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              name: process.env.NEXT_PUBLIC_BRAND_NAME || "Puremelt",
-              url: process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in",
+              name: process.env.NEXT_PUBLIC_BRAND_NAME || "Penova",
+              url: process.env.NEXT_PUBLIC_SITE_URL || "https://penova.in",
               logo:
-                (process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") +
+                (process.env.NEXT_PUBLIC_SITE_URL || "https://penova.in") +
                 "/placeholder-logo.png",
               sameAs: [
                 "https://www.instagram.com/puremeltin/",
@@ -123,7 +123,7 @@ export default function RootLayout({
                   "@type": "ContactPoint",
                   telephone: "+91 93183 67696",
                   contactType: "customer support",
-                  email: "support@puremelt.in",
+                  email: "support@penova.in",
                 },
               ],
               address: {

@@ -147,10 +147,22 @@ export default function RecipesPage() {
   return (
     <>
       <Head>
-        <title>Healthy Peanut Butter Recipes | Puremelt</title>
-        <meta name="description" content="Discover delicious and healthy peanut butter recipes with Puremelt. From smoothies to cookies, enjoy premium nuts butter in every meal." />
-        <meta name="keywords" content="peanut butter recipes, healthy peanut butter, puremelt recipes, nuts butter recipes, protein recipes, breakfast, snacks, desserts" />
-        <link rel="canonical" href={(process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") + "/recipes"} />
+        <title>Healthy Peanut Butter Recipes | Penova</title>
+        <meta
+          name="description"
+          content="Discover delicious and healthy peanut butter recipes with Penova. From smoothies to cookies, enjoy premium nuts butter in every meal."
+        />
+        <meta
+          name="keywords"
+          content="peanut butter recipes, healthy peanut butter, penova recipes, nuts butter recipes, protein recipes, breakfast, snacks, desserts"
+        />
+        <link
+          rel="canonical"
+          href={
+            (process.env.NEXT_PUBLIC_SITE_URL || "https://penova.in") +
+            "/recipes"
+          }
+        />
         {/* Recipes Page Structured Data */}
         <script
           type="application/ld+json"
@@ -158,18 +170,21 @@ export default function RecipesPage() {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "CollectionPage",
-              "name": "Healthy Peanut Butter Recipes | Puremelt",
-              "description": "Discover delicious and healthy peanut butter recipes with Puremelt. From smoothies to cookies, enjoy premium nuts butter in every meal.",
-              "url": (process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") + "/recipes",
-              "publisher": {
+              name: "Healthy Peanut Butter Recipes | Penova",
+              description:
+                "Discover delicious and healthy peanut butter recipes with Penova. From smoothies to cookies, enjoy premium nuts butter in every meal.",
+              url:
+                (process.env.NEXT_PUBLIC_SITE_URL || "https://penova.in") +
+                "/recipes",
+              publisher: {
                 "@type": "Organization",
-                "name": process.env.NEXT_PUBLIC_BRAND_NAME || "Puremelt"
-              }
-            })
+                name: process.env.NEXT_PUBLIC_BRAND_NAME || "Penova",
+              },
+            }),
           }}
         />
       </Head>
-      
+
       <div className="min-h-screen bg-white">
         {/* Header */}
         <Header />
@@ -186,8 +201,8 @@ export default function RecipesPage() {
               <span className="text-primary-color font-semibold">
                 {process.env.NEXT_PUBLIC_BRAND_NAME}
               </span>
-              . From quick breakfast ideas to indulgent treats, these recipes will
-              transform your daily nutrition into something extraordinary.
+              . From quick breakfast ideas to indulgent treats, these recipes
+              will transform your daily nutrition into something extraordinary.
             </p>
           </div>
         </section>

@@ -13,20 +13,20 @@ export default function ProductPage() {
     <>
       <Head>
         <title>
-          Premium Healthy Peanut Butter & Nuts Butter | Puremelt Product
+          Premium Healthy Peanut Butter & Nuts Butter | Penova Product
         </title>
         <meta
           name="description"
-          content="Discover Puremelt's premium healthy peanut butter and nuts butter. Made with peanuts, almonds, cashews, pistachios, dates, honey & . No preservatives, no palm oil, no refined sugar."
+          content="Discover Penova's premium healthy peanut butter and nuts butter. Made with peanuts, almonds, cashews, pistachios, dates, honey & . No preservatives, no palm oil, no refined sugar."
         />
         <meta
           name="keywords"
-          content="peanut butter, healthy peanut butter, premium nuts butter, organic peanut butter, puremelt product, best peanut butter India, protein peanut butter"
+          content="peanut butter, healthy peanut butter, premium nuts butter, organic peanut butter, penova product, best peanut butter India, protein peanut butter"
         />
         <link
           rel="canonical"
           href={
-            (process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") +
+            (process.env.NEXT_PUBLIC_SITE_URL || "https://penova.in") +
             "/product"
           }
         />
@@ -38,24 +38,24 @@ export default function ProductPage() {
               "@context": "https://schema.org/",
               "@type": "Product",
               name:
-                (process.env.NEXT_PUBLIC_BRAND_NAME || "Puremelt") +
+                (process.env.NEXT_PUBLIC_BRAND_NAME || "Penova") +
                 " Premium Peanut Butter",
               image: [
-                (process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") +
+                (process.env.NEXT_PUBLIC_SITE_URL || "https://penova.in") +
                   "/hero-butter.webp",
-                (process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") +
+                (process.env.NEXT_PUBLIC_SITE_URL || "https://penova.in") +
                   "/cta.webp",
               ],
               description:
                 "Premium healthy peanut butter and nuts butters: blend of peanuts, almonds, cashews, pistachios, dates, honey & . No preservatives, no palm oil, no refined sugar. Healthier, tastier, organic.",
               brand: {
                 "@type": "Brand",
-                name: process.env.NEXT_PUBLIC_BRAND_NAME || "Puremelt",
+                name: process.env.NEXT_PUBLIC_BRAND_NAME || "Penova",
               },
               offers: {
                 "@type": "Offer",
                 url:
-                  (process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") +
+                  (process.env.NEXT_PUBLIC_SITE_URL || "https://penova.in") +
                   "/buy-now",
                 priceCurrency: "INR",
                 price: "599",
@@ -126,7 +126,8 @@ export default function ProductPage() {
                   <p className="text-lg text-secondary-color leading-relaxed mb-6">
                     In a market saturated with single-note spreads, we stand
                     apart by offering a one-of-a-kind, premium nuts butter that
-                    blends peanuts, almonds, cashews, pistachios, dates and honey all in one spoon.
+                    blends peanuts, almonds, cashews, pistachios, dates and
+                    honey all in one spoon.
                   </p>
                   <div className="flex items-center space-x-2 mb-6">
                     <div className="flex items-center">
@@ -298,7 +299,7 @@ export default function ProductPage() {
                     "Raw, unprocessed honey for natural golden sweetness",
                   icon: "🍯",
                   benefits: "Antioxidants, enzymes, natural energy",
-                }
+                },
               ].map((ingredient, index) => (
                 <Card
                   key={index}
