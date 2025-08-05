@@ -773,6 +773,7 @@ export default function HomePage() {
               <div>
                 <Link href="/" className="flex items-center space-x-2 mb-4">
                   <div className="w-8 h-8 bg-amber-600 rounded-full flex items-center justify-center">
+                    
                     <span className="text-white font-bold">P</span>
                   </div>
                   <span className="text-xl font-bold">
