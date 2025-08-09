@@ -210,7 +210,7 @@ export default function ImageSlider() {
             {currentSlide === index ? (
               <div className="w-12 sm:w-16 h-2 rounded-full bg-white/80 overflow-hidden">
                 <div
-                  className="h-full bg-red-600 rounded-full transition-all duration-100 ease-linear"
+                  className="h-full bg-amber-700 rounded-full transition-all duration-100 ease-linear"
                   style={{
                     width: isHovered ? "100%" : `${progress}%`,
                     transition: isHovered ? "width 0.3s ease" : "none",

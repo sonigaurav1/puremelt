@@ -51,28 +51,29 @@ export default function CartPage() {
   const total = subtotal + shipping;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white">
+    <div className="min-h-screen !bg-black !text-white">
       {/* Header */}
       <Header />
 
       {/* Cart Content */}
-      <section className="py-12 px-4">
+      <section className="md:py-16 md:px-8 pt-24 px-4">
         <div className="container mx-auto max-w-6xl">
-          <h1 className="text-4xl font-bold text-secondary-color mb-8">
+          <h1 className="text-5xl font-bold font-playfair text-white mb-8">
             Shopping Cart
           </h1>
 
           {cartItems.length === 0 ? (
-            <div className="text-center py-16">
-              <ShoppingBag className="w-24 h-24 text-amber-300 mx-auto mb-6" />
-              <h2 className="text-2xl font-bold text-secondary-color mb-4">
+            <div className="text-center py-24">
+              <ShoppingBag className="w-24 h-24 text-[#f8d87d] mx-auto mb-6" />
+              <h2 className="text-2xl font-bold text-primary-color mb-4">
                 Your cart is empty
               </h2>
-              <p className="text-amber-700 mb-8">
-                Add some delicious {process.env.NEXT_PUBLIC_BRAND_NAME} to get started!
+              <p className="text-[#f8d87d] mb-8">
+                Add some delicious {process.env.NEXT_PUBLIC_BRAND_NAME} to get
+                started!
               </p>
               <Link href="/buy-now">
-                <Button className="bg-amber-600 hover:bg-amber-700 text-white">
+                <Button className="bg-[#EEFF00] hover:bg-[#f8d87d] text-black text-lg">
                   Start Shopping
                 </Button>
               </Link>
@@ -80,31 +81,34 @@ export default function CartPage() {
           ) : (
             <div className="grid lg:grid-cols-3 gap-8">
               {/* Cart Items */}
-              <div className="lg:col-span-2 space-y-4">
+              <div className="lg:col-span-2 space-y-6">
                 {cartItems.map((item) => (
-                  <Card key={item.id} className="border-amber-200">
-                    <CardContent className="p-6">
-                      <div className="flex items-center space-x-4">
+                  <Card
+                    key={item.id}
+                    className="border-[.5px] border-[#f8d87d] bg-[#181818]"
+                  >
+                    <CardContent className="p-8">
+                      <div className="flex items-center space-x-6">
                         <Image
                           src={item.image || "/placeholder.svg"}
                           alt={item.name}
                           width={100}
                           height={100}
-                          className="rounded-lg"
+                          className="rounded-lg bg-black"
                         />
 
                         <div className="flex-1">
-                          <h3 className="font-bold text-secondary-color mb-1">
+                          <h3 className="font-bold text-primary-color mb-1">
                             {item.name}
                           </h3>
-                          <p className="text-amber-700 mb-2">
+                          <p className="text-[#f8d87d] mb-2">
                             Size: {item.size}
                           </p>
                           <div className="flex items-center space-x-2">
-                            <span className="font-bold text-secondary-color">
+                            <span className="font-bold text-primary-color">
                               ₹{item.price}
                             </span>
-                            <span className="text-gray-500 line-through text-sm">
+                            <span className="text-[#f8d87d] line-through text-sm">
                               ₹{item.originalPrice}
                             </span>
                           </div>
@@ -117,11 +121,11 @@ export default function CartPage() {
                             onClick={() =>
                               updateQuantity(item.id, item.quantity - 1)
                             }
-                            className="border-amber-200"
+                            className="border-[#f8d87d] text-[#f8d87d] hover:bg-[#222]"
                           >
                             <Minus className="w-4 h-4" />
                           </Button>
-                          <span className="font-medium text-secondary-color min-w-[2rem] text-center">
+                          <span className="font-medium text-primary-color min-w-[2rem] text-center">
                             {item.quantity}
                           </span>
                           <Button
@@ -130,21 +134,21 @@ export default function CartPage() {
                             onClick={() =>
                               updateQuantity(item.id, item.quantity + 1)
                             }
-                            className="border-amber-200"
+                            className="border-[#f8d87d] text-[#f8d87d] hover:bg-[#222]"
                           >
                             <Plus className="w-4 h-4" />
                           </Button>
                         </div>
 
                         <div className="text-right">
-                          <p className="font-bold text-secondary-color">
+                          <p className="font-bold text-primary-color">
                             ₹{item.price * item.quantity}
                           </p>
                           <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => removeItem(item.id)}
-                            className="text-red-600 hover:text-red-700 hover:bg-red-50 mt-2"
+                            className="text-red-500 hover:text-red-700 hover:bg-[#222] mt-2"
                           >
                             <Trash2 className="w-4 h-4" />
                           </Button>
@@ -157,72 +161,70 @@ export default function CartPage() {
 
               {/* Order Summary */}
               <div className="lg:col-span-1">
-                <Card className="border-amber-200 sticky top-24">
-                  <CardContent className="p-6">
-                    <h3 className="text-xl font-bold text-secondary-color mb-4">
+                <Card className="border-[.5px] border-[#f8d87d] bg-[#181818] sticky top-24">
+                  <CardContent className="p-8">
+                    <h3 className="text-xl font-bold text-primary-color mb-4">
                       Order Summary
                     </h3>
 
                     <div className="space-y-3">
                       <div className="flex justify-between">
-                        <span className="text-amber-700">Subtotal</span>
-                        <span className="text-secondary-color">
-                          ₹{subtotal}
-                        </span>
+                        <span className="text-[#f8d87d]">Subtotal</span>
+                        <span className="text-primary-color">₹{subtotal}</span>
                       </div>
 
                       <div className="flex justify-between">
-                        <span className="text-amber-700">Original Price</span>
-                        <span className="text-gray-500 line-through">
+                        <span className="text-[#f8d87d]">Original Price</span>
+                        <span className="text-[#f8d87d] line-through">
                           ₹{originalTotal}
                         </span>
                       </div>
 
-                      <div className="flex justify-between text-green-600">
+                      <div className="flex justify-between text-green-400">
                         <span>You Save</span>
                         <span>₹{savings}</span>
                       </div>
 
                       <div className="flex justify-between">
-                        <span className="text-amber-700">Shipping</span>
-                        <span className="text-secondary-color">
+                        <span className="text-[#f8d87d]">Shipping</span>
+                        <span className="text-primary-color">
                           {shipping === 0 ? "FREE" : `₹${shipping}`}
                         </span>
                       </div>
 
                       {subtotal < 500 && (
-                        <p className="text-sm text-amber-600">
+                        <p className="text-sm text-[#f8d87d]">
                           Add ₹{500 - subtotal} more for free shipping!
                         </p>
                       )}
 
-                      <Separator />
+                      <Separator className="bg-[#f8d87d]" />
 
                       <div className="flex justify-between text-lg font-bold">
-                        <span className="text-secondary-color">Total</span>
-                        <span className="text-secondary-color">₹{total}</span>
+                        <span className="text-primary-color">Total</span>
+                        <span className="text-primary-color">₹{total}</span>
                       </div>
                     </div>
 
                     <div className="space-y-3 mt-6">
-                      <Button className="w-full bg-amber-600 hover:bg-amber-700 text-white">
+                      <Button className="w-full bg-[#EEFF00] hover:bg-[#f8d87d] text-black text-lg">
                         Proceed to Checkout
                       </Button>
                       <Link href="/buy-now">
                         <Button
                           variant="outline"
-                          className="w-full border-amber-300 text-secondary-color hover:bg-amber-50 bg-transparent"
+                          className="w-full border-[#f8d87d] text-[#f8d87d] hover:bg-[#222] bg-transparent text-lg"
                         >
                           Continue Shopping
                         </Button>
                       </Link>
                     </div>
 
-                    <div className="mt-6 p-4 bg-amber-50 rounded-lg">
-                      <h4 className="font-semibold text-secondary-color mb-2">
+                    <div className="mt-6 p-4 bg-black border border-[#f8d87d] rounded-lg">
+                      <h4 className="font-semibold text-primary-color mb-2">
                         Why Choose {process.env.NEXT_PUBLIC_BRAND_NAME}?
                       </h4>
-                      <ul className="text-sm text-amber-700 space-y-1">
+                      <ul className="text-sm text-[#f8d87d] space-y-1">
                         <li>• 100% Natural & Organic</li>
                         <li>• No Preservatives or Palm Oil</li>
                         <li>• 7 Premium Ingredients</li>

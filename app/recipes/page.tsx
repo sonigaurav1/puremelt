@@ -185,18 +185,18 @@ export default function RecipesPage() {
         />
       </Head>
 
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen !bg-black !text-white">
         {/* Header */}
         <Header />
 
         {/* Hero Section */}
-        <section className="py-20 px-4">
+        <section className="md:py-16 md:px-8 pt-28 px-4">
           <div className="container mx-auto text-center">
-            <h1 className="text-5xl font-bold font-playfair text-secondary-color mb-6">
+            <h1 className="text-5xl font-bold font-playfair text-white mb-6">
               {process.env.NEXT_PUBLIC_BRAND_NAME}{" "}
               <span className="text-primary-color">Recipes</span>
             </h1>
-            <p className="text-xl text-secondary-color max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-white max-w-3xl mx-auto leading-relaxed">
               Discover delicious ways to enjoy{" "}
               <span className="text-primary-color font-semibold">
                 {process.env.NEXT_PUBLIC_BRAND_NAME}
@@ -208,22 +208,22 @@ export default function RecipesPage() {
         </section>
 
         {/* Recipe Categories */}
-        <section className="py-12 bg-white">
+        <section className="py-10 bg-black">
           <div className="container mx-auto px-4">
-            <div className="flex flex-wrap justify-center gap-4 mb-12">
-              <Badge className="bg-[#69b31e] hover:bg-[#69b31e] text-white px-4 py-2 cursor-pointer">
+            <div className="flex flex-wrap justify-center gap-4 mb-10">
+              <Badge className="bg-[#90caf9] border-[#64b5f6] border hover:bg-[#69b31e] text-lg text-white px-4 py-2 cursor-pointer">
                 All Recipes
               </Badge>
-              <Badge className="bg-white border-[.1px] border-primary-color text-primary-color hover:bg-red-50 px-4 py-2 cursor-pointer">
+              <Badge className="bg-[#181818] border-[.5px] border-[#f8d87d] text-[#f8d87d] hover:bg-[#222] px-4 py-2 cursor-pointer">
                 Breakfast
               </Badge>
-              <Badge className="bg-white border-[.1px] border-primary-color text-primary-color hover:bg-red-50 px-4 py-2 cursor-pointer">
+              <Badge className="bg-[#181818] border-[.5px] border-[#f8d87d] text-[#f8d87d] hover:bg-[#222] px-4 py-2 cursor-pointer">
                 Snacks
               </Badge>
-              <Badge className="bg-white border-[.1px] border-primary-color text-primary-color hover:bg-red-50 px-4 py-2 cursor-pointer">
+              <Badge className="bg-[#181818] border-[.5px] border-[#f8d87d] text-[#f8d87d] hover:bg-[#222] px-4 py-2 cursor-pointer">
                 Desserts
               </Badge>
-              <Badge className="bg-white border-[.1px] border-primary-color text-primary-color hover:bg-red-50 px-4 py-2 cursor-pointer">
+              <Badge className="bg-[#181818] border-[.5px] border-[#f8d87d] text-[#f8d87d] hover:bg-[#222] px-4 py-2 cursor-pointer">
                 Smoothies
               </Badge>
             </div>
@@ -232,7 +232,7 @@ export default function RecipesPage() {
               {recipes.map((recipe) => (
                 <Card
                   key={recipe.id}
-                  className="border-[.1px] border-primary-color hover:shadow-lg transition-shadow overflow-hidden"
+                  className="border-[.5px] border-[#f8d87d] bg-[#181818] hover:shadow-lg transition-shadow overflow-hidden"
                 >
                   <div className="relative">
                     <Image
@@ -248,12 +248,12 @@ export default function RecipesPage() {
                   </div>
 
                   <CardContent className="p-6">
-                    <h3 className="text-xl font-bold text-secondary-color mb-2">
+                    <h3 className="text-xl font-bold text-primary-color mb-2">
                       {recipe.title}
                     </h3>
-                    <p className="text-[#bd0000] mb-4">{recipe.description}</p>
+                    <p className="text-[#f8d87d] mb-4">{recipe.description}</p>
 
-                    <div className="flex items-center space-x-4 mb-4 text-sm text-primary-color">
+                    <div className="flex items-center space-x-4 mb-4 text-sm text-[#f8d87d]">
                       <div className="flex items-center space-x-1">
                         <Clock className="w-4 h-4" />
                         <span>{recipe.time}</span>
@@ -270,10 +270,10 @@ export default function RecipesPage() {
 
                     <div className="space-y-4">
                       <div>
-                        <h4 className="font-semibold text-secondary-color mb-2">
+                        <h4 className="font-semibold text-primary-color mb-2">
                           Ingredients:
                         </h4>
-                        <ul className="text-sm text-secondary-color space-y-1">
+                        <ul className="text-sm text-white space-y-1">
                           {recipe.ingredients.map((ingredient, index) => (
                             <li key={index}>• {ingredient}</li>
                           ))}
@@ -281,10 +281,10 @@ export default function RecipesPage() {
                       </div>
 
                       <div>
-                        <h4 className="font-semibold text-secondary-color mb-2">
+                        <h4 className="font-semibold text-primary-color mb-2">
                           Instructions:
                         </h4>
-                        <ol className="text-sm text-secondary-color space-y-1">
+                        <ol className="text-sm text-white space-y-1">
                           {recipe.instructions.map((instruction, index) => (
                             <li key={index}>
                               {index + 1}. {instruction}
@@ -294,7 +294,7 @@ export default function RecipesPage() {
                       </div>
                     </div>
 
-                    <Button className="w-full mt-4 bg-[#ff0000] hover:bg-[#b82b2b] text-white">
+                    <Button className="w-full mt-4 bg-[#EEFF00] text-black text-lg">
                       Try This Recipe
                     </Button>
                   </CardContent>
@@ -305,16 +305,16 @@ export default function RecipesPage() {
         </section>
 
         {/* Recipe Tips */}
-        <section className="py-20 bg-white">
+        <section className="py-16 bg-black">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-secondary-color mb-4">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold text-white mb-4">
                 Pro Tips for Cooking with{" "}
                 <span className="text-primary-color">
                   {process.env.NEXT_PUBLIC_BRAND_NAME}
                 </span>
               </h2>
-              <p className="text-xl text-sub-heading">
+              <p className="text-xl text-[#f8d87d]">
                 Get the most out of your {process.env.NEXT_PUBLIC_BRAND_NAME}{" "}
                 experience
               </p>
@@ -357,14 +357,14 @@ export default function RecipesPage() {
               ].map((tip, index) => (
                 <Card
                   key={index}
-                  className="border-[.1px] border-primary-color hover:shadow-lg transition-shadow"
+                  className="border-[.5px] border-[#f8d87d] bg-[#181818] hover:shadow-lg transition-shadow"
                 >
                   <CardContent className="p-6 text-center">
                     <div className="text-4xl mb-4">{tip.icon}</div>
-                    <h3 className="font-bold text-secondary-color mb-2">
+                    <h3 className="font-bold text-primary-color mb-2">
                       {tip.title}
                     </h3>
-                    <p className="text-primary-color">{tip.description}</p>
+                    <p className="text-[#f8d87d]">{tip.description}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -373,7 +373,7 @@ export default function RecipesPage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-20 bg-primary-dark text-white">
+        <section className="py-16 bg-[#181818] text-white">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-4xl font-bold mb-4">Ready to Start Cooking?</h2>
             <p className="text-xl mb-8 opacity-90">
@@ -383,7 +383,7 @@ export default function RecipesPage() {
             <Link href="/buy-now">
               <Button
                 size="lg"
-                className="bg-white text-amber-700 hover:bg-amber-50 px-8 py-3"
+                className="bg-[#EEFF00] text-black px-8 py-3 text-lg"
               >
                 Order {process.env.NEXT_PUBLIC_BRAND_NAME} Now
               </Button>

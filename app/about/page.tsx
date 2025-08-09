@@ -48,19 +48,20 @@ export default function AboutPage() {
         />
       </Head>
 
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen !bg-black !text-white">
         {/* Header */}
         <Header />
+
         {/* Hero Section */}
-        <section className="py-20 px-4">
+        <section className="pt-28 px-4">
           <div className="container mx-auto text-center">
-            <h1 className="text-5xl font-bold font-playfair text-secondary-color mb-6">
+            <h1 className="text-5xl font-bold font-playfair text-white mb-6">
               About{" "}
               <span className="text-primary-color">
                 {process.env.NEXT_PUBLIC_BRAND_NAME}
               </span>
             </h1>
-            <p className="text-xl text-secondary-color max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-white max-w-3xl mx-auto leading-relaxed">
               Welcome to{" "}
               <span className="text-primary-color">
                 {process.env.NEXT_PUBLIC_BRAND_NAME}
@@ -73,14 +74,14 @@ export default function AboutPage() {
         </section>
 
         {/* Our Story */}
-        <section className="py-20 bg-white">
+        <section className="pt-20 bg-black">
           <div className="container mx-auto px-4">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
                 <h2 className="text-4xl font-bold font-playfair text-primary-color mb-6">
                   Our Story
                 </h2>
-                <div className="space-y-4 text-secondary-color leading-relaxed">
+                <div className="space-y-4 text-[#f8d87d] leading-relaxed">
                   <p>
                     That question led to the creation of our signature and only
                     product: a premium nuts butter unlike anything else on the
@@ -119,16 +120,16 @@ export default function AboutPage() {
         </section>
 
         {/* Mission & Vision */}
-        <section className="py-20 bg-white">
+        <section className="pt-24 bg-black">
           <div className="container mx-auto px-4">
             <div className="grid md:grid-cols-2 gap-12">
-              <Card className="border-[.1px] border-primary-color p-8">
+              <Card className="border-[.5px] border-[#f8d87d] bg-[#181818] p-8">
                 <CardContent className="text-center">
                   <Target className="w-16 h-16 text-primary-color mx-auto mb-6" />
-                  <h3 className="text-2xl font-bold text-secondary-color mb-4">
+                  <h3 className="text-2xl font-bold text-primary-color mb-4">
                     Our Mission
                   </h3>
-                  <p className="text-secondary-color leading-relaxed">
+                  <p className="text-[#f8d87d] leading-relaxed">
                     To elevate everyday nutrition with a thoughtfully crafted
                     nuts butter that blends premium ingredients, health, and
                     indulgence—all in a single, standout variant.
@@ -136,13 +137,13 @@ export default function AboutPage() {
                 </CardContent>
               </Card>
 
-              <Card className="border-[.1px] border-primary-color p-8">
+              <Card className="border-[.5px] border-[#f8d87d] bg-[#181818] p-8">
                 <CardContent className="text-center">
                   <Eye className="w-16 h-16 text-primary-color mx-auto mb-6" />
-                  <h3 className="text-2xl font-bold text-secondary-color mb-4">
+                  <h3 className="text-2xl font-bold text-primary-color mb-4">
                     Our Vision
                   </h3>
-                  <p className="text-secondary-color leading-relaxed">
+                  <p className="text-[#f8d87d] leading-relaxed">
                     To be the most trusted single-variant nuts butter brand in
                     India, known for innovation, purity, and an uncompromising
                     commitment to taste and quality.
@@ -154,15 +155,11 @@ export default function AboutPage() {
         </section>
 
         {/* Values */}
-        <section className="py-20 bg-white">
+        <section className="pt-24 bg-black">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-secondary-color mb-4">
-                Our Values
-              </h2>
-              <p className="text-xl text-sub-heading">
-                What drives us every day
-              </p>
+              <h2 className="text-4xl font-bold text-white mb-4">Our Values</h2>
+              <p className="text-xl text-[#f8d87d]">What drives us every day</p>
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -194,14 +191,14 @@ export default function AboutPage() {
               ].map((value, index) => (
                 <Card
                   key={index}
-                  className="border-[.1px] border-primary-color hover:shadow-lg transition-shadow"
+                  className="border-[.5px] border-[#f8d87d] bg-[#181818] hover:shadow-lg transition-shadow"
                 >
                   <CardContent className="p-6 text-center">
                     <value.icon className="w-12 h-12 text-primary-color mx-auto mb-4" />
-                    <h3 className="font-bold text-secondary-color mb-2">
+                    <h3 className="font-bold text-primary-color mb-2">
                       {value.title}
                     </h3>
-                    <p className="text-primary-color text-sm">
+                    <p className="text-[#f8d87d] text-sm">
                       {value.description}
                     </p>
                   </CardContent>
@@ -212,13 +209,13 @@ export default function AboutPage() {
         </section>
 
         {/* Why One Product */}
-        <section className="py-20 bg-white">
+        <section className="pt-24 bg-black">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-secondary-color mb-4">
+              <h2 className="text-4xl font-bold text-white mb-4">
                 Why Just One Product?
               </h2>
-              <p className="text-xl text-sub-heading max-w-3xl mx-auto">
+              <p className="text-xl text-[#f8d87d] max-w-3xl mx-auto">
                 In a world of endless choices, we believe in the power of
                 perfection through focus.
               </p>
@@ -230,10 +227,10 @@ export default function AboutPage() {
                   <div className="w-16 h-16 bg-primary-color rounded-full flex items-center justify-center mx-auto mb-4">
                     <span className="text-white font-bold text-2xl">1</span>
                   </div>
-                  <h3 className="font-bold text-secondary-color mb-2">
+                  <h3 className="font-bold text-primary-color mb-2">
                     Focused Excellence
                   </h3>
-                  <p className="text-secondary-color">
+                  <p className="text-[#f8d87d]">
                     By focusing on one product, we can perfect every aspect of
                     taste, nutrition, and quality.
                   </p>
@@ -243,10 +240,10 @@ export default function AboutPage() {
                   <div className="w-16 h-16 bg-primary-color rounded-full flex items-center justify-center mx-auto mb-4">
                     <span className="text-white font-bold text-2xl">2</span>
                   </div>
-                  <h3 className="font-bold text-secondary-color mb-2">
+                  <h3 className="font-bold text-primary-color mb-2">
                     No Compromise
                   </h3>
-                  <p className="text-secondary-color">
+                  <p className="text-[#f8d87d]">
                     Every jar represents our unwavering commitment to premium
                     ingredients and exceptional taste.
                   </p>
@@ -256,10 +253,10 @@ export default function AboutPage() {
                   <div className="w-16 h-16 bg-primary-color rounded-full flex items-center justify-center mx-auto mb-4">
                     <span className="text-white font-bold text-2xl">3</span>
                   </div>
-                  <h3 className="font-bold text-secondary-color mb-2">
+                  <h3 className="font-bold text-primary-color mb-2">
                     Simple Choice
                   </h3>
-                  <p className="text-secondary-color">
+                  <p className="text-[#f8d87d]">
                     No confusion, no overwhelming options. Just one perfect
                     product that delivers everything you need.
                   </p>
@@ -270,7 +267,7 @@ export default function AboutPage() {
         </section>
 
         {/* CTA */}
-        <section className="py-20 bg-primary-dark text-white">
+        <section className="mt-24 pt-20 pb-20 bg-[#181818] text-white">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-4xl font-bold mb-4">
               Experience the {process.env.NEXT_PUBLIC_BRAND_NAME} Difference
@@ -286,7 +283,7 @@ export default function AboutPage() {
             <Link href="/buy-now">
               <Button
                 size="lg"
-                className="bg-white text-amber-700 hover:bg-amber-50 px-8 py-3"
+                className="bg-[#EEFF00] text-black px-8 py-3 text-lg"
               >
                 Try {process.env.NEXT_PUBLIC_BRAND_NAME} Today
               </Button>

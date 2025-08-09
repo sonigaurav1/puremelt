@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/sheet";
 import { usePathname } from "next/navigation";
 
-const Header = () => {
+const Header = ({ bgColor = "bg-white", textColor = "text-black" }) => {
   const { getTotalItems } = useCart();
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
@@ -35,8 +35,8 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed md:bg-white w-full border-b-2 border-[#232323] top-0 z-50 transition-colors duration-300 ${
-        scrolled ? "bg-white shadow-md" : "bg-transparent "
+      className={`fixed md:bg-white ${bgColor} w-full border-b-2 border-[#232323]  top-0 z-50 transition-colors duration-300 ${
+        scrolled ? "bg-white shadow-md" : "bg-transparent"
       }`}
     >
       <div className="container mx-auto px-4 md:px-12 py-4">
@@ -139,40 +139,40 @@ const Header = () => {
             <span className="text-3xl font-extrabold text-primary-color">
               {process.env.NEXT_PUBLIC_BRAND_NAME}
             </span>
-            <span className="text-xs text-black tracking-[2.8px] -mt-2">
+            <span className="text-xs text-black tracking-[1.3px] -mt-2">
               Taste the finest
             </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className={`hidden md:flex items-center space-x-8`}>
             <Link
               href="/"
-              className="text-secondary-color hover:text-amber-700 font-medium"
+              className={`${textColor} hover:text-amber-700 font-medium`}
             >
               Home
             </Link>
             <Link
               href="/product"
-              className="text-secondary-color hover:text-amber-700 font-medium"
+              className={`${textColor} hover:text-amber-700 font-medium`}
             >
               Our Product
             </Link>
             <Link
               href="/about"
-              className="text-secondary-color hover:text-amber-700 font-medium"
+              className={`${textColor} hover:text-amber-700 font-medium`}
             >
               About Us
             </Link>
             <Link
               href="/recipes"
-              className="text-secondary-color hover:text-amber-700 font-medium"
+              className={`${textColor} hover:text-amber-700 font-medium`}
             >
               Recipes
             </Link>
             <Link
               href="/contact"
-              className="text-secondary-color hover:text-amber-700 font-medium"
+              className={`${textColor} hover:text-amber-700 font-medium`}
             >
               Contact
             </Link>
@@ -184,7 +184,7 @@ const Header = () => {
               <Button
                 variant="ghost"
                 size="sm"
-                className="text-secondary-color px-2 hover:bg-amber-50 bg-transparent relative"
+                className="text-secondary-color px-2 bg-transparent relative"
               >
                 <ShoppingCart className="!size-5 text-secondary-color cursor-pointer" />
                 {getTotalItems() > 0 && (
@@ -198,7 +198,7 @@ const Header = () => {
               <Button
                 variant="ghost"
                 size="sm"
-                className="text-secondary-color px-2 hover:bg-amber-50 bg-transparent"
+                className="text-secondary-color px-2 bg-transparent"
               >
                 <User className="!size-5 text-secondary-color cursor-pointer" />
               </Button>

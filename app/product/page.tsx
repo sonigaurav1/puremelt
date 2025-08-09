@@ -72,28 +72,28 @@ export default function ProductPage() {
         />
       </Head>
 
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-black text-white">
         {/* Header */}
-        <Header />
+        <Header bgColor="bg-white" />
 
         {/* Hero Section */}
-        <section className="py-20 px-4">
+        <section className="pt-28 px-4">
           <div className="container mx-auto text-center">
-            <Badge className="bg-[#69b31e] hover:bg-[#69b31e] text-white mb-4">
+            <Badge className="bg-[#90caf9] border-[#64b5f6] border hover:bg-[#69b31e] text-lg text-white mb-4">
               Premium Nuts Butter
             </Badge>
-            <h1 className="text-5xl font-bold font-playfair text-secondary-color mb-6">
+            <h1 className="text-5xl font-bold font-playfair text-white mb-6">
               {process.env.NEXT_PUBLIC_BRAND_NAME}{" "}
               <span className="text-primary-color">Premium Nuts Butter</span>
             </h1>
-            <p className="text-xl text-secondary-color max-w-3xl mx-auto leading-relaxed mb-8">
+            <p className="text-xl text-white max-w-3xl mx-auto leading-relaxed mb-8">
               The only nuts butter you'll ever need. Seven premium ingredients
               blended to perfection in one signature variant.
             </p>
             <Link href="/buy-now">
               <Button
                 size="lg"
-                className="bg-[#ff0000] hover:bg-[#b82b2b] text-white px-8 py-3"
+                className="bg-[#EEFF00] text-black text-lg px-8 py-3"
               >
                 Order Now
               </Button>
@@ -102,7 +102,7 @@ export default function ProductPage() {
         </section>
 
         {/* Product Showcase */}
-        <section className="py-20 bg-white">
+        <section className="pt-24 bg-black">
           <div className="container mx-auto px-4">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div className="relative">
@@ -113,17 +113,17 @@ export default function ProductPage() {
                   height={600}
                   className="w-full h-auto rounded-2xl"
                 />
-                <div className="absolute -top-4 -right-4 bg-green-500 text-white px-4 py-2 rounded-full font-semibold">
+                <div className="absolute -top-4 -right-4 bg-[#f8d87d] text-black px-4 py-2 rounded-full font-semibold">
                   100% Organic
                 </div>
               </div>
 
               <div className="space-y-8">
                 <div>
-                  <h2 className="text-3xl font-bold text-secondary-color mb-4">
+                  <h2 className="text-3xl font-bold text-white mb-4">
                     Your All-in-One Premium Nuts Butter
                   </h2>
-                  <p className="text-lg text-secondary-color leading-relaxed mb-6">
+                  <p className="text-lg text-white leading-relaxed mb-6">
                     In a market saturated with single-note spreads, we stand
                     apart by offering a one-of-a-kind, premium nuts butter that
                     blends peanuts, almonds, cashews, pistachios, dates and
@@ -138,51 +138,51 @@ export default function ProductPage() {
                         />
                       ))}
                     </div>
-                    <span className="text-secondary-color font-medium">
+                    <span className="text-[#f8d87d] font-medium">
                       4.9/5 (2,500+ reviews)
                     </span>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-white border-[.1px] border-primary-color p-4 rounded-lg text-center">
-                    <h3 className="font-bold text-secondary-color mb-2">
+                  <div className="bg-[#181818] border-[.5px] border-[#f8d87d] p-4 rounded-lg text-center">
+                    <h3 className="font-bold text-primary-color mb-2">
                       High Protein
                     </h3>
-                    <p className="text-[#bd0000]">25g per 100g</p>
+                    <p className="text-[#f8d87d]">25g per 100g</p>
                   </div>
-                  <div className="bg-white border-[.1px] border-primary-color p-4 rounded-lg text-center">
-                    <h3 className="font-bold text-secondary-color mb-2">
+                  <div className="bg-[#181818] border-[.5px] border-[#f8d87d] p-4 rounded-lg text-center">
+                    <h3 className="font-bold text-primary-color mb-2">
                       Rich in Fiber
                     </h3>
-                    <p className="text-[#bd0000]">From dates & nuts</p>
+                    <p className="text-[#f8d87d]">From dates & nuts</p>
                   </div>
-                  <div className="bg-white border-[.1px] border-primary-color p-4 rounded-lg text-center">
-                    <h3 className="font-bold text-secondary-color mb-2">
+                  <div className="bg-[#181818] border-[.5px] border-[#f8d87d] p-4 rounded-lg text-center">
+                    <h3 className="font-bold text-primary-color mb-2">
                       Healthy Fats
                     </h3>
-                    <p className="text-[#bd0000]">Omega-3 & 6</p>
+                    <p className="text-[#f8d87d]">Omega-3 & 6</p>
                   </div>
-                  <div className="bg-white border-[.1px] border-primary-color p-4 rounded-lg text-center">
-                    <h3 className="font-bold text-secondary-color mb-2">
+                  <div className="bg-[#181818] border-[.5px] border-[#f8d87d] p-4 rounded-lg text-center">
+                    <h3 className="font-bold text-primary-color mb-2">
                       No Preservatives
                     </h3>
-                    <p className="text-[#bd0000]">100% Natural</p>
+                    <p className="text-[#f8d87d]">100% Natural</p>
                   </div>
                 </div>
 
                 <div className="space-y-4">
-                  <h3 className="text-2xl font-bold text-secondary-color">
+                  <h3 className="text-2xl font-bold text-white">
                     Available Sizes
                   </h3>
 
                   <div className="grid grid-cols-3 gap-4">
-                    <Card className="border-[.1px] border-primary-color hover:shadow-lg transition-shadow">
+                    <Card className="border-[.5px] border-[#f8d87d] bg-[#181818] hover:shadow-lg transition-shadow">
                       <CardContent className="p-4 text-center">
-                        <h4 className="font-bold text-secondary-color mb-2">
+                        <h4 className="font-bold text-primary-color mb-2">
                           250g
                         </h4>
-                        <p className="text-2xl font-bold text-secondary-color mb-1">
+                        <p className="text-2xl font-bold text-white mb-1">
                           ₹299
                         </p>
                         <p className="text-sm text-gray-500 line-through">
@@ -193,15 +193,15 @@ export default function ProductPage() {
                         </Badge>
                       </CardContent>
                     </Card>
-                    <Card className="border-2 border-primary-color hover:shadow-lg transition-shadow">
+                    <Card className="border-2 border-[#f8d87d] bg-[#181818] hover:shadow-lg transition-shadow">
                       <CardContent className="p-4 text-center">
                         <Badge className="bg-primary-color text-white mb-2">
                           Most Popular
                         </Badge>
-                        <h4 className="font-bold text-secondary-color mb-2">
+                        <h4 className="font-bold text-primary-color mb-2">
                           500g
                         </h4>
-                        <p className="text-2xl font-bold text-secondary-color mb-1">
+                        <p className="text-2xl font-bold text-white mb-1">
                           ₹599
                         </p>
                         <p className="text-sm text-gray-500 line-through">
@@ -212,12 +212,12 @@ export default function ProductPage() {
                         </Badge>
                       </CardContent>
                     </Card>
-                    <Card className="border-[.1px] border-primary-color hover:shadow-lg transition-shadow">
+                    <Card className="border-[.5px] border-[#f8d87d] bg-[#181818] hover:shadow-lg transition-shadow">
                       <CardContent className="p-4 text-center">
-                        <h4 className="font-bold text-secondary-color mb-2">
+                        <h4 className="font-bold text-primary-color mb-2">
                           1kg
                         </h4>
-                        <p className="text-2xl font-bold text-secondary-color mb-1">
+                        <p className="text-2xl font-bold text-white mb-1">
                           ₹1099
                         </p>
                         <p className="text-sm text-gray-500 line-through">
@@ -234,7 +234,7 @@ export default function ProductPage() {
                 <Link href="/buy-now">
                   <Button
                     size="lg"
-                    className="w-full mt-6 bg-[#ff0000] hover:bg-[#b82b2b] text-white"
+                    className="w-full mt-6 bg-[#EEFF00] text-black text-lg"
                   >
                     Order Your {process.env.NEXT_PUBLIC_BRAND_NAME} Now
                   </Button>
@@ -245,14 +245,14 @@ export default function ProductPage() {
         </section>
 
         {/* Ingredients Detail */}
-        <section className="py-20 bg-white">
+        <section className="pt-24 bg-black">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-secondary-color mb-4">
+              <h2 className="text-4xl font-bold text-white mb-4">
                 <span className="text-primary-color">Seven</span> Premium
                 Ingredients
               </h2>
-              <p className="text-xl text-sub-heading">
+              <p className="text-xl text-[#f8d87d]">
                 Each carefully selected for maximum nutrition and flavor
               </p>
             </div>
@@ -303,17 +303,17 @@ export default function ProductPage() {
               ].map((ingredient, index) => (
                 <Card
                   key={index}
-                  className="border-[.1px] border-primary-color hover:shadow-lg transition-shadow"
+                  className="border-[.5px] border-[#f8d87d] bg-[#181818] hover:shadow-lg transition-shadow"
                 >
                   <CardContent className="p-6 text-center">
                     <div className="text-5xl mb-4">{ingredient.icon}</div>
-                    <h3 className="font-bold text-secondary-color mb-2">
+                    <h3 className="font-bold text-primary-color mb-2">
                       {ingredient.name}
                     </h3>
-                    <p className="text-sm text-[#bd0000] mb-3">
+                    <p className="text-sm text-[#f8d87d] mb-3">
                       {ingredient.description}
                     </p>
-                    <div className="bg-white border-[.1px] border-primary-color p-2 rounded text-xs text-primary-color">
+                    <div className="bg-black border-[.5px] border-[#f8d87d] p-2 rounded text-xs text-[#f8d87d]">
                       {ingredient.benefits}
                     </div>
                   </CardContent>
@@ -324,13 +324,13 @@ export default function ProductPage() {
         </section>
 
         {/* Why Choose */}
-        <section className="py-20 bg-white">
+        <section className="pt-24 bg-black">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-secondary-color mb-4">
+              <h2 className="text-4xl font-bold text-white mb-4">
                 Why {process.env.NEXT_PUBLIC_BRAND_NAME} Stands Apart
               </h2>
-              <p className="text-xl text-sub-heading">
+              <p className="text-xl text-[#f8d87d]">
                 We're not just another nuts butter. We're a revolution in a jar.
               </p>
             </div>
@@ -382,14 +382,14 @@ export default function ProductPage() {
               ].map((feature, index) => (
                 <Card
                   key={index}
-                  className="border-[.1px] border-primary-color hover:shadow-lg transition-shadow"
+                  className="border-[.5px] border-[#f8d87d] bg-[#181818] hover:shadow-lg transition-shadow"
                 >
                   <CardContent className="p-6 text-center">
-                    <feature.icon className="w-12 h-12 text-primary-color mx-auto mb-4" />
-                    <h3 className="font-bold text-secondary-color mb-2">
+                    <feature.icon className="w-12 h-12 text-[#f8d87d] mx-auto mb-4" />
+                    <h3 className="font-bold text-primary-color mb-2">
                       {feature.title}
                     </h3>
-                    <p className="text-primary-color">{feature.description}</p>
+                    <p className="text-[#f8d87d]">{feature.description}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -398,54 +398,54 @@ export default function ProductPage() {
         </section>
 
         {/* Nutrition Facts */}
-        <section className="py-20 bg-white">
+        <section className="pt-24 bg-black">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-secondary-color mb-4">
+            <div className="text-center mb-8">
+              <h2 className="text-4xl font-bold text-white mb-4">
                 Nutrition Facts
               </h2>
-              <p className="text-xl text-sub-heading">Per 100g serving</p>
+              <p className="text-xl text-[#f8d87d]">Per 100g serving</p>
             </div>
 
             <div className="max-w-2xl mx-auto">
-              <Card className="border-[.1px] border-primary-color">
+              <Card className="border-[.5px] border-[#f8d87d] bg-[#181818]">
                 <CardContent className="p-8">
                   <div className="grid grid-cols-2 gap-6">
                     <div className="text-center">
-                      <h3 className="text-3xl font-bold text-secondary-color mb-2">
+                      <h3 className="text-3xl font-bold text-primary-color mb-2">
                         580
                       </h3>
-                      <p className="text-[#bd0000]">Calories</p>
+                      <p className="text-[#f8d87d]">Calories</p>
                     </div>
                     <div className="text-center">
-                      <h3 className="text-3xl font-bold text-secondary-color mb-2">
+                      <h3 className="text-3xl font-bold text-primary-color mb-2">
                         25g
                       </h3>
-                      <p className="text-[#bd0000]">Protein</p>
+                      <p className="text-[#f8d87d]">Protein</p>
                     </div>
                     <div className="text-center">
-                      <h3 className="text-3xl font-bold text-secondary-color mb-2">
+                      <h3 className="text-3xl font-bold text-primary-color mb-2">
                         45g
                       </h3>
-                      <p className="text-[#bd0000]">Healthy Fats</p>
+                      <p className="text-[#f8d87d]">Healthy Fats</p>
                     </div>
                     <div className="text-center">
-                      <h3 className="text-3xl font-bold text-secondary-color mb-2">
+                      <h3 className="text-3xl font-bold text-primary-color mb-2">
                         12g
                       </h3>
-                      <p className="text-[#bd0000]">Fiber</p>
+                      <p className="text-[#f8d87d]">Fiber</p>
                     </div>
                     <div className="text-center">
-                      <h3 className="text-3xl font-bold text-secondary-color mb-2">
+                      <h3 className="text-3xl font-bold text-primary-color mb-2">
                         15g
                       </h3>
-                      <p className="text-[#bd0000]">Natural Sugars</p>
+                      <p className="text-[#f8d87d]">Natural Sugars</p>
                     </div>
                     <div className="text-center">
-                      <h3 className="text-3xl font-bold text-secondary-color mb-2">
+                      <h3 className="text-3xl font-bold text-primary-color mb-2">
                         0mg
                       </h3>
-                      <p className="text-[#bd0000]">Cholesterol</p>
+                      <p className="text-[#f8d87d]">Cholesterol</p>
                     </div>
                   </div>
                 </CardContent>
@@ -455,7 +455,7 @@ export default function ProductPage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-20 bg-primary-dark text-white">
+        <section className="mt-24 pt-20 pb-20 bg-[#181818] text-white">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-4xl font-bold mb-4">
               Ready to Taste the Difference?
@@ -466,7 +466,7 @@ export default function ProductPage() {
             <Link href="/buy-now">
               <Button
                 size="lg"
-                className="bg-white text-amber-700 hover:bg-amber-50 px-8 py-3"
+                className="bg-[#EEFF00] text-black px-8 py-3 text-lg"
               >
                 Order {process.env.NEXT_PUBLIC_BRAND_NAME} Now
               </Button>

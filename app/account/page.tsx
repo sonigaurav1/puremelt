@@ -91,90 +91,38 @@ export default function AccountPage() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white">
+      <div className="min-h-dvh !bg-black !text-white">
         {/* Header */}
-        <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-amber-100">
-          <div className="container mx-auto px-4 py-4">
-            <div className="flex items-center justify-between">
-              <Link href="/" className="flex items-center space-x-2">
-                <div className="w-10 h-10 bg-gradient-to-br from-amber-600 to-amber-800 rounded-full flex items-center justify-center">
-                  <span className="text-white font-bold text-lg">P</span>
-                </div>
-                <span className="text-2xl font-bold text-secondary-color">
-                  {process.env.NEXT_PUBLIC_BRAND_NAME}
-                </span>
-              </Link>
-
-              <nav className="hidden md:flex items-center space-x-8">
-                <Link
-                  href="/"
-                  className="text-secondary-color hover:text-amber-700 font-medium"
-                >
-                  Home
-                </Link>
-                <Link
-                  href="/product"
-                  className="text-secondary-color hover:text-amber-700 font-medium"
-                >
-                  Our Product
-                </Link>
-                <Link
-                  href="/about"
-                  className="text-secondary-color hover:text-amber-700 font-medium"
-                >
-                  About Us
-                </Link>
-                <Link
-                  href="/recipes"
-                  className="text-secondary-color hover:text-amber-700 font-medium"
-                >
-                  Recipes
-                </Link>
-                <Link
-                  href="/contact"
-                  className="text-secondary-color hover:text-amber-700 font-medium"
-                >
-                  Contact
-                </Link>
-              </nav>
-
-              <div className="flex items-center space-x-4">
-                <Link href="/cart">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="border-amber-200 text-secondary-color hover:bg-amber-50 bg-transparent"
-                  >
-                    Cart
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </header>
+        <Header bgColor="bg-black" />
 
         {/* Login/Register Section */}
-        <section className="py-20 px-4">
-          <div className="container mx-auto max-w-md">
-            <Card className="border-amber-200">
+        <section className="flex items-center justify-center py-40 md:py-32 px-4">
+          <div className="w-full max-w-md">
+            <Card className="border-[#f8d87d] bg-[#181818] text-white">
               <CardContent className="p-8">
-                <Tabs value={activeTab} onValueChange={setActiveTab}>
-                  <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="login">Login</TabsTrigger>
-                    <TabsTrigger value="register">Register</TabsTrigger>
+                <Tabs
+                  value={activeTab}
+                  onValueChange={setActiveTab}
+                  className="w-full"
+                >
+                  <TabsList className="grid w-full grid-cols-2 bg-[#222] border border-[#f8d87d]">
+                    <TabsTrigger value="login" className="text-white">
+                      Login
+                    </TabsTrigger>
+                    <TabsTrigger value="register" className="text-white">
+                      Register
+                    </TabsTrigger>
                   </TabsList>
-
                   <TabsContent value="login" className="space-y-4">
                     <div className="text-center mb-6">
-                      <h2 className="text-2xl font-bold text-secondary-color">
+                      <h2 className="text-2xl font-bold text-[#f8d87d]">
                         Welcome Back
                       </h2>
-                      <p className="text-amber-700">Sign in to your account</p>
+                      <p className="text-[#f8d87d]">Sign in to your account</p>
                     </div>
-
                     <form onSubmit={handleLogin} className="space-y-4">
                       <div>
-                        <label className="block text-secondary-color font-medium mb-2">
+                        <label className="block text-white font-medium mb-2">
                           Email
                         </label>
                         <Input
@@ -186,14 +134,13 @@ export default function AccountPage() {
                               email: e.target.value,
                             })
                           }
-                          className="border-amber-200 focus:border-amber-600"
+                          className="border-[#f8d87d] focus:border-[#EEFF00] bg-black text-white"
                           placeholder="your@email.com"
                           required
                         />
                       </div>
-
                       <div>
-                        <label className="block text-secondary-color font-medium mb-2">
+                        <label className="block text-white font-medium mb-2">
                           Password
                         </label>
                         <Input
@@ -205,34 +152,31 @@ export default function AccountPage() {
                               password: e.target.value,
                             })
                           }
-                          className="border-amber-200 focus:border-amber-600"
+                          className="border-[#f8d87d] focus:border-[#EEFF00] bg-black text-white"
                           placeholder="••••••••"
                           required
                         />
                       </div>
-
                       <Button
                         type="submit"
-                        className="w-full bg-amber-600 hover:bg-amber-700 text-white"
+                        className="w-full bg-[#EEFF00] text-black font-bold hover:bg-[#f8d87d]"
                       >
                         Sign In
                       </Button>
                     </form>
                   </TabsContent>
-
                   <TabsContent value="register" className="space-y-4">
                     <div className="text-center mb-6">
-                      <h2 className="text-2xl font-bold text-secondary-color">
+                      <h2 className="text-2xl font-bold text-[#f8d87d]">
                         Create Account
                       </h2>
-                      <p className="text-amber-700">
+                      <p className="text-[#f8d87d]">
                         Join the {process.env.NEXT_PUBLIC_BRAND_NAME} family
                       </p>
                     </div>
-
                     <form onSubmit={handleRegister} className="space-y-4">
                       <div>
-                        <label className="block text-secondary-color font-medium mb-2">
+                        <label className="block text-white font-medium mb-2">
                           Full Name
                         </label>
                         <Input
@@ -243,14 +187,13 @@ export default function AccountPage() {
                               name: e.target.value,
                             })
                           }
-                          className="border-amber-200 focus:border-amber-600"
+                          className="border-[#f8d87d] focus:border-[#EEFF00] bg-black text-white"
                           placeholder="Your full name"
                           required
                         />
                       </div>
-
                       <div>
-                        <label className="block text-secondary-color font-medium mb-2">
+                        <label className="block text-white font-medium mb-2">
                           Email
                         </label>
                         <Input
@@ -262,14 +205,13 @@ export default function AccountPage() {
                               email: e.target.value,
                             })
                           }
-                          className="border-amber-200 focus:border-amber-600"
+                          className="border-[#f8d87d] focus:border-[#EEFF00] bg-black text-white"
                           placeholder="your@email.com"
                           required
                         />
                       </div>
-
                       <div>
-                        <label className="block text-secondary-color font-medium mb-2">
+                        <label className="block text-white font-medium mb-2">
                           Password
                         </label>
                         <Input
@@ -281,14 +223,13 @@ export default function AccountPage() {
                               password: e.target.value,
                             })
                           }
-                          className="border-amber-200 focus:border-amber-600"
+                          className="border-[#f8d87d] focus:border-[#EEFF00] bg-black text-white"
                           placeholder="••••••••"
                           required
                         />
                       </div>
-
                       <div>
-                        <label className="block text-secondary-color font-medium mb-2">
+                        <label className="block text-white font-medium mb-2">
                           Confirm Password
                         </label>
                         <Input
@@ -300,15 +241,14 @@ export default function AccountPage() {
                               confirmPassword: e.target.value,
                             })
                           }
-                          className="border-amber-200 focus:border-amber-600"
+                          className="border-[#f8d87d] focus:border-[#EEFF00] bg-black text-white"
                           placeholder="••••••••"
                           required
                         />
                       </div>
-
                       <Button
                         type="submit"
-                        className="w-full bg-amber-600 hover:bg-amber-700 text-white"
+                        className="w-full bg-[#EEFF00] text-black font-bold hover:bg-[#f8d87d]"
                       >
                         Create Account
                       </Button>
@@ -324,9 +264,9 @@ export default function AccountPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b bg-black text-white">
       {/* Header */}
-      <Header />
+      <Header bgColor="bg-white" />
 
       {/* Account Dashboard */}
       <section className="py-12 px-4">

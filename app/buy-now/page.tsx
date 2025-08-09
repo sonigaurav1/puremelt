@@ -136,7 +136,7 @@ const BuyNowPage = () => {
 
       <div className="min-h-screen bg-black text-white">
         {/* Header */}
-        <Header />
+        <Header bgColor="bg-white" />
 
         {/* Product Section */}
         <section className="pb-12 pt-24 px-4 text-white bg-black">
@@ -300,14 +300,6 @@ const BuyNowPage = () => {
                   >
                     <ShoppingCart className="w-5 h-5 mr-2" />
                     Add to Cart
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="lg"
-                    className="w-full text-primary-color hover:bg-amber-50"
-                  >
-                    <Heart className="w-5 h-5 mr-2" />
-                    Add to Wishlist
                   </Button>
                 </div>
 
