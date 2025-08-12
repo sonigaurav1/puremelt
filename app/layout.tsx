@@ -1,9 +1,13 @@
 import type React from "react";
-import type { Metadata } from "next";
+// Service worker registration moved to client component
+import RegisterServiceWorker from "../components/RegisterServiceWorker";
+import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Sans, Inter, Parisienne, Playfair } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "./components/cart-context";
 import { AuthProvider } from "./components/auth-context";
+import { ThemeProvider } from "../components/theme-provider";
+import { Toaster } from "../components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,6 +32,9 @@ const parisienne = Parisienne({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "https://penova.in"
+  ),
   title: `${process.env.NEXT_PUBLIC_BRAND_NAME} | Premium Peanut Butter & Healthy Nuts Butters`,
   description:
     "Premium healthy peanut butter and nuts butters: blend of peanuts, almonds, cashews, pistachios, dates & honey. No preservatives, no palm oil, no refined sugar. Healthier, tastier, organic.",
@@ -46,18 +53,44 @@ export const metadata: Metadata = {
     "almond butter",
     "pistachio butter",
     "dates honey peanut butter",
-    "peanut butter",
     "penova peanut butter",
     "best peanut butter in india",
-    "natural peanut butter",
     "organic peanut butter india",
     "buy peanut butter online",
   ],
+  icons: {
+    icon: [
+      { url: "/favicon/favicon.ico" },
+      { url: "/favicon/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: [{ url: "/favicon/apple-touch-icon.png" }],
+    other: [{ rel: "manifest", url: "/manifest.json" }],
+  },
+  authors: [{ name: "Gaurav Soni" }],
+  creator: "Gaurav Soni",
+  publisher: process.env.NEXT_PUBLIC_BRAND_NAME || "Penova",
+  applicationName: process.env.NEXT_PUBLIC_BRAND_NAME || "Penova",
+  generator: "Next.js",
+  referrer: "origin-when-cross-origin",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+  alternates: {
+    canonical: process.env.NEXT_PUBLIC_SITE_URL || "https://penova.in",
+  },
   openGraph: {
+    type: "website",
+    locale: "en_IN",
+    url: process.env.NEXT_PUBLIC_SITE_URL || "https://penova.in",
     title: `${process.env.NEXT_PUBLIC_BRAND_NAME} | Premium Peanut Butter & Healthy Nuts Butters`,
     description:
       "Premium healthy peanut butter and nuts butters: blend of peanuts, almonds, cashews, pistachios, dates & honey. Healthier, tastier, organic.",
-    url: process.env.NEXT_PUBLIC_SITE_URL || "https://penova.in",
     siteName: process.env.NEXT_PUBLIC_BRAND_NAME || "Penova",
     images: [
       {
@@ -69,11 +102,11 @@ export const metadata: Metadata = {
         alt: `${process.env.NEXT_PUBLIC_BRAND_NAME} Premium Peanut Butter`,
       },
     ],
-    locale: "en_IN",
-    type: "website",
   },
   twitter: {
     card: "summary_large_image",
+    site: "@puremeltin",
+    creator: "@puremeltin",
     title: `${process.env.NEXT_PUBLIC_BRAND_NAME} | Premium Peanut Butter & Healthy Nuts Butters`,
     description:
       "Premium healthy peanut butter and nuts butters: blend of peanuts, almonds, cashews, pistachios, dates & honey. Healthier, tastier, organic.",
@@ -81,11 +114,39 @@ export const metadata: Metadata = {
       (process.env.NEXT_PUBLIC_SITE_URL || "https://penova.in") +
         "/hero-butter.webp",
     ],
-    site: "@puremeltin",
   },
-  alternates: {
-    canonical: process.env.NEXT_PUBLIC_SITE_URL || "https://penova.in",
+  appleWebApp: {
+    title: process.env.NEXT_PUBLIC_BRAND_NAME || "Penova",
+    statusBarStyle: "black-translucent",
+    capable: true,
   },
+  formatDetection: {
+    telephone: true,
+    email: true,
+    address: true,
+  },
+  category: "Food",
+  classification: "Peanut Butter & Nut Butters",
+  other: {
+    "business:contact_data:street_address": "Humayunpur Chowk",
+    "business:contact_data:locality": "South Delhi",
+    "business:contact_data:region": "Delhi",
+    "business:contact_data:postal_code": "110029",
+    "business:contact_data:country_name": "India",
+    "fb:app_id": "",
+    "article:author": "Gaurav Soni",
+    "article:section": "Food",
+    "article:tag": "peanut butter",
+  },
+};
+
+// Viewport configuration
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: "#fff9f3",
 };
 
 export default function RootLayout({
@@ -94,13 +155,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className={`${inter.className} ${playfair.variable} ${ibmPlexSans.variable} ${parisienne.variable}`}
+    >
       <head>
         {/* Canonical tag for SEO */}
         <link
           rel="canonical"
           href={process.env.NEXT_PUBLIC_SITE_URL || "https://penova.in"}
         />
+        <link rel="manifest" href="/manifest.json" />
         {/* Organization Structured Data for SEO */}
         <script
           type="application/ld+json"
@@ -138,12 +203,14 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body
-        className={`${inter.className} ${playfair.variable} ${ibmPlexSans.variable} ${parisienne.variable}`}
-      >
-        <AuthProvider>
-          <CartProvider>{children}</CartProvider>
-        </AuthProvider>
+      <body>
+        <RegisterServiceWorker />
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+          <Toaster richColors />
+          <AuthProvider>
+            <CartProvider>{children}</CartProvider>
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

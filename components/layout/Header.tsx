@@ -39,28 +39,27 @@ const Header = ({ bgColor = "bg-white", textColor = "text-black" }) => {
         scrolled ? "bg-white shadow-md" : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-4 md:px-12 py-4">
+      <div className="container mx-auto px-4 md:px-12 py-4 md:max-w-[1400px]">
         <div className="flex items-center justify-between">
           {/* Mobile Menu Trigger */}
-
           <Sheet>
             <SheetTrigger asChild>
-              <Menu className="md:hidden size-6 text-secondary-color cursor-pointer" />
+              <Menu className="md:hidden size-6 cursor-pointer text-black" />
             </SheetTrigger>
 
             <SheetContent
               side="left"
-              className="w-64 bg-white/80 backdrop-blur-md [&>[data-state=closed]]:hidden"
+              className="w-64 bg-black text-white border-r border-[#f8d87d] shadow-lg backdrop-blur-md [&>[data-state=closed]]:hidden"
             >
               {/* Mobile Navigation Links */}
-              <nav className="flex flex-col gap-5 mt-10 text-secondary-color text-base font-medium">
+              <nav className="flex flex-col gap-5 mt-10 text-white text-base font-medium">
                 <SheetClose asChild>
                   <Link
                     href="/"
                     className={
                       pathname === "/"
-                        ? "text-amber-700 font-semibold underline underline-offset-4"
-                        : "hover:text-amber-700"
+                        ? "text-[#f8d87d] font-semibold underline underline-offset-4"
+                        : "hover:text-[#f8d87d]"
                     }
                   >
                     Home
@@ -72,8 +71,8 @@ const Header = ({ bgColor = "bg-white", textColor = "text-black" }) => {
                     href="/product"
                     className={
                       pathname === "/product"
-                        ? "text-amber-700 font-semibold underline underline-offset-4"
-                        : "hover:text-amber-700"
+                        ? "text-[#f8d87d] font-semibold underline underline-offset-4"
+                        : "hover:text-[#f8d87d]"
                     }
                   >
                     Our Product
@@ -85,8 +84,8 @@ const Header = ({ bgColor = "bg-white", textColor = "text-black" }) => {
                     href="/about"
                     className={
                       pathname === "/about"
-                        ? "text-amber-700 font-semibold underline underline-offset-4"
-                        : "hover:text-amber-700"
+                        ? "text-[#f8d87d] font-semibold underline underline-offset-4"
+                        : "hover:text-[#f8d87d]"
                     }
                   >
                     About Us
@@ -98,8 +97,8 @@ const Header = ({ bgColor = "bg-white", textColor = "text-black" }) => {
                     href="/recipes"
                     className={
                       pathname === "/recipes"
-                        ? "text-amber-700 font-semibold underline underline-offset-4"
-                        : "hover:text-amber-700"
+                        ? "text-[#f8d87d] font-semibold underline underline-offset-4"
+                        : "hover:text-[#f8d87d]"
                     }
                   >
                     Recipes
@@ -111,8 +110,8 @@ const Header = ({ bgColor = "bg-white", textColor = "text-black" }) => {
                     href="/contact"
                     className={
                       pathname === "/contact"
-                        ? "text-amber-700 font-semibold underline underline-offset-4"
-                        : "hover:text-amber-700"
+                        ? "text-[#f8d87d] font-semibold underline underline-offset-4"
+                        : "hover:text-[#f8d87d]"
                     }
                   >
                     Contact

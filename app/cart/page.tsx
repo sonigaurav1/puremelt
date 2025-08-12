@@ -56,7 +56,7 @@ export default function CartPage() {
       <Header />
 
       {/* Cart Content */}
-      <section className="md:py-16 md:px-8 pt-24 px-4">
+      <section className="md:pb-16 md:px-8 pt-24 md:pt-32 px-4">
         <div className="container mx-auto max-w-6xl">
           <h1 className="text-5xl font-bold font-playfair text-white mb-8">
             Shopping Cart

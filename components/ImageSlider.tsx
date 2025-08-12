@@ -155,12 +155,12 @@ export default function ImageSlider() {
     <div
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="relative 2xl:max-w-5xl w-full mx-auto group"
+      className="relative w-full mx-auto group"
     >
       {/* Slider Container */}
       <div
         ref={sliderRef}
-        className="keen-slider w-full h-[450px] sm:h-[550px] md:h-[500px] overflow-hidden shadow-md"
+        className="keen-slider w-full h-[500px] sm:h-[450px] md:h-[500px] overflow-hidden shadow-md"
       >
         {images.map((img, index) => (
           <div
@@ -195,7 +195,7 @@ export default function ImageSlider() {
 
       {/* Loading skeleton - only show if not loaded */}
       {!isLoaded && (
-        <div className="absolute inset-0 w-full h-[450px] sm:h-[550px] md:h-[500px] bg-gray-200 animate-pulse rounded-md" />
+        <div className="absolute inset-0 w-full h-[500px] sm:h-[450px] md:h-[500px] bg-gray-200 animate-pulse rounded-md" />
       )}
 
       {/* Dot Indicators */}

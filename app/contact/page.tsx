@@ -51,7 +51,7 @@ const ContactPage = () => {
       <Header />
 
       {/* Hero Section */}
-      <section className="md:py-16 md:px-8 pt-28 px-4">
+      <section className="md:pb-16 md:px-8 pt-28 px-4">
         <div className="container mx-auto text-center">
           <h1 className="text-5xl font-bold font-playfair text-white mb-6">
             Get in <span className="text-primary-color">Touch</span>

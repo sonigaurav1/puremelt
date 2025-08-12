@@ -107,7 +107,7 @@ export default function HomePage() {
   return (
     <>
       <div className="min-h-screen !bg-black !text-white">
-        <main className="">
+        <main>
           {/* Header */}
           <Header bgColor="bg-transparent" />
 
@@ -116,7 +116,7 @@ export default function HomePage() {
           </div>
 
           {/* Hero Section */}
-          <section id="home" className="md:py-10 md:px-8 pt-10 px-4">
+          <section id="home" className="md:py-10 md:px-12 pt-10 px-4">
             <div className="container mx-auto">
               <div className="grid lg:grid-cols-2 gap-12 items-center">
                 <div className="space-y-8 relative">
@@ -220,15 +220,18 @@ export default function HomePage() {
         </main>
 
         {/* Product Spotlight */}
-        <section id="product" className="pb-10 my-16 bg-black text-white">
-          <div className="container mx-auto px-4">
-            <div className="max-w-xl mx-auto flex flex-col space-y-8 items-center">
+        <section
+          id="product"
+          className="pb-10 my-16 md:my-0 md:pb-20 px-4 bg-black text-white"
+        >
+          <div className="container mx-auto">
+            <div className="max-w-7xl mx-auto flex flex-col space-y-8 items-center">
               {/* Tagline */}
               <div className="flex flex-col items-center space-y-2 pt-8">
                 <h3 className="text-3xl font-bold text-primary-color text-center">
                   Premium Nuts Blend
                 </h3>
-                <p className="text-lg text-white leading-relaxed text-center">
+                <p className="text-lg text-white md:max-w-3xl leading-relaxed text-center">
                   <span className="">All-in-One Superfood Spread</span> crafted
                   from{" "}
                   <span className="text-primary-color font-bold text-xl">
@@ -243,7 +246,7 @@ export default function HomePage() {
               </div>
 
               {/* Features with icons */}
-              <div className="grid grid-cols-2 gap-4 w-full">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
                 {[
                   {
                     icon: (
@@ -292,8 +295,8 @@ export default function HomePage() {
         </section>
 
         {/* Ingredients Section */}
-        <section className="pb-12">
-          <div className="container mx-auto px-4">
+        <section className="pb-12 px-4 md:px-12">
+          <div className="container md:max-w-7xl mx-auto">
             <div className="flex flex-col items-center mb-10">
               <h2 className="text-3xl font-bold text-center mb-2">
                 Nature's Finest, Blended to Perfection
@@ -305,7 +308,7 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 max-w-xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mx-auto">
               {[
                 {
                   name: "Peanuts",
@@ -370,8 +373,8 @@ export default function HomePage() {
         </section>
 
         {/* Why Choose Section */}
-        <section className="py-12">
-          <div className="container mx-auto px-4">
+        <section className="py-12 px-4 md:px-12">
+          <div className="container mx-auto md:max-w-7xl">
             <div className="flex flex-col items-center mb-10">
               <h2 className="text-3xl font-bold px-4 py-1 mb-3">
                 Why Choose Us?
@@ -388,7 +391,7 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 max-w-xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mx-auto">
               {[
                 {
                   icon: (
@@ -451,8 +454,8 @@ export default function HomePage() {
         </section>
 
         {/* Usage Section */}
-        <section className="py-12">
-          <div className="container mx-auto px-4">
+        <section className="py-12 px-4 md:px-12">
+          <div className="container mx-auto md:max-w-7xl">
             <div className="flex flex-col items-center mb-10">
               <h2 className="text-3xl text-center font-bold px-4 py-1 mb-3">
                 How to Enjoy our nuts butter?
@@ -466,7 +469,7 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 max-w-xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mx-auto">
               {[
                 {
                   title: "Spread on Bread",
@@ -508,7 +511,7 @@ export default function HomePage() {
               <Link href="/recipes">
                 <Button
                   variant="outline"
-                  className="border-primary-color text-white hover:bg-amber-50 bg-transparent"
+                  className="border-primary-color text-white bg-transparent hover:bg-primary-color hover:text-black transition-colors duration-200"
                 >
                   View All Recipes
                 </Button>
@@ -518,8 +521,8 @@ export default function HomePage() {
         </section>
 
         {/* Testimonials */}
-        <section className="py-12">
-          <div className="container mx-auto px-4">
+        <section className="py-12 px-4 md:px-12">
+          <div className="container mx-auto md:max-w-7xl">
             <div className="flex flex-col items-center mb-10">
               <h2 className="text-3xl font-bold text-center mb-2">
                 What Our Customers Say
@@ -532,7 +535,7 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-4 max-w-xl mx-auto">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3 mx-auto">
               {[
                 {
                   name: "Gaurav Soni",
@@ -578,8 +581,8 @@ export default function HomePage() {
         </section>
 
         {/* FAQ Section for SEO */}
-        <section className="py-12 bg-white" id="faq">
-          <div className="container mx-auto px-4">
+        <section className="py-12 bg-white px-4 md:px-12" id="faq">
+          <div className="container mx-auto md:max-w-7xl">
             <div className="flex flex-col items-center mb-10">
               <h2 className="text-4xl font-bold text-primary-color text-center mb-2">
                 FAQ
@@ -593,7 +596,7 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="max-w-2xl mx-auto flex flex-col gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[
                 {
                   question:
@@ -636,7 +639,7 @@ export default function HomePage() {
               ].map((faq, idx) => (
                 <div
                   key={faq.question}
-                  className="bg-black rounded-xl p-5 shadow-sm"
+                  className="bg-black md:last:col-span-2 md:last:max-w-xl md:last:justify-self-center rounded-xl p-5 shadow-sm"
                 >
                   <h3 className="font-semibold text-lg text-primary-color mb-2 flex items-center">
                     <span className="mr-2">Q{idx + 1}.</span> {faq.question}
@@ -649,9 +652,9 @@ export default function HomePage() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-12 bg-[#000] text-white">
+        <section className="py-12 md:px-12 bg-[#000] text-white">
           <div className="container mx-auto px-4 flex justify-center">
-            <div className="w-full max-w-xl bg-[#181818] rounded-2xl shadow-lg p-8 flex flex-col items-center border border-[#f8d87d]">
+            <div className="w-full max-w-7xl bg-[#181818] rounded-2xl shadow-lg p-8 flex flex-col items-center border border-[#f8d87d]">
               <Badge className="bg-[#f8d87d] text-black text-base font-bold px-4 py-1 mb-4 border-none">
                 Limited Time Offer
               </Badge>
@@ -688,15 +691,15 @@ export default function HomePage() {
         </section>
 
         {/* Footer */}
-        <footer className="bg-black text-white pt-16 pb-6">
-          <div className="container mx-auto px-4">
+        <footer className="bg-black text-white pt-16 pb-6 md:px-12">
+          <div className="container md:max-w-8xl mx-auto px-4">
             <div className="grid md:grid-cols-5 gap-8">
               <div>
                 <Link href="/" className="flex items-center space-x-2 mb-4">
                   <div className="w-8 h-8 bg-amber-600 rounded-full flex items-center justify-center">
                     <span className="text-white font-bold">P</span>
                   </div>
-                  <span className="text-xl font-bold">
+                  <span className="text-xl font-bold text-primary-color">
                     {process.env.NEXT_PUBLIC_BRAND_NAME}
                   </span>
                 </Link>
