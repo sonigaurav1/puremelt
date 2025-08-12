@@ -109,7 +109,7 @@ export default function HomePage() {
       <div className="min-h-screen !bg-black !text-white">
         <main>
           {/* Header */}
-          <Header bgColor="bg-transparent" />
+          <Header bgColor="bg-black" textColor="md:text-white text-black" />
 
           <div className="md:pt-[76px]">
             <ImageSlider />

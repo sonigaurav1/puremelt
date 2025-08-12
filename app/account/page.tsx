@@ -93,7 +93,7 @@ export default function AccountPage() {
     return (
       <div className="min-h-dvh !bg-black !text-white">
         {/* Header */}
-        <Header bgColor="bg-black" />
+        <Header bgColor="bg-black" textColor="text-white" />
 
         {/* Login/Register Section */}
         <section className="flex items-center justify-center py-40 md:py-32 px-4">
@@ -266,7 +266,7 @@ export default function AccountPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b bg-black text-white">
       {/* Header */}
-      <Header bgColor="bg-white" />
+      <Header bgColor="bg-black" textColor="text-white" />
 
       {/* Account Dashboard */}
       <section className="py-12 px-4">

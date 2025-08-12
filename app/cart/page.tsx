@@ -53,11 +53,11 @@ export default function CartPage() {
   return (
     <div className="min-h-screen !bg-black !text-white">
       {/* Header */}
-      <Header />
+      <Header bgColor="bg-black" textColor="text-white" />
 
       {/* Cart Content */}
-      <section className="md:pb-16 md:px-8 pt-24 md:pt-32 px-4">
-        <div className="container mx-auto max-w-6xl">
+      <section className="md:pb-16 pt-24 md:pt-32 px-4 md:px-0">
+        <div className="mx-auto md:px-12">
           <h1 className="text-5xl font-bold font-playfair text-white mb-8">
             Shopping Cart
           </h1>

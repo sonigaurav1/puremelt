@@ -204,7 +204,7 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <RegisterServiceWorker />
+        {/* <RegisterServiceWorker /> */}
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <Toaster richColors />
           <AuthProvider>

@@ -187,7 +187,7 @@ export default function RecipesPage() {
 
       <div className="min-h-screen !bg-black !text-white">
         {/* Header */}
-        <Header />
+        <Header bgColor="bg-black" textColor="text-white" />
 
         {/* Hero Section */}
         <section className="md:pb-16 md:px-8 pt-28 px-4">
