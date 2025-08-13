@@ -195,9 +195,6 @@ export default function ProductPage() {
                     </Card>
                     <Card className="border-2 border-[#f8d87d] bg-[#181818] hover:shadow-lg transition-shadow">
                       <CardContent className="p-4 text-center">
-                        <Badge className="bg-primary-color text-white mb-2">
-                          Most Popular
-                        </Badge>
                         <h4 className="font-bold text-primary-color mb-2">
                           500g
                         </h4>
@@ -209,6 +206,9 @@ export default function ProductPage() {
                         </p>
                         <Badge className="bg-green-100 text-green-800 mt-2">
                           14% OFF
+                        </Badge>
+                        <Badge className="bg-primary-color text-white mt-2">
+                          Most Popular
                         </Badge>
                       </CardContent>
                     </Card>
@@ -247,7 +247,7 @@ export default function ProductPage() {
         {/* Ingredients Detail */}
         <section className="pt-24 bg-black">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-16">
+            <div className="text-center mb-8">
               <h2 className="text-4xl font-bold text-white mb-4">
                 <span className="text-primary-color">Seven</span> Premium
                 Ingredients
@@ -260,64 +260,77 @@ export default function ProductPage() {
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
                 {
-                  name: "Premium Peanuts",
+                  name: "Peanuts",
                   description:
                     "Roasted to perfection for that signature crunch and aroma",
-                  icon: "🥜",
+                  icon: "https://images.unsplash.com/photo-1575399872095-9363bf262e64?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGVhbnV0fGVufDB8fDB8fHww",
                   benefits: "High protein, healthy fats, vitamin E",
                 },
                 {
-                  name: "California Almonds",
+                  name: "Almonds",
                   description:
                     "Adds smoothness and creamy texture to every spoonful",
-                  icon: "🌰",
+                  icon: "https://plus.unsplash.com/premium_photo-1675237625910-e5d354c03987?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8YWxtb25kc3xlbnwwfHwwfHx8MA%3D%3D",
                   benefits: "Vitamin E, magnesium, fiber",
                 },
                 {
-                  name: "Rich Cashews",
+                  name: "Cashews",
                   description:
                     "Premium cashews for ultimate creaminess and indulgence",
-                  icon: "🥜",
+                  icon: "https://images.unsplash.com/photo-1723466998060-533cd1af4e11?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzZ8fGNhc2hld3xlbnwwfHwwfHx8MA%3D%3D",
                   benefits: "Copper, magnesium, healthy fats",
                 },
                 {
-                  name: "Luxury Pistachios",
+                  name: "Pistachios",
                   description:
                     "Hand-picked pistachios adding luxury and antioxidants",
-                  icon: "🌰",
+                  icon: "https://images.unsplash.com/photo-1704079662049-d00890d21a69?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGlzdGFjaGlvc3xlbnwwfHwwfHx8MA%3D%3D",
                   benefits: "Antioxidants, protein, potassium",
                 },
                 {
-                  name: "Medjool Dates",
+                  name: "Dates",
                   description: "Natural sweetness with a rich caramel twist",
-                  icon: "🌴",
+                  icon: "https://plus.unsplash.com/premium_photo-1676208753932-6e8bc83a0b0d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZGF0ZXN8ZW58MHx8MHx8fDA%3D",
                   benefits: "Fiber, potassium, natural sugars",
+                },
+                {
+                  name: "Raisins",
+                  description: "Natural sweetness & energy",
+                  icon: "https://i.pinimg.com/736x/b4/8f/41/b48f410fbdc63a19197a349a702fb4b8.jpg",
+                  benefits: "Natural sweetness & energy",
                 },
                 {
                   name: "Pure Honey",
                   description:
                     "Raw, unprocessed honey for natural golden sweetness",
-                  icon: "🍯",
+                  icon: "https://images.unsplash.com/photo-1654515722385-c684c5331c04?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGhvbmV5fGVufDB8fDB8fHww",
                   benefits: "Antioxidants, enzymes, natural energy",
                 },
-              ].map((ingredient, index) => (
-                <Card
-                  key={index}
-                  className="border-[.5px] border-[#f8d87d] bg-[#181818] hover:shadow-lg transition-shadow"
+              ].map((ingredient, idx) => (
+                <div
+                  key={ingredient.name}
+                  className="flex flex-col items-center bg-[#181818] rounded-xl p-4 border-[.5px] border-[#f8d87d] shadow-sm text-center min-h-[140px]"
                 >
-                  <CardContent className="p-6 text-center">
-                    <div className="text-5xl mb-4">{ingredient.icon}</div>
-                    <h3 className="font-bold text-primary-color mb-2">
-                      {ingredient.name}
-                    </h3>
-                    <p className="text-sm text-[#f8d87d] mb-3">
-                      {ingredient.description}
-                    </p>
-                    <div className="bg-black border-[.5px] border-[#f8d87d] p-2 rounded text-xs text-[#f8d87d]">
-                      {ingredient.benefits}
-                    </div>
-                  </CardContent>
-                </Card>
+                  <div className="size-20 rounded-full flex justify-center items-center mb-2 overflow-hidden bg-black">
+                    <Image
+                      src={ingredient.icon}
+                      alt={`Ingredient: ${ingredient.name} for healthy peanut butter, organic peanut butter, best peanut butter in India`}
+                      width={60}
+                      height={60}
+                      className="size-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                  <h3 className="font-bold text-base text-primary-color mb-1">
+                    {ingredient.name}
+                  </h3>
+                  <p className="text-xs text-white opacity-80">
+                    {ingredient.description}
+                  </p>
+                  <div className="bg-black border-[.5px] border-[#f8d87d] p-2 rounded text-xs text-[#f8d87d] mt-2">
+                    {ingredient.benefits}
+                  </div>
+                </div>
               ))}
             </div>
           </div>

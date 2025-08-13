@@ -107,6 +107,7 @@ export default function HomePage() {
   return (
     <>
       <div className="min-h-screen !bg-black !text-white">
+        {/* MAIN SECTION */}
         <main>
           {/* Header */}
           <Header bgColor="bg-black" textColor="md:text-white text-black" />
@@ -116,11 +117,15 @@ export default function HomePage() {
           </div>
 
           {/* Hero Section */}
-          <section id="home" className="md:py-10 md:px-12 pt-10 px-4">
-            <div className="container mx-auto">
-              <div className="grid lg:grid-cols-2 gap-12 items-center">
-                <div className="space-y-8 relative">
-                  <div className="space-y-4">
+          <section
+            id="home"
+            className="py-8 px-4 md:py-12 md:px-8 lg:py-16 lg:px-12 xl:py-20  bg-black"
+          >
+            <div className="container mx-auto max-w-7xl">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 ">
+                {/* Content Column */}
+                <div className="space-y-8 pt-5 relative order-2 lg:order-1">
+                  <div className="space-y-4 md:space-y-6">
                     <Badge className="bg-[#90caf9] border-[#64b5f6] border hover:bg-[#69b31e] text-lg text-white">
                       <Award size={20} className="mr-1" /> India's Finest Nuts
                       Butter
@@ -147,7 +152,7 @@ export default function HomePage() {
                     </p>
                   </div>
 
-                  <div className="relative">
+                  <div className="relative lg:hidden">
                     <Image
                       src="/cta.webp"
                       alt="Healthy peanut butter and nuts butter jar - Penova premium blend, organic peanut butter India"
@@ -157,7 +162,8 @@ export default function HomePage() {
                       loading="lazy"
                     />
                   </div>
-                  <div className="flex items-center space-x-4">
+
+                  <div className="flex items-center gap-3 md:gap-4">
                     <label className="text-white font-medium">
                       Choose Weight:
                     </label>
@@ -176,10 +182,10 @@ export default function HomePage() {
                     </Select>
                   </div>
 
-                  <div className="flex flex-col sm:flex-row gap-4 pb-8">
+                  <div className="flex flex-col sm:flex-row gap-4 md:gap-6">
                     <Button
                       size="lg"
-                      className="text-black text-lg px-8 py-3 bg-[#EEFF00]"
+                      className="text-black text-lg md:px-10 md:py-4 transition-colors px-8 py-3 bg-[#EEFF00]"
                       onClick={handleOrderNow}
                     >
                       Buy Now
@@ -193,26 +199,38 @@ export default function HomePage() {
                         Add to Cart - ₹599
                       </Button>
                     </Link>
+                  </div>
 
-                    {/* Trust badge & rating */}
-                    <div className="flex flex-col items-center space-y-2 pt-2">
-                      <div className="flex items-center space-x-1">
-                        {[1, 2, 3, 4, 5].map((star) => (
-                          <Star
-                            key={star}
-                            className="w-5 h-5 fill-amber-400 text-amber-400"
-                          />
-                        ))}
-                        <span className="ml-2 font-medium">4.5/5</span>
-                      </div>
-                      <div className="text-sm text-white opacity-80">
-                        <span className="font-semibold">
-                          {isClient ? customerCount.toLocaleString() : "2,500"}+
-                        </span>{" "}
-                        Happy Customers
-                      </div>
+                  {/* Trust badge & rating */}
+                  <div className="flex flex-col items-center space-y-2  sm:flex-row sm:items-center sm:justify-between lg:justify-start lg:gap-8 sm:space-y-0 pt-2 md:pt-2">
+                    <div className="flex items-center justify-center sm:justify-start space-x-1">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <Star
+                          key={star}
+                          className="w-5 h-5 fill-amber-400 text-amber-400"
+                        />
+                      ))}
+                      <span className="ml-2 font-medium">4.5/5</span>
+                    </div>
+                    <div className="text-sm text-white opacity-80">
+                      <span className="font-semibold">
+                        {isClient ? customerCount.toLocaleString() : "2,500"}+
+                      </span>{" "}
+                      Happy Customers
                     </div>
                   </div>
+                </div>
+
+                {/* Image Column */}
+                <div className="relative order-1 lg:order-2 hidden lg:block">
+                  <Image
+                    src="/cta.webp"
+                    alt="Healthy peanut butter and nuts butter jar - Penova premium blend, organic peanut butter India"
+                    width={500}
+                    height={500}
+                    className="w-full h-auto rounded-2xl"
+                    loading="lazy"
+                  />
                 </div>
               </div>
             </div>
@@ -222,7 +240,7 @@ export default function HomePage() {
         {/* Product Spotlight */}
         <section
           id="product"
-          className="pb-10 my-16 md:my-0 md:pb-20 px-4 bg-black text-white"
+          className="pb-10 mb-16 mt-4 md:my-0 md:pb-20 px-4 bg-black text-white"
         >
           <div className="container mx-auto">
             <div className="max-w-7xl mx-auto flex flex-col space-y-8 items-center">
@@ -308,7 +326,10 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mx-auto">
+            <div
+              className="grid grid-cols-2
+            md:grid-cols-4 gap-4 mx-auto"
+            >
               {[
                 {
                   name: "Peanuts",
@@ -348,7 +369,8 @@ export default function HomePage() {
               ].map((ingredient, idx) => (
                 <div
                   key={ingredient.name}
-                  className="flex flex-col items-center bg-[#181818] rounded-xl p-4 border-[.5px] border-[#f8d87d] shadow-sm text-center min-h-[140px]"
+                  className="flex flex-col items-center bg-[#181818] rounded-xl p-4 border-[.5px] max-sm:last:col-span-2 max-sm:last:min-w-[200px] max-sm:last:justify-self-center
+                  border-[#f8d87d] shadow-sm text-center min-h-[140px]"
                 >
                   <div className="size-20 rounded-full flex justify-center items-center mb-2 overflow-hidden bg-black">
                     <Image

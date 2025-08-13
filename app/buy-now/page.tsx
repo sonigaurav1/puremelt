@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Head from "next/head";
 import Header from "@/components/layout/Header";
@@ -31,7 +31,7 @@ import Header from "@/components/layout/Header";
 const BuyNowPage = () => {
   const searchParams = useSearchParams();
   const [selectedWeight, setSelectedWeight] = useState(
-    searchParams.get("weight") || "500g"
+    searchParams?.get("weight") || "500g"
   );
   const [quantity, setQuantity] = useState(1);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
@@ -68,11 +68,77 @@ const BuyNowPage = () => {
     );
   };
 
-  const buyNow = () => {
-    // Buy now logic here
-    alert(
-      `Proceeding to checkout with ${quantity} x ${process.env.NEXT_PUBLIC_BRAND_NAME} ${selectedWeight}`
-    );
+  // Razorpay script loader
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const existingScript = document.getElementById("razorpay-script");
+      if (!existingScript) {
+        const script = document.createElement("script");
+        script.id = "razorpay-script";
+        script.src = "https://checkout.razorpay.com/v1/checkout.js";
+        script.async = true;
+        document.body.appendChild(script);
+      }
+    }
+  }, []);
+
+  // Razorpay payment handler
+  const handleRazorpayPayment = async () => {
+    const amount = currentPrice.discounted * quantity * 100; // in paise
+    // 1. Create order on backend
+    const orderRes = await fetch("/api/razorpay-order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        amount,
+        currency: "INR",
+        notes: {
+          weight: selectedWeight,
+          quantity: quantity,
+        },
+      }),
+    });
+    const orderData = await orderRes.json();
+    if (!orderData.id) {
+      alert("Failed to create order. Please try again.");
+      return;
+    }
+    // 2. Open Razorpay checkout with order_id
+    const options = {
+      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "rzp_test_wRRcjbZESJnz17", // Replace with your Razorpay Key ID
+      amount: orderData.amount,
+      currency: orderData.currency,
+      name: process.env.NEXT_PUBLIC_BRAND_NAME || "Penova",
+      description: `Order for ${quantity} x ${selectedWeight}`,
+      image:
+        (process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") +
+        "/product.webp",
+      order_id: orderData.id,
+      handler: function (response: any) {
+        alert(
+          "Payment successful! Payment ID: " + response.razorpay_payment_id
+        );
+        // You can verify payment on backend here
+      },
+      prefill: {
+        name: "Gaurav Soni",
+        email: "gaurav@example.com",
+        contact: "9876543210",
+      },
+      notes: {
+        weight: selectedWeight,
+        quantity: quantity,
+      },
+      theme: {
+        color: "#EEFF00",
+      },
+    };
+    if (typeof window !== "undefined" && (window as any).Razorpay) {
+      const rzp = new (window as any).Razorpay(options);
+      rzp.open();
+    } else {
+      alert("Razorpay SDK failed to load. Please try again later.");
+    }
   };
 
   return (
@@ -136,14 +202,14 @@ const BuyNowPage = () => {
 
       <div className="min-h-screen bg-black text-white">
         {/* Header */}
-        <Header bgColor="bg-white" />
+        <Header bgColor="bg-black" textColor="md:text-white text-white" />
 
         {/* Product Section */}
-        <section className="pb-12 pt-24 px-4 text-white bg-black">
+        <section className="pb-12 pt-[70px] md:pt-24 text-white bg-black">
           <div className="container mx-auto">
-            <div className="grid lg:grid-cols-2 gap-12">
+            <div className="grid lg:grid-cols-2 gap-6">
               {/* Left - Product Images */}
-              <div className="space-y-4">
+              <div className="space-y-4 py-4 px-4">
                 {/* Main Image */}
                 <div className="relative bg-white rounded-2xl overflow-hidden border border-black/40 shadow-lg">
                   <Image
@@ -172,7 +238,7 @@ const BuyNowPage = () => {
                         className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border transition-all ${
                           selectedImageIndex === index
                             ? "border-primary-color"
-                            : "border-black/20 hover:border-primary-color"
+                            : "border-black/20 opacity-60 hover:border-primary-color"
                         }`}
                       >
                         <Image
@@ -203,7 +269,7 @@ const BuyNowPage = () => {
               </div>
 
               {/* Right - Product Details */}
-              <div className="space-y-6">
+              <div className="space-y-6 px-4 md:pt-3">
                 {/* Product Title and Rating */}
                 <div className="space-y-2">
                   <h1 className="text-3xl text-primary-color font-bold">
@@ -288,7 +354,7 @@ const BuyNowPage = () => {
                   <Button
                     size="lg"
                     className="w-full bg-[#EEFF00] text-black font-bold"
-                    onClick={buyNow}
+                    onClick={handleRazorpayPayment}
                   >
                     Buy Now - ₹{currentPrice.discounted * quantity}
                   </Button>
