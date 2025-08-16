@@ -194,7 +194,7 @@ export default function CartPage() {
 
     // Prepare Razorpay options
     const options = {
-      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "rzp_test_wRRcjbZESJnz17",
+      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!,
       amount: orderData.amount,
       currency: orderData.currency,
       name: process.env.NEXT_PUBLIC_BRAND_NAME || "Penova",

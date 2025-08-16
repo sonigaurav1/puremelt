@@ -46,7 +46,6 @@ export default function HomePage() {
     }
     setNewsletterStatus("Processing...");
     try {
-      // Example: Mailchimp API integration
       // You should create a backend API route to avoid exposing your API key
       const response = await fetch("/api/newsletter-subscribe", {
         method: "POST",

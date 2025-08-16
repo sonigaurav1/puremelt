@@ -7,19 +7,19 @@ export async function POST(req: NextRequest) {
     }
 
     // Brevo API details
-    const API_KEY = process.env.BREVO_API_KEY!;
-    const LIST_ID = process.env.BREVO_LIST_ID!;
+    const BREVO_API_KEY = process.env.BREVO_API_KEY!;
+    const BREVO_LIST_ID = process.env.BREVO_LIST_ID!;
 
     try {
         const response = await fetch("https://api.brevo.com/v3/contacts", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "api-key": API_KEY,
+                "api-key": BREVO_API_KEY,
             },
             body: JSON.stringify({
                 email,
-                listIds: [LIST_ID],
+                listIds: [BREVO_LIST_ID],
                 updateEnabled: true,
             }),
         });
