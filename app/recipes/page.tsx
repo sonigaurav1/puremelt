@@ -1,3 +1,6 @@
+"use client";
+
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -144,6 +147,38 @@ export default function RecipesPage() {
     },
   ];
 
+  const [selectedCategory, setSelectedCategory] = React.useState("All Recipes");
+
+  // Map recipe titles to categories
+  const categoryMap: Record<string, string[]> = {
+    Breakfast: ["Toast Deluxe", "Protein Pancakes", "Overnight Oats"],
+    Snacks: ["Energy Balls"],
+    Desserts: ["Chocolate Cookies"],
+    Smoothies: ["Power Smoothie"],
+  };
+
+  // Get all categories
+  const categories = [
+    "All Recipes",
+    "Breakfast",
+    "Snacks",
+    "Desserts",
+    "Smoothies",
+  ];
+
+  // Filter recipes by selected category
+  const filteredRecipes =
+    selectedCategory === "All Recipes"
+      ? recipes
+      : recipes.filter((recipe) => {
+          const title = recipe.title
+            .replace(process.env.NEXT_PUBLIC_BRAND_NAME + " ", "")
+            .replace("Nuts Butter ", "");
+          return categoryMap[selectedCategory]?.some((catTitle: string) =>
+            title.includes(catTitle)
+          );
+        });
+
   return (
     <>
       <Head>
@@ -211,25 +246,23 @@ export default function RecipesPage() {
         <section className="py-10 bg-black">
           <div className="container mx-auto px-4">
             <div className="flex flex-wrap justify-center gap-4 mb-10">
-              <Badge className="bg-[#90caf9] border-[#64b5f6] border hover:bg-[#69b31e] text-lg text-white px-4 py-2 cursor-pointer">
-                All Recipes
+              {categories.map((category) => (
+              <Badge
+                key={category}
+                className={`px-4 py-2 text-lg cursor-pointer border-[.5px] ${
+                selectedCategory === category
+                  ? "bg-primary-color border-primary-color text-black hover:bg-primary-color/80"
+                  : "bg-[#181818] border-primary-color text-primary-color hover:bg-primary-color/20"
+                }`}
+                onClick={() => setSelectedCategory(category)}
+              >
+                {category}
               </Badge>
-              <Badge className="bg-[#181818] border-[.5px] border-[#f8d87d] text-[#f8d87d] hover:bg-[#222] px-4 py-2 cursor-pointer">
-                Breakfast
-              </Badge>
-              <Badge className="bg-[#181818] border-[.5px] border-[#f8d87d] text-[#f8d87d] hover:bg-[#222] px-4 py-2 cursor-pointer">
-                Snacks
-              </Badge>
-              <Badge className="bg-[#181818] border-[.5px] border-[#f8d87d] text-[#f8d87d] hover:bg-[#222] px-4 py-2 cursor-pointer">
-                Desserts
-              </Badge>
-              <Badge className="bg-[#181818] border-[.5px] border-[#f8d87d] text-[#f8d87d] hover:bg-[#222] px-4 py-2 cursor-pointer">
-                Smoothies
-              </Badge>
+              ))}
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {recipes.map((recipe) => (
+              {filteredRecipes.map((recipe) => (
                 <Card
                   key={recipe.id}
                   className="border-[.5px] border-[#f8d87d] bg-[#181818] hover:shadow-lg transition-shadow overflow-hidden"

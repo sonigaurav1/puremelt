@@ -17,6 +17,38 @@ const Header = ({ bgColor = "bg-white", textColor = "text-black" }) => {
   const { getTotalItems } = useCart();
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
+
+  // Sync cart count from localStorage and custom event
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const updateCartCount = () => {
+        const storedCart = localStorage.getItem("cart");
+        if (storedCart) {
+          try {
+            const parsed = JSON.parse(storedCart);
+            setCartCount(
+              parsed.reduce(
+                (sum: number, item: any) => sum + (item.quantity || 1),
+                0
+              )
+            );
+          } catch {
+            setCartCount(getTotalItems());
+          }
+        } else {
+          setCartCount(getTotalItems());
+        }
+      };
+      updateCartCount();
+      window.addEventListener("storage", updateCartCount);
+      window.addEventListener("cartUpdated", updateCartCount);
+      return () => {
+        window.removeEventListener("storage", updateCartCount);
+        window.removeEventListener("cartUpdated", updateCartCount);
+      };
+    }
+  }, [getTotalItems]);
 
   // Add scroll event listener
   useEffect(() => {
@@ -26,6 +58,8 @@ const Header = ({ bgColor = "bg-white", textColor = "text-black" }) => {
         setScrolled(isScrolled);
       }
     };
+
+    handleScroll(); // Initial check
 
     window.addEventListener("scroll", handleScroll);
     return () => {
@@ -39,7 +73,7 @@ const Header = ({ bgColor = "bg-white", textColor = "text-black" }) => {
         scrolled ? "!bg-white md:bg-black shadow-md" : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-4 md:px-12 py-4 md:max-w-[1400px]">
+      <div className="container mx-auto px-4 md:px-14 py-4 md:max-w-[1500px]">
         <div className="flex items-center justify-between">
           {/* Mobile Menu Trigger */}
           <Sheet>
@@ -159,72 +193,100 @@ const Header = ({ bgColor = "bg-white", textColor = "text-black" }) => {
           <nav className={`hidden md:flex items-center space-x-8`}>
             <Link
               href="/"
-              className={`${textColor} ${
-                scrolled ? "!text-black" : ""
-              }  hover:text-amber-700 font-medium`}
+              className={`${
+                pathname === "/"
+                  ? "text-amber-700 font-semibold"
+                  : `${textColor} ${
+                      scrolled ? "!text-black" : ""
+                    } hover:text-amber-700 font-medium`
+              }`}
             >
               Home
             </Link>
             <Link
               href="/product"
-              className={`${textColor} ${
-                scrolled ? "!text-black" : ""
-              }  hover:text-amber-700 font-medium`}
+              className={`${
+                pathname === "/product"
+                  ? "text-amber-700 font-semibold"
+                  : `${textColor} ${
+                      scrolled ? "!text-black" : ""
+                    } hover:text-amber-700 font-medium`
+              }`}
             >
               Our Product
             </Link>
             <Link
               href="/about"
-              className={`${textColor} ${
-                scrolled ? "!text-black" : ""
-              }  hover:text-amber-700 font-medium`}
+              className={`${
+                pathname === "/about"
+                  ? "text-amber-700 font-semibold"
+                  : `${textColor} ${
+                      scrolled ? "!text-black" : ""
+                    } hover:text-amber-700 font-medium`
+              }`}
             >
               About Us
             </Link>
             <Link
               href="/recipes"
-              className={`${textColor} ${
-                scrolled ? "!text-black" : ""
-              }  hover:text-amber-700 font-medium`}
+              className={`${
+                pathname === "/recipes"
+                  ? "text-amber-700 font-semibold"
+                  : `${textColor} ${
+                      scrolled ? "!text-black" : ""
+                    } hover:text-amber-700 font-medium`
+              }`}
             >
               Recipes
             </Link>
             <Link
               href="/contact"
-              className={`${textColor} ${
-                scrolled ? "!text-black" : ""
-              }  hover:text-amber-700 font-medium`}
+              className={`${
+                pathname === "/contact"
+                  ? "text-amber-700 font-semibold"
+                  : `${textColor} ${
+                      scrolled ? "!text-black" : ""
+                    } hover:text-amber-700 font-medium`
+              }`}
             >
               Contact
             </Link>
           </nav>
 
           {/* Right Buttons */}
-          <div className="flex items-center">
+          <div className="flex items-center gap-3">
             <Link href="/cart">
               <Button
                 variant="ghost"
                 size="sm"
-                className="px-2 bg-transparent relative"
+                className={`px-2 bg-transparent relative`}
               >
                 <ShoppingCart
                   className={`!size-5 ${
                     scrolled ? "!text-black" : ""
-                  }  ${textColor} cursor-pointer`}
+                  } ${textColor} 
+                  ${pathname === "/cart" ? "!text-amber-700" : ""}
+                  cursor-pointer`}
                 />
-                {getTotalItems() > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-amber-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                    {getTotalItems()}
+                {cartCount > 0 && (
+                  <span className="absolute -top-1.5 -right-2 bg-amber-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                    {cartCount}
                   </span>
                 )}
               </Button>
             </Link>
             <Link href="/account">
-              <Button variant="ghost" size="sm" className="px-2 bg-transparent">
+              <Button
+                variant="ghost"
+                size="sm"
+                className={`px-2 bg-transparent `}
+              >
                 <User
                   className={`!size-5 ${
                     scrolled ? "!text-black" : ""
-                  } ${textColor} cursor-pointer`}
+                  } ${textColor} ${
+                    pathname === "/account" ? "!text-amber-700" : ""
+                  } cursor-pointer`}
                 />
               </Button>
             </Link>

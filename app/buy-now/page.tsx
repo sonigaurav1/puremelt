@@ -24,9 +24,11 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Head from "next/head";
 import Header from "@/components/layout/Header";
+import { PRODUCT_PRICES, PRODUCT_WEIGHTS } from "@/constant";
+
 
 const BuyNowPage = () => {
   const searchParams = useSearchParams();
@@ -36,15 +38,12 @@ const BuyNowPage = () => {
   const [quantity, setQuantity] = useState(1);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
+  const router = useRouter();
+
   const productImages = ["/product.webp", "/product.webp", "/product.webp"];
 
-  const prices = {
-    "250g": { original: 349, discounted: 299 },
-    "500g": { original: 699, discounted: 599 },
-    "1kg": { original: 1299, discounted: 1099 },
-  };
-
-  const currentPrice = prices[selectedWeight as keyof typeof prices];
+  const currentPrice =
+    PRODUCT_PRICES[selectedWeight as keyof typeof PRODUCT_PRICES];
   const discount = Math.round(
     ((currentPrice.original - currentPrice.discounted) /
       currentPrice.original) *
@@ -62,10 +61,39 @@ const BuyNowPage = () => {
   };
 
   const addToCart = () => {
-    // Add to cart logic here
-    alert(
-      `Added ${quantity} x ${process.env.NEXT_PUBLIC_BRAND_NAME} ${selectedWeight} to cart!`
-    );
+    // Create cart item
+    const cartItem = {
+      name: `${process.env.NEXT_PUBLIC_BRAND_NAME} Premium All-in-One Nuts Butter (${selectedWeight})`,
+      weight: selectedWeight,
+      quantity,
+      price: currentPrice.discounted,
+      total: currentPrice.discounted * quantity,
+    };
+    // Get existing cart from localStorage
+    let cart = [];
+    if (typeof window !== "undefined") {
+      const storedCart = localStorage.getItem("cart");
+      if (storedCart) {
+        try {
+          cart = JSON.parse(storedCart);
+        } catch {
+          cart = [];
+        }
+      }
+      // Check if item with same weight exists, update quantity if so
+      const existingIndex = cart.findIndex(
+        (item: any) => item.weight === cartItem.weight
+      );
+      if (existingIndex !== -1) {
+        cart[existingIndex].quantity += cartItem.quantity;
+        cart[existingIndex].total += cartItem.total;
+      } else {
+        cart.push(cartItem);
+      }
+      localStorage.setItem("cart", JSON.stringify(cart));
+
+      router.push("/cart"); // Redirect to cart page after adding
+    }
   };
 
   // Razorpay script loader
@@ -81,65 +109,6 @@ const BuyNowPage = () => {
       }
     }
   }, []);
-
-  // Razorpay payment handler
-  const handleRazorpayPayment = async () => {
-    const amount = currentPrice.discounted * quantity * 100; // in paise
-    // 1. Create order on backend
-    const orderRes = await fetch("/api/razorpay-order", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        amount,
-        currency: "INR",
-        notes: {
-          weight: selectedWeight,
-          quantity: quantity,
-        },
-      }),
-    });
-    const orderData = await orderRes.json();
-    if (!orderData.id) {
-      alert("Failed to create order. Please try again.");
-      return;
-    }
-    // 2. Open Razorpay checkout with order_id
-    const options = {
-      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "rzp_test_wRRcjbZESJnz17", // Replace with your Razorpay Key ID
-      amount: orderData.amount,
-      currency: orderData.currency,
-      name: process.env.NEXT_PUBLIC_BRAND_NAME || "Penova",
-      description: `Order for ${quantity} x ${selectedWeight}`,
-      image:
-        (process.env.NEXT_PUBLIC_SITE_URL || "https://puremelt.in") +
-        "/product.webp",
-      order_id: orderData.id,
-      handler: function (response: any) {
-        alert(
-          "Payment successful! Payment ID: " + response.razorpay_payment_id
-        );
-        // You can verify payment on backend here
-      },
-      prefill: {
-        name: "Gaurav Soni",
-        email: "gaurav@example.com",
-        contact: "9876543210",
-      },
-      notes: {
-        weight: selectedWeight,
-        quantity: quantity,
-      },
-      theme: {
-        color: "#EEFF00",
-      },
-    };
-    if (typeof window !== "undefined" && (window as any).Razorpay) {
-      const rzp = new (window as any).Razorpay(options);
-      rzp.open();
-    } else {
-      alert("Razorpay SDK failed to load. Please try again later.");
-    }
-  };
 
   return (
     <>
@@ -316,9 +285,15 @@ const BuyNowPage = () => {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="250g">250g - ₹299 (₹349)</SelectItem>
-                      <SelectItem value="500g">500g - ₹599 (₹699)</SelectItem>
-                      <SelectItem value="1kg">1kg - ₹1099 (₹1299)</SelectItem>
+                      {PRODUCT_WEIGHTS.map((weight: string) => (
+                        <SelectItem value={weight} key={weight}>
+                          {weight} - ₹{PRODUCT_PRICES[weight as keyof typeof PRODUCT_PRICES].discounted} (
+                          <span className="line-through">
+                            ₹{PRODUCT_PRICES[weight as keyof typeof PRODUCT_PRICES].original}
+                          </span>
+                          )
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>
@@ -354,14 +329,6 @@ const BuyNowPage = () => {
                   <Button
                     size="lg"
                     className="w-full bg-[#EEFF00] text-black font-bold"
-                    onClick={handleRazorpayPayment}
-                  >
-                    Buy Now - ₹{currentPrice.discounted * quantity}
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    className="w-full border-primary-color text-white bg-transparent"
                     onClick={addToCart}
                   >
                     <ShoppingCart className="w-5 h-5 mr-2" />

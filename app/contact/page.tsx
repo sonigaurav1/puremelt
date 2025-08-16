@@ -20,6 +20,8 @@ import Link from "next/link";
 import { useState } from "react";
 
 import Header from "@/components/layout/Header";
+import { PHONE_NUMBER } from "@/constant";
+import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -28,12 +30,39 @@ const ContactPage = () => {
     subject: "",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    alert("Thank you for your message! We'll get back to you soon.");
-    setFormData({ name: "", email: "", subject: "", message: "" });
+    setIsSubmitting(true);
+    setError(null);
+    setSuccess(null);
+    try {
+      const response = await fetch("/api/send-contact-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        }),
+      });
+      if (response.ok) {
+        setSuccess("Thank you for your message! We'll get back to you soon.");
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        setError("Sorry, there was an error sending your message. Please try again later.");
+      }
+    } catch (error) {
+      setError("Sorry, there was an error sending your message. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (
@@ -71,7 +100,7 @@ const ContactPage = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Contact Form */}
-            <Card className="border-[.5px] border-[#f8d87d] bg-[#181818] order-2 lg:order-1">
+            <Card className="border-[.5px] border-[#f8d87d] bg-[#181818] order-2 lg:order-2 md:max-h-max">
               <CardContent className="p-8">
                 <h2 className="text-2xl font-bold text-primary-color mb-6">
                   Send us a Message
@@ -135,13 +164,53 @@ const ContactPage = () => {
                     />
                   </div>
 
-                  <Button
-                    type="submit"
-                    className="w-full bg-[#EEFF00] hover:bg-[#f8d87d] text-black py-3 text-lg"
-                  >
-                    <MessageCircle className="w-5 h-5 mr-2" />
-                    Send Message
-                  </Button>
+                    <Button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className={`w-full bg-[#EEFF00] hover:bg-[#f8d87d] text-black py-3 text-lg flex items-center justify-center ${
+                        isSubmitting ? "opacity-70 cursor-not-allowed" : ""
+                      }`}
+                    >
+                      {isSubmitting ? (
+                        <span className="flex items-center gap-2">
+                          <svg className="animate-spin h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                          </svg>
+                          <span className="font-semibold tracking-wide animate-pulse">Sending...</span>
+                        </span>
+                      ) : error ? (
+                        <span className="flex items-center text-red-600">
+                          <MessageCircle className="w-5 h-5 mr-2" />
+                          {error}
+                        </span>
+                      ) : (
+                        <>
+                          <MessageCircle className="w-5 h-5 mr-2" />
+                          Send Message
+                        </>
+                      )}
+                    </Button>
+                    {success && (
+                      <AlertDialog open={!!success} onOpenChange={() => setSuccess(null)}>
+                        <AlertDialogContent className="bg-[#181818] border-[.5px] border-[#f8d87d] md:max-w-max text-white">
+                          <AlertDialogHeader>
+                            <AlertDialogTitle className="text-primary-color">Message Sent!</AlertDialogTitle>
+                            <AlertDialogDescription className="text-[#EEFF00]">
+                              {success}
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogAction
+                              onClick={() => setSuccess(null)}
+                              className="bg-[#EEFF00] mx-auto text-black hover:bg-[#f8d87d] border-none"
+                            >
+                              OK
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    )}
                 </form>
               </CardContent>
             </Card>
@@ -160,9 +229,13 @@ const ContactPage = () => {
                         <p className="font-medium text-[#f8d87d] text-base">
                           Email
                         </p>
-                        <p className="text-[#EEFF00] text-base break-all">
-                          support@{process.env.NEXT_PUBLIC_BRAND_NAME}.in
-                        </p>
+                        <Link
+                          href={`mailto:support@${process.env.NEXT_PUBLIC_BRAND_NAME?.toLowerCase()}.in`}
+                          className="text-[#EEFF00] text-base break-all"
+                        >
+                          support@
+                          {process.env.NEXT_PUBLIC_BRAND_NAME?.toLowerCase()}.in
+                        </Link>
                       </div>
                     </div>
 
@@ -172,9 +245,9 @@ const ContactPage = () => {
                         <p className="font-medium text-[#f8d87d] text-base">
                           Phone
                         </p>
-                        <p className="text-[#EEFF00] text-base">
-                          +91 93183 67696
-                        </p>
+                        <Link href={`tel:${PHONE_NUMBER}`} className="text-[#EEFF00] text-base break-all">
+                          {PHONE_NUMBER}
+                        </Link>
                       </div>
                     </div>
 
@@ -184,11 +257,16 @@ const ContactPage = () => {
                         <p className="font-medium text-[#f8d87d] text-base">
                           Address
                         </p>
-                        <p className="text-[#EEFF00] text-base">
-                          123 Organic Street
+                        <Link
+                          href="https://www.google.com/maps/search/?api=1&query=Humayunpur,+Safdarjung,+South+Delhi,+India,+110029"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[#EEFF00] text-base"
+                        >
+                          Humayunpur, Safdarjung
                           <br />
-                          Mumbai, Maharashtra 400001
-                        </p>
+                          South Delhi, India, 110029
+                        </Link>
                       </div>
                     </div>
 

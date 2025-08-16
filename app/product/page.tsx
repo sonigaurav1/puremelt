@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -7,8 +9,12 @@ import Image from "next/image";
 
 import Head from "next/head";
 import Header from "@/components/layout/Header";
+import { PRODUCT_PRICES, PRODUCT_WEIGHTS } from "@/constant";
+import { useState } from "react";
 
 export default function ProductPage() {
+  const [selectedWeight, setSelectedWeight] = useState<typeof PRODUCT_WEIGHTS[number]>(PRODUCT_WEIGHTS[0]);
+
   return (
     <>
       <Head>
@@ -79,9 +85,6 @@ export default function ProductPage() {
         {/* Hero Section */}
         <section className="pt-28 px-4">
           <div className="container mx-auto text-center">
-            <Badge className="bg-[#90caf9] border-[#64b5f6] border hover:bg-[#69b31e] text-lg text-white mb-4">
-              Premium Nuts Butter
-            </Badge>
             <h1 className="text-5xl font-bold font-playfair text-white mb-6">
               {process.env.NEXT_PUBLIC_BRAND_NAME}{" "}
               <span className="text-primary-color">Premium Nuts Butter</span>
@@ -104,7 +107,7 @@ export default function ProductPage() {
         {/* Product Showcase */}
         <section className="pt-24 bg-black">
           <div className="container mx-auto px-4">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="grid lg:grid-cols-2 gap-12 items-center md:items-start">
               <div className="relative">
                 <Image
                   src="/cta.webp"
@@ -113,7 +116,7 @@ export default function ProductPage() {
                   height={600}
                   className="w-full h-auto rounded-2xl"
                 />
-                <div className="absolute -top-4 -right-4 bg-[#f8d87d] text-black px-4 py-2 rounded-full font-semibold">
+                <div className="absolute -top-4 -right-4 bg-[#8fd846] text-black px-4 py-2 rounded-full font-semibold">
                   100% Organic
                 </div>
               </div>
@@ -176,69 +179,94 @@ export default function ProductPage() {
                     Available Sizes
                   </h3>
 
+                  {/* Dynamic Product Cards */}
                   <div className="grid grid-cols-3 gap-4">
-                    <Card className="border-[.5px] border-[#f8d87d] bg-[#181818] hover:shadow-lg transition-shadow">
-                      <CardContent className="p-4 text-center">
-                        <h4 className="font-bold text-primary-color mb-2">
-                          250g
-                        </h4>
-                        <p className="text-2xl font-bold text-white mb-1">
-                          ₹299
-                        </p>
-                        <p className="text-sm text-gray-500 line-through">
-                          ₹349
-                        </p>
-                        <Badge className="bg-green-100 text-green-800 mt-2">
-                          14% OFF
-                        </Badge>
-                      </CardContent>
-                    </Card>
-                    <Card className="border-2 border-[#f8d87d] bg-[#181818] hover:shadow-lg transition-shadow">
-                      <CardContent className="p-4 text-center">
-                        <h4 className="font-bold text-primary-color mb-2">
-                          500g
-                        </h4>
-                        <p className="text-2xl font-bold text-white mb-1">
-                          ₹599
-                        </p>
-                        <p className="text-sm text-gray-500 line-through">
-                          ₹699
-                        </p>
-                        <Badge className="bg-green-100 text-green-800 mt-2">
-                          14% OFF
-                        </Badge>
-                        <Badge className="bg-primary-color text-white mt-2">
-                          Most Popular
-                        </Badge>
-                      </CardContent>
-                    </Card>
-                    <Card className="border-[.5px] border-[#f8d87d] bg-[#181818] hover:shadow-lg transition-shadow">
-                      <CardContent className="p-4 text-center">
-                        <h4 className="font-bold text-primary-color mb-2">
-                          1kg
-                        </h4>
-                        <p className="text-2xl font-bold text-white mb-1">
-                          ₹1099
-                        </p>
-                        <p className="text-sm text-gray-500 line-through">
-                          ₹1299
-                        </p>
-                        <Badge className="bg-green-100 text-green-800 mt-2">
-                          15% OFF
-                        </Badge>
-                      </CardContent>
-                    </Card>
+                    {PRODUCT_WEIGHTS.map((weight) => {
+                      const priceObj = PRODUCT_PRICES[weight];
+                      const discount = priceObj
+                        ? Math.round(
+                            ((priceObj.original - priceObj.discounted) /
+                              priceObj.original) *
+                              100
+                          )
+                        : 0;
+                      return (
+                        <Card
+                          key={weight}
+                          className={`border-[.5px] border-[#f8d87d] bg-[#181818] hover:shadow-lg transition-shadow cursor-pointer ${
+                            selectedWeight === weight
+                              ? "border-2 border-[#f8d87d]"
+                              : ""
+                          }`}
+                          onClick={() => setSelectedWeight(weight)}
+                        >
+                          <CardContent className="p-4 text-center">
+                            <h4 className="font-bold text-primary-color mb-2">
+                              {weight}
+                            </h4>
+                            <p className="text-2xl font-bold text-white mb-1">
+                              ₹{priceObj?.discounted}
+                            </p>
+                            <p className="text-sm text-gray-500 line-through">
+                              ₹{priceObj?.original}
+                            </p>
+                            <Badge className="bg-green-100 text-green-800 mt-2">
+                              {discount}% OFF
+                            </Badge>
+                            {weight === "500g" && (
+                              <Badge className="bg-primary-color text-white mt-2">
+                                Most Popular
+                              </Badge>
+                            )}
+                          </CardContent>
+                        </Card>
+                      );
+                    })}
                   </div>
                 </div>
 
-                <Link href="/buy-now">
-                  <Button
-                    size="lg"
-                    className="w-full mt-6 bg-[#EEFF00] text-black text-lg"
-                  >
-                    Order Your {process.env.NEXT_PUBLIC_BRAND_NAME} Now
-                  </Button>
-                </Link>
+                {/* Order Button */}
+                <Button
+                  size="lg"
+                  className="w-full mt-6 bg-[#EEFF00] text-black text-lg"
+                  onClick={() => {
+                    // Add selected item to cart and redirect
+                    const priceObj = PRODUCT_PRICES[selectedWeight];
+                    const cartItem = {
+                      name: `${
+                        process.env.NEXT_PUBLIC_BRAND_NAME || "Penova"
+                      } Premium All-in-One Nuts Butter (${selectedWeight})`,
+                      weight: selectedWeight,
+                      quantity: 1,
+                      price: priceObj?.discounted || 0,
+                      total: priceObj?.discounted || 0,
+                    };
+                    let cart = [];
+                    if (typeof window !== "undefined") {
+                      const storedCart = localStorage.getItem("cart");
+                      if (storedCart) {
+                        try {
+                          cart = JSON.parse(storedCart);
+                        } catch {
+                          cart = [];
+                        }
+                      }
+                      const existingIndex = cart.findIndex(
+                        (item: { weight: string }) => item.weight === cartItem.weight
+                      );
+                      if (existingIndex !== -1) {
+                        cart[existingIndex].quantity += cartItem.quantity;
+                        cart[existingIndex].total += cartItem.total;
+                      } else {
+                        cart.push(cartItem);
+                      }
+                      localStorage.setItem("cart", JSON.stringify(cart));
+                      window.location.href = "/cart";
+                    }
+                  }}
+                >
+                  Order Your {process.env.NEXT_PUBLIC_BRAND_NAME} Now
+                </Button>
               </div>
             </div>
           </div>

@@ -76,8 +76,8 @@ export default function AboutPage() {
         {/* Our Story */}
         <section className="pt-20 bg-black">
           <div className="container mx-auto px-4">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div>
+            <div className="grid lg:grid-cols-2 gap-12 items-center md:items-start">
+              <div className="md:pt-2">
                 <h2 className="text-4xl font-bold font-playfair text-primary-color mb-6">
                   Our Story
                 </h2>

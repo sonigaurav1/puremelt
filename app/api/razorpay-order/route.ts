@@ -1,4 +1,4 @@
-export const runtime = 'edge';
+export const runtime = 'nodejs';
 import Razorpay from 'razorpay';
 
 const hasKeys = Boolean(process.env.RAZORPAY_KEY_ID && process.env.RAZORPAY_KEY_SECRET && process.env.RAZORPAY_KEY_ID !== 'your_key_id_here' && process.env.RAZORPAY_KEY_SECRET !== 'your_key_secret_here');

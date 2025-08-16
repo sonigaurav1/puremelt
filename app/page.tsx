@@ -30,8 +30,44 @@ import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import Header from "@/components/layout/Header";
 import ImageSlider from "@/components/ImageSlider";
+import { PRODUCT_PRICES, PRODUCT_WEIGHTS } from "@/constant";
 
 export default function HomePage() {
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [newsletterStatus, setNewsletterStatus] = useState("");
+
+  const handleNewsletterSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+    e.preventDefault();
+    if (!newsletterEmail) {
+      setNewsletterStatus("Please enter your email.");
+      return;
+    }
+    setNewsletterStatus("Processing...");
+    try {
+      // Example: Mailchimp API integration
+      // You should create a backend API route to avoid exposing your API key
+      const response = await fetch("/api/newsletter-subscribe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: newsletterEmail }),
+      });
+      if (response.ok) {
+        setNewsletterStatus("Subscribed! Thank you.");
+        setNewsletterEmail("");
+      } else {
+        const data = await response.json();
+        setNewsletterStatus(
+          data?.error || "Subscription failed. Please try again later."
+        );
+      }
+    } catch (err) {
+      setNewsletterStatus("Subscription failed. Please try again later.");
+    }
+  };
   const [customerCount, setCustomerCount] = useState(0);
   const [isClient, setIsClient] = useState(false);
   const [selectedWeight, setSelectedWeight] = useState("500g");
@@ -65,6 +101,40 @@ export default function HomePage() {
 
   const handleLearnMore = () => {
     router.push("/about");
+  };
+
+  const addToCart = () => {
+    const cartItem = {
+      name: `${process.env.NEXT_PUBLIC_BRAND_NAME} Premium All-in-One Nuts Butter (${selectedWeight})`,
+      weight: selectedWeight,
+      quantity: 1,
+      price: 599,
+      total: 599,
+    };
+    let cart = [];
+    if (typeof window !== "undefined") {
+      const storedCart = localStorage.getItem("cart");
+      if (storedCart) {
+        try {
+          cart = JSON.parse(storedCart);
+        } catch {
+          cart = [];
+        }
+      }
+      const existingIndex = cart.findIndex(
+        (item: any) => item.weight === cartItem.weight
+      );
+      if (existingIndex !== -1) {
+        cart[existingIndex].quantity += cartItem.quantity;
+        cart[existingIndex].total += cartItem.total;
+      } else {
+        cart.push(cartItem);
+      }
+      localStorage.setItem("cart", JSON.stringify(cart));
+
+      // Redirect to cart page after adding
+      router.push("/cart");
+    }
   };
 
   // Function to render stars based on rating
@@ -175,9 +245,11 @@ export default function HomePage() {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent className="text-primary-color border-primary-color">
-                        <SelectItem value="250g">250g</SelectItem>
-                        <SelectItem value="500g">500g</SelectItem>
-                        <SelectItem value="1kg">1kg</SelectItem>
+                        {PRODUCT_WEIGHTS.map((weight) => (
+                          <SelectItem value={weight} key={weight}>
+                            {weight}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                   </div>
@@ -190,15 +262,19 @@ export default function HomePage() {
                     >
                       Buy Now
                     </Button>
-                    <Link href="/buy-now">
-                      <Button
-                        size="lg"
-                        className="hover:bg-slate-100 border-[.1px] border-primary-color text-secondary-color bg-white w-full"
-                      >
-                        <ShoppingCart className="w-5 h-5 mr-2" />
-                        Add to Cart - ₹599
-                      </Button>
-                    </Link>
+                    <Button
+                      size="lg"
+                      className="hover:bg-slate-100 border-[.1px] border-primary-color text-secondary-color bg-white w-full md:max-w-max"
+                      onClick={addToCart}
+                    >
+                      <ShoppingCart className="w-5 h-5 mr-2" />
+                      Add to Cart - ₹
+                      {
+                        PRODUCT_PRICES[
+                          selectedWeight as keyof typeof PRODUCT_PRICES
+                        ].discounted
+                      }
+                    </Button>
                   </div>
 
                   {/* Trust badge & rating */}
@@ -689,15 +765,14 @@ export default function HomePage() {
                 <span className="font-semibold">premium nutrition</span>.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
-                <Link href="/buy-now" className="w-full sm:w-auto">
-                  <Button
-                    size="lg"
-                    className="w-full sm:w-auto bg-[#EEFF00] text-black font-bold px-8 py-3 shadow-md hover:bg-[#d4e000] text-lg rounded-xl"
-                  >
-                    <ShoppingCart className="w-5 h-5 mr-2" />
-                    Order Now - ₹599
-                  </Button>
-                </Link>
+                <Button
+                  size="lg"
+                  className="w-full sm:w-auto bg-[#EEFF00] text-black font-bold px-8 py-3 shadow-md hover:bg-[#d4e000] text-lg rounded-xl"
+                  onClick={addToCart}
+                >
+                  <ShoppingCart className="w-5 h-5 mr-2" />
+                  Order Now - ₹599
+                </Button>
                 <Link href="/about" className="w-full sm:w-auto">
                   <Button
                     variant="outline"
@@ -794,14 +869,26 @@ export default function HomePage() {
                   Get recipes, health tips, and exclusive offers!
                 </p>
                 <div className="space-y-2">
-                  <Input
-                    type="email"
-                    placeholder="Enter your email"
-                    className="border-amber-700 text-white placeholder:text-slate-400"
-                  />
-                  <Button className="w-full bg-amber-600 hover:bg-amber-700 text-white">
-                    Subscribe
-                  </Button>
+                  <form onSubmit={handleNewsletterSubmit} className="space-y-2">
+                    <Input
+                      type="email"
+                      placeholder="Enter your email"
+                      className="border-amber-700 text-black placeholder:text-slate-400"
+                      value={newsletterEmail}
+                      onChange={(e) => setNewsletterEmail(e.target.value)}
+                    />
+                    <Button
+                      className="w-full bg-amber-600 hover:bg-amber-700 text-white"
+                      type="submit"
+                    >
+                      Subscribe
+                    </Button>
+                    {newsletterStatus && (
+                      <div className="text-sm text-[#EEFF00] mt-2">
+                        {newsletterStatus}
+                      </div>
+                    )}
+                  </form>
                 </div>
               </div>
 
@@ -821,7 +908,7 @@ export default function HomePage() {
                 </div>
                 <div className="space-y-2 text-white">
                   <p className="text-sm">
-                    Email: support@{process.env.NEXT_PUBLIC_BRAND_NAME}.in
+                    Email: support@{process.env.NEXT_PUBLIC_BRAND_NAME?.toLowerCase()}.in
                   </p>
                   <p className="text-sm">Phone: +91 93183 67696</p>
                 </div>
