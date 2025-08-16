@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
             },
             body: JSON.stringify({
                 email,
-                listIds: [BREVO_LIST_ID],
+                listIds: [Number(BREVO_LIST_ID)],
                 updateEnabled: true,
             }),
         });
