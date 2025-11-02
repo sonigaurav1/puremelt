@@ -2,14 +2,21 @@
   "name": "peanut-butter-project",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "name": "Gaurav Soni",
+    "url": "https://github.com/sonigaurav1"
+  },
   "scripts": {
     "build": "next build",
     "dev": "next dev",
+    "convex": "npx convex dev",
     "lint": "next lint",
     "start": "next start",
     "postbuild": "next-sitemap"
   },
   "dependencies": {
+    "@clerk/clerk-react": "^5.43.0",
+    "@clerk/nextjs": "^6.31.3",
     "@hookform/resolvers": "^3.9.1",
     "@radix-ui/react-accordion": "1.2.2",
     "@radix-ui/react-alert-dialog": "1.1.4",
@@ -42,9 +49,14 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "1.0.4",
+    "convex": "^1.25.4",
     "date-fns": "^3.0.0",
     "emailjs-com": "^3.2.0",
     "embla-carousel-react": "8.5.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-tailwindcss": "^3.18.2",
+    "firebase": "^12.3.0",
     "input-otp": "1.4.1",
     "keen-slider": "^6.8.6",
     "lucide-react": "^0.454.0",
@@ -52,6 +64,8 @@
     "next-pwa": "^5.6.0",
     "next-sitemap": "^4.2.3",
     "next-themes": "^0.4.4",
+    "prettier": "^3.6.2",
+    "prettier-plugin-tailwindcss": "^0.6.14",
     "razorpay": "^2.9.6",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
@@ -66,9 +80,12 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@types/firebase": "^2.4.32",
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "eslint": "^9.33.0",
+    "eslint-config-next": "^15.5.0",
     "postcss": "^8.5",
     "tailwindcss": "^3.4.17",
     "typescript": "^5"

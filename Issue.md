@@ -1,0 +1,1 @@
+1) After registration of user new table of user data is being storing in convex table

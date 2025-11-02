@@ -1,7 +1,7 @@
 {
-  "name": "Penova Peanut Butter",
-  "short_name": "Penova",
-  "description": "Penova: Delicious, healthy peanut butter. Buy now, explore recipes, and enjoy a better lifestyle!",
+  "name": "Penowa Peanut Butter",
+  "short_name": "Penowa",
+  "description": "Penowa: Delicious, healthy peanut butter. Buy now, explore recipes, and enjoy a better lifestyle!",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",

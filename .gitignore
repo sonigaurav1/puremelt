@@ -10,6 +10,7 @@
 # production
 /build
 /TODO.md
+/Pages.md
 
 # debug
 npm-debug.log*
