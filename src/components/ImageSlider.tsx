@@ -9,7 +9,7 @@ import { Leaf } from 'lucide-react';
 
 const images = [
   {
-    src: '/cta.webp',
+    src: '/penowa.png',
     caption: (
       <p className='text-center text-xl font-semibold text-white sm:text-2xl'>
         No Refined Sugar and Palm Oil
@@ -17,7 +17,7 @@ const images = [
     )
   },
   {
-    src: '/cta.webp',
+    src: '/penowa.png',
     caption: (
       <p className='text-center text-xl font-semibold text-white sm:text-2xl'>
         <Leaf className='mr-2 inline' /> 100% Natural Ingredients
@@ -25,7 +25,7 @@ const images = [
     )
   },
   {
-    src: '/cta.webp',
+    src: '/penowa.png',
     caption: (
       <div className='space-y-1'>
         <h3 className='text-xl font-bold text-white'>No Preservatives</h3>
@@ -182,7 +182,7 @@ export default function ImageSlider() {
             />
 
             {/* Caption with improved animations */}
-            <div
+            {/* <div
               className={clsx(
                 'absolute bottom-12 left-1/2 z-20 -translate-x-1/2 transform px-2 py-2 sm:bottom-16 sm:px-4 md:bottom-20',
                 'transition-all duration-700 ease-in-out',
@@ -193,7 +193,7 @@ export default function ImageSlider() {
               )}
             >
               {img?.caption}
-            </div>
+            </div> */}
           </div>
         ))}
       </div>

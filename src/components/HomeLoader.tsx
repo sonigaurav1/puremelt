@@ -3,47 +3,30 @@
 import { useState, useEffect } from 'react';
 
 const HomeLoader = () => {
-  const [loadingText, setLoadingText] = useState('');
-  const [showCursor, setShowCursor] = useState(true);
+  // Smooth per-letter reveal using CSS transitions rather than re-rendering full string
   const fullText = 'Penowa';
+  const [index, setIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
 
+  // Fine-tuned timing for natural feel; minimal work per tick
   useEffect(() => {
-    let currentIndex = 0;
-    let isDeleting = false;
-    let timeoutId: ReturnType<typeof setTimeout>;
+    let delay = isDeleting ? 70 : 120; // base speed
 
-    const typeText = () => {
-      if (!isDeleting && currentIndex < fullText.length) {
-        setLoadingText(fullText.slice(0, currentIndex + 1));
-        currentIndex++;
-        timeoutId = setTimeout(typeText, 150);
-      } else if (!isDeleting && currentIndex === fullText.length) {
-        timeoutId = setTimeout(() => {
-          isDeleting = true;
-          typeText();
-        }, 2000);
-      } else if (isDeleting && currentIndex > 0) {
-        currentIndex--;
-        setLoadingText(fullText.slice(0, currentIndex));
-        timeoutId = setTimeout(typeText, 100);
-      } else if (isDeleting && currentIndex === 0) {
-        isDeleting = false;
-        timeoutId = setTimeout(typeText, 500);
+    if (!isDeleting && index === fullText.length) delay = 1800; // pause after typing
+    if (isDeleting && index === 0) delay = 420; // short pause before retyping
+
+    const id = setTimeout(() => {
+      if (!isDeleting) {
+        if (index < fullText.length) setIndex(index + 1);
+        else setIsDeleting(true);
+      } else {
+        if (index > 0) setIndex(index - 1);
+        else setIsDeleting(false);
       }
-    };
+    }, delay);
 
-    typeText();
-
-    return () => clearTimeout(timeoutId);
-  }, []);
-
-  useEffect(() => {
-    const cursorInterval = setInterval(() => {
-      setShowCursor((prev) => !prev);
-    }, 600);
-
-    return () => clearInterval(cursorInterval);
-  }, []);
+    return () => clearTimeout(id);
+  }, [index, isDeleting, fullText.length]);
 
   return (
     <div className='relative flex min-h-dvh flex-col items-center justify-center overflow-hidden bg-black bg-gradient-to-br text-white'>
@@ -73,11 +56,27 @@ const HomeLoader = () => {
       {/* Main content */}
       <div className='relative z-10 text-center'>
         <div className='mb-2'>
-          <span className='bg-gradient-to-r from-amber-600 via-white to-amber-600 bg-clip-text text-7xl font-bold text-transparent drop-shadow-2xl md:text-8xl'>
-            {loadingText || '\u00A0'}
-            {/* <span
-              className={`inline-block w-1 h-20 bg-gradient-to-b from-amber-600 to-purple-600 ml-2 ${showCursor ? "opacity-100" : "opacity-0"} transition-opacity duration-100`}
-            /> */}
+          {/* Container to stack gradient text and a masking overlay that reveals per-letter */}
+          <span className='relative inline-block'>
+            {/* Bottom layer: single continuous gradient across the whole word */}
+            <span className='gradient-text bg-gradient-to-r from-amber-600 via-white to-amber-600 bg-clip-text text-7xl font-bold text-transparent [-webkit-font-smoothing:antialiased] [text-rendering:optimizeLegibility] md:text-8xl'>
+              {fullText}
+            </span>
+            {/* Top layer: per-letter overlay that fades out to reveal gradient below */}
+            <span
+              aria-hidden
+              className='mask-layer pointer-events-none absolute inset-0 inline-flex items-end text-7xl font-bold [-webkit-font-smoothing:antialiased] [text-rendering:optimizeLegibility] md:text-8xl'
+            >
+              {fullText.split('')?.map((ch, i) => (
+                <span
+                  key={i}
+                  className={`mask-letter ${i < index ? 'revealed' : ''}`}
+                >
+                  {ch}
+                  <span className='cover' />
+                </span>
+              ))}
+            </span>
           </span>
         </div>
 
@@ -141,6 +140,60 @@ const HomeLoader = () => {
 
         .animate-float {
           animation: float 3s ease-in-out infinite;
+        }
+
+        /* Subtle, smooth per-letter reveal */
+        /* Per-letter overlay that hides text until revealed (continuous gradient below) */
+        .mask-layer {
+          color: transparent; /* do not render overlay text itself */
+          text-shadow: none;
+        }
+        .mask-letter {
+          position: relative;
+          display: inline-block;
+        }
+        .mask-letter .cover {
+          position: absolute;
+          inset: 0;
+          background: #000; /* match page background */
+          transform-origin: left center;
+          transform: scaleX(1);
+          opacity: 1;
+          transition:
+            transform 220ms ease,
+            opacity 220ms ease;
+          will-change: transform, opacity;
+        }
+        .mask-letter.revealed .cover {
+          transform: scaleX(0);
+          opacity: 0;
+        }
+
+        /* Ensure gradient text works across browsers (esp. Safari) */
+        .gradient-text {
+          -webkit-text-fill-color: transparent;
+          -webkit-background-clip: text;
+          background-clip: text;
+        }
+
+        /* GPU-friendly caret blink */
+        @keyframes caret-blink {
+          0%,
+          49% {
+            opacity: 1;
+          }
+          50%,
+          100% {
+            opacity: 0;
+          }
+        }
+        .caret {
+          display: inline-block;
+          width: 2px;
+          height: 1em;
+          background: linear-gradient(to bottom, #f59e0b, #ffffff);
+          animation: caret-blink 1s step-start infinite;
+          align-self: flex-end;
         }
       `}</style>
     </div>

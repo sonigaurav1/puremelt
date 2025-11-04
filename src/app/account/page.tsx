@@ -169,7 +169,7 @@ const AccountPage = () => {
     }
   };
 
-  if (isLoaded) {
+  if (!isLoaded) {
     return <HomeLoader />;
   }
 

@@ -24,7 +24,8 @@ import {
   Instagram,
   Facebook,
   Twitter,
-  Package
+  Package,
+  ArrowRight
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -34,12 +35,15 @@ import { Input } from '@/components/ui/input';
 import Header from '@/components/layout/Header';
 import ImageSlider from '@/components/ImageSlider';
 import {
+  PRODUCT_DEFAULT_SLUG,
   PRODUCT_INGREDIENTS,
   PRODUCT_INGREDIENTS_DETAILED,
   PRODUCT_PRICES,
-  PRODUCT_WEIGHTS
+  PRODUCTS
 } from '@/constant';
 import ProductCard from '@/components/ProductCard';
+import Footer from '@/components/layout/Footer';
+import FAQ from '@/components/FAQ';
 
 export default function HomePage() {
   const [newsletterEmail, setNewsletterEmail] = useState('');
@@ -80,6 +84,7 @@ export default function HomePage() {
       setNewsletterStatus('Subscription failed. Please try again later.');
     }
   };
+
   const [customerCount, setCustomerCount] = useState(0);
   const [isClient, setIsClient] = useState(false);
   const [selectedWeight, setSelectedWeight] = useState('350g');
@@ -139,23 +144,25 @@ export default function HomePage() {
   };
 
   const { addToCart } = useCart();
-  const addToCartHandler = () => {
-    addToCart({
-      name: `${process.env.NEXT_PUBLIC_BRAND_NAME} Premium All-in-One Nuts Butter (${selectedWeight})`,
-      size: selectedWeight,
-      price:
-        PRODUCT_PRICES[selectedWeight as keyof typeof PRODUCT_PRICES]
-          .discounted,
-      originalPrice:
-        PRODUCT_PRICES[selectedWeight as keyof typeof PRODUCT_PRICES].original,
-      quantity: 1,
-      image: '/product.webp',
-      weight: Number(selectedWeight.replace('g', '')) / 1000 // converts "500g" to 0.5
-    });
-    router.push('/cart');
-  };
+
+  // const addToCartHandler = () => {
+  //   addToCart({
+  //     name: `${process.env.NEXT_PUBLIC_BRAND_NAME} Premium All-in-One Nuts Butter (${selectedWeight})`,
+  //     size: selectedWeight,
+  //     price:
+  //       PRODUCT_PRICES[selectedWeight as keyof typeof PRODUCT_PRICES]
+  //         .discounted,
+  //     originalPrice:
+  //       PRODUCT_PRICES[selectedWeight as keyof typeof PRODUCT_PRICES].original,
+  //     quantity: 1,
+  //     image: '/product.webp',
+  //     weight: Number(selectedWeight.replace('g', '')) / 1000 // converts "500g" to 0.5
+  //   });
+  //   router.push('/cart');
+  // };
 
   // Function to render stars based on rating
+
   const renderStars = (rating: number) => {
     const stars = [];
     const fullStars = Math.floor(rating);
@@ -248,7 +255,7 @@ export default function HomePage() {
                     </p>
 
                     {/* Features with icons for desktop view */}
-                    <div className='hidden w-full gap-4 py-6 md:grid-cols-2 lg:grid lg:grid-cols-2'>
+                    <div className='hidden w-full gap-4 md:grid-cols-2 lg:grid lg:grid-cols-2'>
                       {[
                         {
                           icon: (
@@ -275,14 +282,15 @@ export default function HomePage() {
                           icon: (
                             <Heart className='mx-auto mb-1 h-6 w-6 text-primary-color' />
                           ), // fiber
-                          title: 'Fiber Rich',
-                          description: 'From dates & nuts'
+                          title: 'Natural Sweetness',
+                          description: 'From dates & honey'
                         }
                       ].map((item) => (
                         <div
                           key={item.title}
                           className='flex flex-col items-center rounded-xl border-[2.5px] border-[#f8d87d] bg-[#efefef] px-4 py-2 text-center shadow-sm'
                         >
+                          {item.icon}
                           <h4 className='mb-1 text-base font-bold text-primary-color'>
                             {item.title}
                           </h4>
@@ -296,13 +304,22 @@ export default function HomePage() {
 
                   <div className='relative lg:hidden'>
                     <Image
-                      src='/cta.webp'
+                      src='/penowa.png'
                       alt='Healthy peanut butter and nuts butter jar - Penowa premium blend, organic peanut butter India'
                       width={500}
                       height={500}
                       className='h-auto w-full rounded-2xl'
                       loading='lazy'
                     />
+                    <div className='absolute bottom-0 left-1/2 mb-4 flex -translate-x-1/2 transform'>
+                      <Link
+                        href={`/products/${PRODUCT_DEFAULT_SLUG}`}
+                        className='flex items-center justify-center rounded-2xl border-[1.4px] border-gray-700 px-5 py-1 text-sm font-bold text-gray-500 backdrop-blur-3xl'
+                      >
+                        Buy Now
+                        {/* <ArrowRight className='ml-1 h-4 w-4' /> */}
+                      </Link>
+                    </div>
                   </div>
 
                   {/* <div className='flex items-center gap-3 md:gap-4'>
@@ -369,10 +386,10 @@ export default function HomePage() {
                   </div> */}
                 </div>
 
-                {/* Image Column */}
+                {/* Image Column  */}
                 <div className='relative order-1 hidden lg:order-2 lg:block'>
                   <Image
-                    src='/cta.webp'
+                    src='/penowa.png'
                     alt='Healthy peanut butter and nuts butter jar - Penowa premium blend, organic peanut butter India'
                     width={500}
                     height={500}
@@ -391,11 +408,11 @@ export default function HomePage() {
                     <Star className='mx-auto mb-1 h-6 w-6 text-primary-color' />
                   ), // protein
                   title: 'Protein Rich',
-                  description: '25g protein per 100g'
+                  description: `${PRODUCTS['premium-nuts-butter'].protein}g protein per 100g`
                 },
                 {
                   icon: (
-                    <Leaf className='mx-auto mb-1 h-6 w-6 text-primary-color' />
+                    <Heart className='mx-auto mb-1 h-6 w-6 text-primary-color' />
                   ), // healthy fats
                   title: 'Healthy Fats',
                   description: 'Omega-3 & Omega-6'
@@ -411,14 +428,15 @@ export default function HomePage() {
                   icon: (
                     <Heart className='mx-auto mb-1 h-6 w-6 text-primary-color' />
                   ), // fiber
-                  title: 'Fiber Rich',
-                  description: 'From dates & nuts'
+                  title: 'Natural Sweetness',
+                  description: 'From dates & honey'
                 }
               ].map((item) => (
                 <div
                   key={item.title}
                   className='flex flex-col items-center rounded-xl border-[2.5px] border-[#f8d87d] bg-[#efefef] px-4 py-2 text-center shadow-sm'
                 >
+                  {item.icon}
                   <h4 className='mb-1 text-base font-bold text-primary-color'>
                     {item.title}
                   </h4>
@@ -434,46 +452,36 @@ export default function HomePage() {
           <section className='bg-black px-4 py-8 md:px-8 md:py-12 lg:px-12 lg:pb-16 xl:pb-20'>
             <div className='container mx-auto max-w-7xl'>
               <h2 className='mb-1 text-2xl font-bold text-white md:mb-1'>
-                All Products
+                Our All Products
               </h2>
               <span className='mb-5 block h-1 w-12 rounded bg-amber-400 md:mb-5' />
-              <div className='grid grid-cols-2 items-center justify-center gap-2 md:grid-cols-2 md:gap-6 lg:grid-cols-3'>
-                {/* Map through all products and display them */}
-                {[
-                  {
-                    weight: '350g',
-                    productName: 'Premium Nuts Butter',
-                    slug: 'premium-nuts-butter',
-                    description: 'A delicious blend of premium nuts.',
-                    original:
-                      PRODUCT_PRICES['premium-nuts-butter']['350g'].original,
-                    price:
-                      PRODUCT_PRICES['premium-nuts-butter']['350g'].discounted
-                  },
-                  {
-                    weight: '500g',
-                    productName: 'Peanut Butter',
-                    slug: 'peanut-butter',
-                    description: 'A delicious blend of premium nuts.',
-                    original: PRODUCT_PRICES['peanut-butter']['500g'].original,
-                    price: PRODUCT_PRICES['peanut-butter']['500g'].discounted
-                  },
-                  {
-                    weight: '250g',
-                    productName: 'Almond Walnut Cashew Butter',
-                    slug: 'almond-walnut-cashew-butter',
-                    description: 'A delicious blend of premium nuts.',
-                    original:
-                      PRODUCT_PRICES['almond-walnut-cashew-butter']['250g']
-                        .original,
-                    price:
-                      PRODUCT_PRICES['almond-walnut-cashew-butter']['250g']
-                        .discounted
-                  }
-                ].map((product, idx) => (
-                  // Pass the entire product object so ProductCard receives all required props
-                  <ProductCard key={idx} {...product} />
-                ))}
+
+              {/* <div className='mb-10 flex flex-col items-center'>
+                <h2 className='mb-2 text-center text-3xl font-bold'>
+                  Our All product are perfectly blended for taste and nutrition.
+                </h2>
+              </div> */}
+
+              <div className='grid grid-cols-2 items-center justify-center gap-2 md:grid-cols-2 md:gap-6 lg:flex lg:flex-wrap lg:items-start lg:justify-start lg:gap-14'>
+                {/* Build product cards from central constants instead of hardcoding */}
+                {Object.values(PRODUCTS)
+                  .map((p) => {
+                    const weight = p.availableWeights?.[0] ?? '350g';
+                    const priceInfo = (PRODUCT_PRICES as any)[p.slug]?.[
+                      weight
+                    ] ?? { original: 399, discounted: 399 };
+                    return {
+                      weight,
+                      productName: p.name,
+                      slug: p.slug,
+                      description: p.shortDescription,
+                      original: priceInfo.original,
+                      price: priceInfo.discounted
+                    };
+                  })
+                  .map((product) => (
+                    <ProductCard key={product.slug} {...product} />
+                  ))}
               </div>
             </div>
           </section>
@@ -512,11 +520,12 @@ export default function HomePage() {
         <section className='px-4 py-12 md:px-12'>
           <div className='container mx-auto md:max-w-7xl'>
             <div className='mb-10 flex flex-col items-center'>
-              <h2 className='mb-2 text-center text-3xl font-bold'>
-                Nature's Finest, Blended to Perfection
+              <h2 className='mb-2 text-center text-[33px] font-bold leading-[1.2]'>
+                Handpicked for flavor, nutrition & purity
               </h2>
-              <p className='max-w-md text-center text-lg text-primary-color'>
-                Each ingredient is handpicked for taste, nutrition, and quality.
+              <p className='max-w-md text-center text-lg leading-tight text-primary-color'>
+                Premium organic ingredients: rich taste, balanced nutrition, no
+                preservatives.
               </p>
             </div>
 
@@ -524,7 +533,7 @@ export default function HomePage() {
               {PRODUCT_INGREDIENTS_DETAILED.map((ingredient, idx) => (
                 <div
                   key={ingredient.name}
-                  className='flex min-h-[140px] flex-col items-center rounded-xl border-[2.5px] border-[#f8d87d] bg-[#efefef] p-4 text-center shadow-sm max-sm:last:col-span-2 max-sm:last:min-w-[200px] max-sm:last:justify-self-center'
+                  className='flex min-h-[140px] flex-col items-center rounded-xl border-[2.5px] border-[#f8d87d] bg-[#efefef] p-4 text-center shadow-sm'
                 >
                   <div className='mb-2 flex size-20 items-center justify-center overflow-hidden rounded-full bg-black'>
                     <Image
@@ -726,19 +735,19 @@ export default function HomePage() {
               ].map((testimonial, idx) => (
                 <div
                   key={testimonial.name}
-                  className='flex min-h-[140px] flex-col items-center rounded-xl border-[.5px] border-[#f8d87d] bg-[#181818] p-6 text-center shadow-sm'
+                  className='flex min-h-[140px] flex-col items-center rounded-xl border-[2px] border-[#f8d87d] bg-white p-6 text-center shadow-sm'
                 >
                   <div className='mb-2 flex items-center justify-center gap-1'>
                     {renderStars(testimonial.rating)}
                   </div>
-                  <p className='mb-3 text-base italic text-white'>
+                  <p className='mb-3 text-base italic text-black opacity-80'>
                     "{testimonial.text}"
                   </p>
                   <div>
-                    <p className='font-semibold text-[#f8d87d]'>
+                    <p className='font-semibold text-[#c79a1f]'>
                       {testimonial.name}
                     </p>
-                    <p className='text-xs text-white opacity-70'>
+                    <p className='text-xs text-black opacity-70'>
                       {testimonial.location}
                     </p>
                   </div>
@@ -749,78 +758,10 @@ export default function HomePage() {
         </section>
 
         {/* FAQ Section for SEO */}
-        <section className='bg-white px-4 py-12 md:px-12' id='faq'>
-          <div className='container mx-auto md:max-w-7xl'>
-            <div className='mb-10 flex flex-col items-center'>
-              <h2 className='mb-2 text-center text-4xl font-bold text-primary-color'>
-                FAQ
-              </h2>
-              <p className='max-w-md text-center text-lg text-secondary-color'>
-                Everything you want to know about{' '}
-                <span className='font-semibold text-primary-color'>
-                  healthy peanut butter
-                </span>{' '}
-                and our premium blend.
-              </p>
-            </div>
-
-            <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
-              {[
-                {
-                  question:
-                    'What makes Penowa the best healthy nuts butter in India?',
-                  answer:
-                    'Penowa uses only premium, natural ingredients: peanuts, almonds, cashews, pistachios, dates and honey. No palm oil, no preservatives, and no refined sugar. Our nuts butter is protein-rich, organic, and delicious!'
-                },
-                {
-                  question:
-                    'Is your nuts butter suitable for fitness and weight loss?',
-                  answer:
-                    'Yes! Our healthy nuts butter is high in protein and healthy fats, making it perfect for fitness enthusiasts, athletes, and anyone looking for a nutritious snack or post-workout meal.'
-                },
-                {
-                  question: 'Do you use palm oil or refined sugar?',
-                  answer:
-                    'Never. We use only natural sweeteners like dates and honey, and never add palm oil or refined sugar. This makes our nuts butter healthier and tastier.'
-                },
-                {
-                  question: 'Is Penowa nuts butter organic?',
-                  answer:
-                    'Yes, we use certified organic ingredients wherever possible, ensuring a clean, healthy, and safe product for you and your family.'
-                },
-                {
-                  question: 'How can I use your nuts butter?',
-                  answer: (
-                    <span>
-                      Spread it on bread, add to shakes, pair with fruits, or
-                      drizzle on desserts. Check out our{' '}
-                      <Link
-                        href='/recipes'
-                        className='text-primary-color underline'
-                      >
-                        healthy nuts butter recipes
-                      </Link>{' '}
-                      for more ideas!
-                    </span>
-                  )
-                }
-              ].map((faq, idx) => (
-                <div
-                  key={faq.question}
-                  className='rounded-xl bg-black p-5 shadow-sm md:last:col-span-2 md:last:max-w-xl md:last:justify-self-center'
-                >
-                  <h3 className='mb-2 flex items-center text-lg font-semibold text-primary-color'>
-                    <span className='mr-2'>Q{idx + 1}.</span> {faq.question}
-                  </h3>
-                  <div className='pl-6 text-base text-white'>{faq.answer}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <FAQ />
 
         {/* CTA Section */}
-        <section className='bg-[#000] py-12 text-white md:px-12'>
+        {/* <section className='bg-[#000] py-12 text-white md:px-12'>
           <div className='container mx-auto flex justify-center px-4'>
             <div className='flex w-full max-w-7xl flex-col items-center rounded-2xl border border-[#f8d87d] bg-[#181818] p-8 shadow-lg'>
               <Badge className='mb-4 border-none bg-[#f8d87d] px-4 py-1 text-base font-bold text-black'>
@@ -865,145 +806,10 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Footer */}
-        <footer className='bg-black pb-6 pt-16 text-white md:px-12'>
-          <div className='md:max-w-8xl container mx-auto px-4'>
-            <div className='grid gap-8 md:grid-cols-5'>
-              <div>
-                <Link href='/' className='mb-4 flex items-center space-x-2'>
-                  <div className='flex h-8 w-8 items-center justify-center rounded-full bg-amber-600'>
-                    <span className='font-bold text-white'>P</span>
-                  </div>
-                  <span className='text-xl font-bold text-primary-color'>
-                    {process.env.NEXT_PUBLIC_BRAND_NAME}
-                  </span>
-                </Link>
-                <p className='mb-4 text-white'>
-                  Premium nuts butter crafted for the health-conscious,
-                  flavor-seeking consumer.
-                </p>
-                <div className='flex space-x-4'>
-                  <Instagram className='h-5 w-5 cursor-pointer text-white hover:text-white' />
-                  <Facebook className='h-5 w-5 cursor-pointer text-white hover:text-white' />
-                  <Twitter className='h-5 w-5 cursor-pointer text-white hover:text-white' />
-                </div>
-              </div>
-
-              <div>
-                <h3 className='mb-4 font-bold'>Quick Links</h3>
-                <ul className='space-y-2 text-white'>
-                  <li>
-                    <Link href='/about' className='hover:text-white'>
-                      Our Story
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href='/product' className='hover:text-white'>
-                      Our Product
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href='/recipes' className='hover:text-white'>
-                      Recipes
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href='/blog' className='hover:text-white'>
-                      Blog
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-
-              <div>
-                <h3 className='mb-4 font-bold'>Support</h3>
-                <ul className='space-y-2 text-white'>
-                  <li>
-                    <Link href='/contact' className='hover:text-white'>
-                      Contact Us
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href='/faq' className='hover:text-white'>
-                      FAQ
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href='/shipping' className='hover:text-white'>
-                      Shipping Info
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href='/returns' className='hover:text-white'>
-                      Returns
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-
-              <div>
-                <h3 className='mb-4 font-bold'>Newsletter</h3>
-                <p className='mb-4 text-sm text-white'>
-                  Get recipes, health tips, and exclusive offers!
-                </p>
-                <div className='space-y-2'>
-                  <form onSubmit={handleNewsletterSubmit} className='space-y-2'>
-                    <Input
-                      type='email'
-                      placeholder='Enter your email'
-                      className='border-amber-700 text-black placeholder:text-slate-400'
-                      value={newsletterEmail}
-                      onChange={(e) => setNewsletterEmail(e.target.value)}
-                    />
-                    <Button
-                      className='w-full bg-amber-600 text-white hover:bg-amber-700'
-                      type='submit'
-                    >
-                      Subscribe
-                    </Button>
-                    {newsletterStatus && (
-                      <div className='mt-2 text-sm text-[#EEFF00]'>
-                        {newsletterStatus}
-                      </div>
-                    )}
-                  </form>
-                </div>
-              </div>
-
-              <div>
-                <h3 className='mb-4 font-bold'>We Accept</h3>
-                <div className='mb-4 grid grid-cols-3 gap-2'>
-                  <div className='rounded text-center'>
-                    <Image
-                      src='/upi.webp'
-                      alt='UPI Payment for healthy peanut butter purchase, Penowa India'
-                      width={100}
-                      height={100}
-                      className='h-auto w-full'
-                      loading='lazy'
-                    />
-                  </div>
-                </div>
-                <div className='space-y-2 text-white'>
-                  <p className='text-sm'>
-                    Email: support@
-                    {process.env.NEXT_PUBLIC_BRAND_NAME?.toLowerCase()}.in
-                  </p>
-                  <p className='text-sm'>Phone: +91 93183 67696</p>
-                </div>
-              </div>
-            </div>
-
-            <div className='mt-12 border-t border-amber-800 pt-8 text-center text-white'>
-              <p>
-                &copy; 2025 {process.env.NEXT_PUBLIC_BRAND_NAME}. All rights
-                reserved. | Privacy Policy | Terms of Service
-              </p>
-            </div>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </>
   );

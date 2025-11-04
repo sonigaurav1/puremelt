@@ -53,7 +53,7 @@ export default function Head() {
               (process.env.NEXT_PUBLIC_SITE_URL || 'https://penowa.in') +
                 '/hero-butter.webp',
               (process.env.NEXT_PUBLIC_SITE_URL || 'https://penowa.in') +
-                '/cta.webp'
+                '/penowa.png'
             ],
             description:
               'Premium healthy peanut butter and nuts butters: blend of peanuts, almonds, cashews, pistachios, dates & honey. No preservatives, no palm oil, no refined sugar. Healthier, tastier, organic.',

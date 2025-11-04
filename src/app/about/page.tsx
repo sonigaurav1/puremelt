@@ -108,7 +108,7 @@ export default function AboutPage() {
               </div>
               <div className='relative'>
                 <Image
-                  src='/placeholder.svg?height=400&width=400'
+                  src='/penowa.png'
                   alt={`${process.env.NEXT_PUBLIC_BRAND_NAME} Story`}
                   width={400}
                   height={400}
@@ -123,33 +123,38 @@ export default function AboutPage() {
         <section className='bg-black pt-24'>
           <div className='container mx-auto px-4'>
             <div className='grid gap-12 md:grid-cols-2'>
-              <Card className='border-[.5px] border-[#f8d87d] bg-[#181818] p-8'>
-                <CardContent className='text-center'>
-                  <Target className='mx-auto mb-6 h-16 w-16 text-primary-color' />
-                  <h3 className='mb-4 text-2xl font-bold text-primary-color'>
-                    Our Mission
-                  </h3>
-                  <p className='leading-relaxed text-[#f8d87d]'>
-                    To elevate everyday nutrition with a thoughtfully crafted
-                    nuts butter that blends premium ingredients, health, and
-                    indulgence—all in a single, standout variant.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className='border-[.5px] border-[#f8d87d] bg-[#181818] p-8'>
-                <CardContent className='text-center'>
-                  <Eye className='mx-auto mb-6 h-16 w-16 text-primary-color' />
-                  <h3 className='mb-4 text-2xl font-bold text-primary-color'>
-                    Our Vision
-                  </h3>
-                  <p className='leading-relaxed text-[#f8d87d]'>
-                    To be the most trusted single-variant nuts butter brand in
-                    India, known for innovation, purity, and an uncompromising
-                    commitment to taste and quality.
-                  </p>
-                </CardContent>
-              </Card>
+              {[
+                {
+                  icon: Target,
+                  title: 'Our Mission',
+                  description:
+                    'To elevate everyday nutrition with a thoughtfully crafted nuts butter that blends premium ingredients, health, and indulgence—all in a single, standout variant.'
+                },
+                {
+                  icon: Eye,
+                  title: 'Our Vision',
+                  description:
+                    'To be the most trusted single-variant nuts butter brand in India, known for innovation, purity, and an uncompromising commitment to taste and quality.'
+                }
+              ].map((item, idx) => {
+                const Icon = item.icon;
+                return (
+                  <Card
+                    key={idx}
+                    className='border-[2.5px] border-[#f8d87d] bg-white p-8'
+                  >
+                    <CardContent className='text-center'>
+                      <Icon className='mx-auto mb-6 h-16 w-16 text-primary-color' />
+                      <h3 className='mb-4 text-2xl font-bold text-primary-color'>
+                        {item.title}
+                      </h3>
+                      <p className='leading-relaxed text-[#f8d87d]'>
+                        {item.description}
+                      </p>
+                    </CardContent>
+                  </Card>
+                );
+              })}
             </div>
           </div>
         </section>
@@ -191,7 +196,7 @@ export default function AboutPage() {
               ].map((value, index) => (
                 <Card
                   key={index}
-                  className='border-[.5px] border-[#f8d87d] bg-[#181818] transition-shadow hover:shadow-lg'
+                  className='border-[2.5px] border-[#f8d87d] bg-white transition-shadow hover:shadow-lg'
                 >
                   <CardContent className='p-6 text-center'>
                     <value.icon className='mx-auto mb-4 h-12 w-12 text-primary-color' />
@@ -283,7 +288,7 @@ export default function AboutPage() {
             <Link href='/buy-now'>
               <Button
                 size='lg'
-                className='bg-[#EEFF00] px-8 py-3 text-lg text-black'
+                className='bg-primary-color px-8 py-3 text-lg text-white'
               >
                 Try {process.env.NEXT_PUBLIC_BRAND_NAME} Today
               </Button>

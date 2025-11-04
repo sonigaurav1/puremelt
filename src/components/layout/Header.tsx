@@ -1,26 +1,26 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Menu, ShoppingCart, User } from "lucide-react";
-import { Button } from "../ui/button";
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { Menu, ShoppingCart, User } from 'lucide-react';
+import { Button } from '../ui/button';
 import {
   Sheet,
   SheetContent,
   SheetTrigger,
-  SheetClose,
-} from "@/components/ui/sheet";
-import { useCart } from "@/app/components/cart-context";
-import clsx from "clsx";
+  SheetClose
+} from '@/components/ui/sheet';
+import { useCart } from '@/app/components/cart-context';
+import clsx from 'clsx';
 
 // Navigation links
 const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/product", label: "Our Product" },
-  { href: "/about", label: "About Us" },
-  { href: "/recipes", label: "Recipes" },
-  { href: "/contact", label: "Contact" },
+  { href: '/', label: 'Home' },
+  { href: '/products', label: 'Our Product' },
+  { href: '/about', label: 'About Us' },
+  { href: '/recipes', label: 'Recipes' },
+  { href: '/contact', label: 'Contact' }
 ];
 
 // NavLinks component
@@ -29,9 +29,9 @@ const NavLinks = ({
   pathname,
   textColor,
   scrolled,
-  onClick,
+  onClick
 }: {
-  variant: "desktop" | "mobile";
+  variant: 'desktop' | 'mobile';
   pathname: string;
   textColor: string;
   scrolled: boolean;
@@ -42,32 +42,32 @@ const NavLinks = ({
       const isActive = pathname === href;
 
       const baseClasses = clsx(
-        "relative transition-all duration-300 ease-in-out",
-        variant === "desktop"
-          ? "font-medium group"
-          : "font-medium hover:text-[#f8d87d]",
+        'relative transition-all duration-300 ease-in-out',
+        variant === 'desktop'
+          ? 'font-medium group'
+          : 'font-medium hover:text-[#f8d87d]',
         // Desktop: active tab always amber, inactive tabs black when scrolled, white otherwise
-        variant === "desktop"
+        variant === 'desktop'
           ? isActive
-            ? "!text-amber-700 font-semibold"
+            ? '!text-amber-700 font-semibold'
             : scrolled
-            ? "text-black"
-            : "text-white"
+              ? 'text-black'
+              : 'text-white'
           : isActive
-          ? "text-[#f8d87d] font-semibold underline underline-offset-4"
-          : scrolled
-          ? "text-white"
-          : ""
+            ? 'text-[#f8d87d] font-semibold underline underline-offset-4'
+            : scrolled
+              ? 'text-white'
+              : ''
       );
 
       return (
         <Link key={href} href={href} className={baseClasses} onClick={onClick}>
           {label}
-          {variant === "desktop" && (
+          {variant === 'desktop' && (
             <span
               className={clsx(
-                "absolute left-0 -bottom-1 h-[2px] bg-amber-700 transition-all duration-300 ease-in-out",
-                isActive ? "w-full" : "w-0 group-hover:w-full"
+                'absolute -bottom-1 left-0 h-[2px] bg-amber-700 transition-all duration-300 ease-in-out',
+                isActive ? 'w-full' : 'w-0 group-hover:w-full'
               )}
             />
           )}
@@ -83,7 +83,7 @@ const HeaderIcons = ({
   textColor,
   scrolled,
   cartCount,
-  pop,
+  pop
 }: {
   pathname: string;
   textColor: string;
@@ -91,28 +91,28 @@ const HeaderIcons = ({
   cartCount: number;
   pop: boolean;
 }) => (
-  <div className="flex items-center gap-3">
+  <div className='flex items-center gap-3'>
     {/* Cart */}
-    <Link href="/cart">
+    <Link href='/cart'>
       <Button
-        variant="ghost"
-        size="sm"
-        className="px-2 bg-transparent relative"
+        variant='ghost'
+        size='sm'
+        className='relative bg-transparent px-2'
       >
         <ShoppingCart
           className={clsx(
-            "!size-5 cursor-pointer",
+            '!size-5 cursor-pointer',
             textColor,
-            scrolled && "text-black",
-            pathname === "/cart" && "!text-amber-700"
+            scrolled && 'text-black',
+            pathname === '/cart' && '!text-amber-700'
           )}
-          aria-label="View cart"
+          aria-label='View cart'
         />
         {cartCount > 0 && (
           <span
             className={clsx(
-              "absolute -top-1.5 -right-2 bg-amber-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center transition-transform duration-300",
-              pop && "animate-pop"
+              'absolute -right-2 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-amber-600 text-xs text-white transition-transform duration-300',
+              pop && 'animate-pop'
             )}
           >
             {cartCount}
@@ -122,16 +122,16 @@ const HeaderIcons = ({
     </Link>
 
     {/* User */}
-    <Link href="/account">
-      <Button variant="ghost" size="sm" className="px-2 bg-transparent">
+    <Link href='/account'>
+      <Button variant='ghost' size='sm' className='bg-transparent px-2'>
         <User
           className={clsx(
-            "!size-[22px] cursor-pointer transition-transform duration-200 hover:scale-110",
+            '!size-[22px] cursor-pointer transition-transform duration-200 hover:scale-110',
             textColor,
-            scrolled && "text-black",
-            pathname === "/account" && "!text-amber-700"
+            scrolled && 'text-black',
+            pathname === '/account' && '!text-amber-700'
           )}
-          aria-label="User account"
+          aria-label='User account'
         />
       </Button>
     </Link>
@@ -155,15 +155,15 @@ const Header = () => {
     setMounted(true);
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
     handleScroll();
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
@@ -179,122 +179,129 @@ const Header = () => {
   const getColors = () => {
     // Desktop
     if (!isMobile) {
-      if (pathname === "/" || pathname === "/product") {
+      if (pathname === '/' || pathname === '/products') {
         if (!scrolled) {
-          return { bg: "bg-transparent", text: "text-white" };
+          return { bg: 'bg-transparent', text: 'text-white' };
         } else {
-          return { bg: "bg-white", text: "text-black" };
+          return { bg: 'bg-white', text: 'text-black' };
         }
       }
-      if (pathname === "/product") {
+      if (pathname === '/products') {
         if (!scrolled) {
-          return { bg: "bg-transparent", text: "text-white" };
+          return { bg: 'bg-transparent', text: 'text-white' };
         } else {
-          return { bg: "bg-white", text: "text-black" };
+          return { bg: 'bg-white', text: 'text-black' };
         }
       }
-      if (pathname === "/about") {
+      if (pathname === '/about') {
         if (!scrolled) {
-          return { bg: "bg-transparent", text: "text-white" };
+          return { bg: 'bg-transparent', text: 'text-white' };
         } else {
-          return { bg: "bg-white", text: "text-black" };
+          return { bg: 'bg-white', text: 'text-black' };
         }
       }
-      if (pathname === "/recipes") {
+      if (pathname === '/recipes') {
         if (!scrolled) {
-          return { bg: "bg-transparent", text: "text-white" };
+          return { bg: 'bg-transparent', text: 'text-white' };
         } else {
-          return { bg: "bg-white", text: "text-black" };
+          return { bg: 'bg-white', text: 'text-black' };
         }
       }
-      if (pathname === "/contact") {
+      if (pathname === '/contact') {
         if (!scrolled) {
-          return { bg: "bg-transparent", text: "text-white" };
+          return { bg: 'bg-transparent', text: 'text-white' };
         } else {
-          return { bg: "bg-white", text: "text-black" };
+          return { bg: 'bg-white', text: 'text-black' };
         }
       }
-      if (pathname === "/cart") {
+      if (pathname === '/cart') {
         if (!scrolled) {
-          return { bg: "bg-transparent", text: "text-white" };
+          return { bg: 'bg-transparent', text: 'text-white' };
         } else {
-          return { bg: "bg-white", text: "text-black" };
+          return { bg: 'bg-white', text: 'text-black' };
         }
       }
-      if (pathname === "/account") {
+      if (pathname === '/account') {
         if (!scrolled) {
-          return { bg: "bg-transparent", text: "text-white" };
+          return { bg: 'bg-transparent', text: 'text-white' };
         } else {
-          return { bg: "bg-white", text: "text-black" };
+          return { bg: 'bg-white', text: 'text-black' };
         }
       }
       // Default fallback
       if (!scrolled) {
-        return { bg: "bg-transparent", text: "text-white" };
+        return { bg: 'bg-transparent', text: 'text-white' };
       } else {
-        return { bg: "bg-white", text: "text-black" };
+        return { bg: 'bg-white', text: 'text-black' };
       }
     }
     // Mobile
     if (isMobile) {
-      if (pathname === "/") {
+      if (pathname === '/') {
         if (!scrolled) {
-          return { bg: "bg-transparent", text: "text-black" };
+          return { bg: 'bg-transparent', text: 'text-black' };
         } else {
-          return { bg: "bg-white", text: "text-black" };
+          return { bg: 'bg-white', text: 'text-black' };
         }
       }
-      if (pathname === "/product") {
+      if (pathname === '/products') {
         if (!scrolled) {
-          return { bg: "bg-transparent", text: "text-white" };
+          return { bg: 'bg-transparent', text: 'text-white' };
         } else {
-          return { bg: "bg-white", text: "text-black" };
+          return { bg: 'bg-white', text: 'text-black' };
         }
       }
-      if (pathname === "/about") {
+      if (pathname === '/products/[slug]'  || pathname.startsWith('/products/')) {
         if (!scrolled) {
-          return { bg: "bg-transparent", text: "text-white" };
+          return { bg: 'bg-transparent', text: 'text-white' };
         } else {
-          return { bg: "bg-white", text: "text-black" };
+          return { bg: 'bg-white', text: 'text-black' };
         }
       }
-      if (pathname === "/recipes") {
+      if (pathname === '/about') {
         if (!scrolled) {
-          return { bg: "bg-transparent", text: "text-white" };
+          return { bg: 'bg-transparent', text: 'text-white' };
         } else {
-          return { bg: "bg-white", text: "text-black" };
+          return { bg: 'bg-white', text: 'text-black' };
         }
       }
-      if (pathname === "/contact") {
+      if (pathname === '/recipes') {
         if (!scrolled) {
-          return { bg: "bg-transparent", text: "text-white" };
+          return { bg: 'bg-transparent', text: 'text-white' };
         } else {
-          return { bg: "bg-white", text: "text-black" };
+          return { bg: 'bg-white', text: 'text-black' };
         }
       }
-      if (pathname === "/cart") {
+      if (pathname === '/contact') {
         if (!scrolled) {
-          return { bg: "bg-transparent", text: "text-white" };
+          return { bg: 'bg-transparent', text: 'text-white' };
         } else {
-          return { bg: "bg-white", text: "text-black" };
+          return { bg: 'bg-white', text: 'text-black' };
         }
       }
-      if (pathname === "/account") {
+      if (pathname === '/cart') {
         if (!scrolled) {
-          return { bg: "bg-transparent", text: "text-white" };
+          return { bg: 'bg-transparent', text: 'text-white' };
         } else {
-          return { bg: "bg-white", text: "text-black" };
+          return { bg: 'bg-white', text: 'text-black' };
+        }
+      }
+      if (pathname === '/account') {
+        if (!scrolled) {
+          return { bg: 'bg-transparent', text: 'text-white' };
+        } else {
+          return { bg: 'bg-white', text: 'text-black' };
         }
       }
       // Default fallback
       if (!scrolled) {
-        return { bg: "bg-transparent", text: "text-black" };
+        return { bg: 'bg-transparent', text: 'text-black' };
       } else {
-        return { bg: "bg-white", text: "text-black" };
+        return { bg: 'bg-white', text: 'text-black' };
       }
     }
     // Fallback
-    return { bg: "bg-transparent", text: "text-white" };
+    return { bg: 'bg-transparent', text: 'text-white' };
   };
 
   const { bg, text } = getColors();
@@ -302,39 +309,39 @@ const Header = () => {
   return (
     <header
       className={clsx(
-        "fixed w-full border-b-2 top-0 z-50 transition-all duration-700 ease-out transform",
-        mounted ? "translate-y-0 opacity-100" : "-translate-y-5 opacity-0",
+        'fixed top-0 z-50 w-full transform border-b-2 transition-all duration-700 ease-out',
+        mounted ? 'translate-y-0 opacity-100' : '-translate-y-5 opacity-0',
         scrolled
-          ? `${bg} shadow-md border-[#232323]`
-          : `bg-transparent border-[#232323]`
+          ? `${bg} border-[#232323] shadow-md`
+          : `border-[#232323] bg-transparent`
       )}
     >
-      <div className="container mx-auto px-4 md:px-14 py-4 md:max-w-[1500px] flex items-center justify-between">
+      <div className='container mx-auto flex items-center justify-between px-4 py-4 md:max-w-[1500px] md:px-14'>
         {/* Mobile Menu */}
         <Sheet>
           <SheetTrigger asChild>
             <Menu
               className={clsx(
-                "md:hidden size-6 cursor-pointer",
+                'size-6 cursor-pointer md:hidden',
                 text,
-                scrolled && "!text-black"
+                scrolled && '!text-black'
               )}
-              aria-label="Open navigation menu"
+              aria-label='Open navigation menu'
             />
           </SheetTrigger>
 
           <SheetContent
-            side="left"
+            side='left'
             className={clsx(
-              "w-64 bg-black/95 backdrop-blur-md text-white border-r border-[#f8d87d] shadow-lg transition-transform duration-300 ease-in-out",
-              "[&>[data-state=open]]:translate-x-0 [&>[data-state=open]]:opacity-100",
-              "[&>[data-state=closed]]:translate-x-[-100%] [&>[data-state=closed]]:opacity-0"
+              'w-64 border-r border-[#f8d87d] bg-black/95 text-white shadow-lg backdrop-blur-md transition-transform duration-300 ease-in-out',
+              '[&>[data-state=open]]:translate-x-0 [&>[data-state=open]]:opacity-100',
+              '[&>[data-state=closed]]:translate-x-[-100%] [&>[data-state=closed]]:opacity-0'
             )}
           >
-            <nav className="flex flex-col gap-5 mt-10 text-white text-base font-medium">
+            <nav className='mt-10 flex flex-col gap-5 text-base font-medium text-white'>
               <SheetClose asChild>
                 <NavLinks
-                  variant="mobile"
+                  variant='mobile'
                   pathname={pathname}
                   textColor={text}
                   scrolled={scrolled}
@@ -345,16 +352,16 @@ const Header = () => {
         </Sheet>
 
         {/* Mobile Logo */}
-        <div className="absolute md:hidden left-1/2 -translate-x-1/2 text-center">
-          <Link href="/" className="flex flex-col items-center">
-            <span className="text-3xl font-extrabold text-primary-color">
+        <div className='absolute left-1/2 -translate-x-1/2 text-center md:hidden'>
+          <Link href='/' className='flex flex-col items-center'>
+            <span className='text-3xl font-extrabold text-primary-color'>
               {process.env.NEXT_PUBLIC_BRAND_NAME}
             </span>
             <span
               className={clsx(
-                "text-[11.3px] tracking-[1.5px] -mt-2",
+                '-mt-2 text-[11.3px] tracking-[1.5px]',
                 text,
-                scrolled && "!text-black"
+                scrolled && '!text-black'
               )}
             >
               Taste the Finest
@@ -362,15 +369,15 @@ const Header = () => {
           </Link>
         </div>
 
-        <Link href="/" className="hidden md:flex flex-col items-center">
-          <span className="text-3xl font-extrabold text-primary-color">
+        <Link href='/' className='hidden flex-col items-center md:flex'>
+          <span className='text-3xl font-extrabold text-primary-color'>
             {process.env.NEXT_PUBLIC_BRAND_NAME}
           </span>
           <span
             className={clsx(
-              "text-xs tracking-[1.2px]  -mt-2",
+              '-mt-2 text-xs tracking-[1.2px]',
               text,
-              scrolled && "!text-black"
+              scrolled && '!text-black'
             )}
           >
             Taste the Finest
@@ -378,9 +385,9 @@ const Header = () => {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center space-x-8">
+        <nav className='hidden items-center space-x-8 md:flex'>
           <NavLinks
-            variant="desktop"
+            variant='desktop'
             pathname={pathname}
             textColor={text}
             scrolled={scrolled}

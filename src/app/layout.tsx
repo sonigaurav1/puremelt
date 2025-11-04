@@ -16,6 +16,7 @@ import { ThemeProvider } from '../components/theme-provider';
 import { Toaster } from '../components/ui/sonner';
 import { ConvexClientProvider } from '@/components/providers/ConvexProvider';
 import Script from 'next/script';
+import { PHONE_NUMBER } from '@/constant';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -173,6 +174,7 @@ export default function RootLayout({
   return (
     <html
       lang='en'
+      suppressHydrationWarning
       className={`${inter.className} ${alexBrush.variable} ${playfair.variable} ${ibmPlexSans.variable} ${parisienne.variable}`}
     >
       <head>
@@ -202,7 +204,7 @@ export default function RootLayout({
               contactPoint: [
                 {
                   '@type': 'ContactPoint',
-                  telephone: '+91 93183 67696',
+                  telephone: PHONE_NUMBER,
                   contactType: 'customer support',
                   email: 'support@penowa.in'
                 }
@@ -231,7 +233,12 @@ export default function RootLayout({
           strategy='afterInteractive'
         />
         {/* <RegisterServiceWorker /> */}
-        <ThemeProvider attribute='class' defaultTheme='light' enableSystem>
+        <ThemeProvider
+          attribute='class'
+          defaultTheme='light'
+          enableSystem={false}
+          enableColorScheme={false}
+        >
           <Toaster richColors />
           <AuthProvider>
             <ConvexClientProvider>

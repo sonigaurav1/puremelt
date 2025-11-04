@@ -20,7 +20,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 import Header from '@/components/layout/Header';
-import { PHONE_NUMBER } from '@/constant';
+import { EMAIL_ADDRESS, PHONE_NUMBER } from '@/constant';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -265,11 +265,10 @@ const ContactPage = () => {
                           Email
                         </p>
                         <Link
-                          href={`mailto:support@${process.env.NEXT_PUBLIC_BRAND_NAME?.toLowerCase()}.in`}
+                          href={EMAIL_ADDRESS}
                           className='break-all text-base text-[#EEFF00]'
                         >
-                          support@
-                          {process.env.NEXT_PUBLIC_BRAND_NAME?.toLowerCase()}.in
+                          {EMAIL_ADDRESS}
                         </Link>
                       </div>
                     </div>

@@ -416,9 +416,9 @@ export default function CartPage() {
                       </span>
                     </div>
 
-                    {subtotal < 500 && (
+                    {subtotal < 600 && (
                       <p className='rounded-lg border border-amber-500/30 bg-gray-800 p-3 text-sm text-amber-300'>
-                        Add ₹{500 - subtotal} more for free shipping!
+                        Add ₹{600 - subtotal} more for free shipping!
                       </p>
                     )}
 
@@ -435,7 +435,7 @@ export default function CartPage() {
                   <div className=''>
                     <Button
                       onClick={handleRazorpayPayment} // Implement payment logic using cartItems from context if needed
-                      className='mb-4 w-full rounded-xl bg-[#EEFF00] py-4 text-lg font-semibold text-black hover:bg-[#EEFF00]/90'
+                      className='mb-4 w-full rounded-xl  bg-gradient-to-r from-[hsl(var(--honey))] to-[hsl(var(--amber-rich))] py-4 text-lg font-semibold text-black hover:bg-[#EEFF00]/90'
                     >
                       🔒 Checkout
                     </Button>
