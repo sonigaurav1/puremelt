@@ -98,7 +98,7 @@ export const PRODUCTS = {
   },
   "peanut-date-butter": {
     slug: "peanut-date-butter",
-    name: "Peanut & Date Butter",
+    name: "Peanut & Dates Butter",
     ingredient: ["Peanuts", "Dates", "Salt"],
     description:
       `Penowa's Peanut & Date Butter strips peanut butter down to its purest essence—premium roasted peanuts naturally sweetened with dates and a hint of salt. Simple, wholesome, and incredibly delicious, this three-ingredient wonder proves that less is truly more.

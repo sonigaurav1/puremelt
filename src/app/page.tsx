@@ -218,13 +218,13 @@ export default function HomePage() {
           {/* Hero Section */}
           <section
             id='home'
-            className='bg-black px-4 py-8 md:px-8 md:py-12 lg:px-12 lg:py-16 xl:py-20'
+            className='bg-black px-4 py-8 pt-16 md:px-8 md:py-12 lg:px-12 lg:py-16 xl:py-20'
           >
             <div className='container mx-auto max-w-7xl'>
               <div className='grid grid-cols-1 gap-8 md:gap-12 lg:grid-cols-2 lg:gap-16'>
                 {/* Content Column */}
-                <div className='relative order-2 space-y-8 pt-5 lg:order-1'>
-                  <div className='space-y-4 md:space-y-6'>
+                <div className='relative order-2 space-y-8 lg:order-1'>
+                  <div className='space-y-3'>
                     <Badge className='bg-gradient-to-r from-white via-[#90caf9] to-[#64b5f6] text-lg text-black'>
                       <Award size={20} className='mr-1' /> India's Finest Nuts
                       Butter
@@ -462,7 +462,7 @@ export default function HomePage() {
                 </h2>
               </div> */}
 
-              <div className='grid grid-cols-2 items-center justify-center gap-2 md:grid-cols-2 md:gap-6 lg:flex lg:flex-wrap lg:items-start lg:justify-start lg:gap-14'>
+              <div className='grid grid-cols-2 items-center justify-center gap-2 md:grid-cols-3 xl:gap-6'>
                 {/* Build product cards from central constants instead of hardcoding */}
                 {Object.values(PRODUCTS)
                   .map((p) => {

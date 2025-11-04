@@ -268,6 +268,7 @@ const BuyNowPage = () => {
                     className='h-96 w-full cursor-zoom-in object-cover'
                     priority
                   />
+                  {/* Organic Badge */}
                   <div className='absolute right-4 top-4'>
                     {/* <Badge className='bg-green-500 text-white'>
                       100% Organic
