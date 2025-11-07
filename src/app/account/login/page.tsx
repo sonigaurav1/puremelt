@@ -23,7 +23,15 @@ import {
 
 const LoginPage = () => {
   const router = useRouter();
-  const { isLoaded, isSignedIn } = useUser();
+  // Only invoke Clerk hooks when a publishable key is present to avoid
+  // build-time prerender errors when Clerk isn't configured.
+  const hasClerk = Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
+  type ClerkAuthState = { isLoaded: boolean; isSignedIn: boolean };
+  const { isLoaded, isSignedIn } = (
+    hasClerk
+      ? useUser()
+      : ({ isLoaded: true, isSignedIn: false } as ClerkAuthState)
+  ) as ClerkAuthState;
   const { login, googleLogin, loading, startPasswordReset, resetPassword } =
     useAuth();
 
@@ -65,7 +73,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className='min-h-dvh pt-12 md:pt-0 bg-black text-white'>
+    <div className='min-h-dvh bg-black pt-12 text-white md:pt-0'>
       <Header />
       <section className='flex items-center justify-center px-4 py-16 md:py-24'>
         <div className='w-full max-w-md'>
@@ -77,7 +85,7 @@ const LoginPage = () => {
               </div>
               <form onSubmit={onSubmitLogin} className='space-y-4'>
                 {/* Google One Tap surface (auto appears if enabled in Clerk dashboard) */}
-                {isLoaded && !isSignedIn && <GoogleOneTap />}
+                {hasClerk && isLoaded && !isSignedIn && <GoogleOneTap />}
                 <div>
                   <label className='mb-2 block text-sm font-medium'>
                     Email

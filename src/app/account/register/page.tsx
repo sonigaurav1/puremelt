@@ -13,7 +13,13 @@ import { FcGoogle } from 'react-icons/fc';
 
 const RegisterPage = () => {
   const router = useRouter();
-  const { isLoaded, isSignedIn } = useUser();
+  const hasClerk = Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
+  type ClerkAuthState = { isLoaded: boolean; isSignedIn: boolean };
+  const { isLoaded, isSignedIn } = (
+    hasClerk
+      ? useUser()
+      : ({ isLoaded: true, isSignedIn: false } as ClerkAuthState)
+  ) as ClerkAuthState;
   const { register, verifyEmailOtp, googleLogin, loading } = useAuth();
 
   const [firstName, setFirstName] = useState('');
@@ -58,7 +64,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className='min-h-dvh  pt-12 md:pt-0 bg-black text-white'>
+    <div className='min-h-dvh bg-black pt-12 text-white md:pt-0'>
       <Header />
       <section className='flex items-center justify-center px-4 py-16 md:py-24'>
         <div className='w-full max-w-md'>

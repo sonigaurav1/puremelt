@@ -22,6 +22,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from './useAuth';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@clerk/clerk-react';
+import type { UserResource } from '@clerk/types';
 import Header from '@/components/layout/Header';
 import HomeLoader from '@/components/HomeLoader';
 import { useMutation, useQuery } from 'convex/react';
@@ -69,7 +70,14 @@ interface WishlistItem {
 const AccountPage = () => {
   // Only need logout here; others removed to satisfy unused variable lint warnings
   const { logout } = useAuth();
-  const { user, isSignedIn, isLoaded } = useUser();
+  const hasClerk = Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
+  const { user, isSignedIn, isLoaded } = hasClerk
+    ? useUser()
+    : ({ user: undefined, isSignedIn: false, isLoaded: true } as {
+        user: UserResource | undefined;
+        isSignedIn: boolean;
+        isLoaded: boolean;
+      });
 
   // Convex hooks
   const createUser = useMutation(api.users.users.createUser);
@@ -99,7 +107,7 @@ const AccountPage = () => {
     if (isLoaded && isSignedIn && user) {
       createUser({
         clerkUserId: user.id,
-        email: user.emailAddresses[0]?.emailAddress || '',
+        email: user.emailAddresses?.[0]?.emailAddress || '',
         name: user.fullName || '',
         imageUrl: user.imageUrl || ''
       });
@@ -180,7 +188,7 @@ const AccountPage = () => {
   }
 
   return (
-    <div className='min-h-screen pt-12 md:pt-0 bg-black bg-gradient-to-b text-white'>
+    <div className='min-h-screen bg-black bg-gradient-to-b pt-12 text-white md:pt-0'>
       <div className='min-h-screen bg-black bg-gradient-to-b text-white'>
         {/* Header */}
         <Header />
@@ -192,7 +200,7 @@ const AccountPage = () => {
               <div>
                 <h1 className='text-4xl font-bold text-white'>My Account</h1>
                 <p className='text-amber-700'>
-                  Welcome back, {convexUser?.name || user.fullName}!
+                  Welcome back, {convexUser?.name || user?.fullName || ''}!
                 </p>
               </div>
               <Button
