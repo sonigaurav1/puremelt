@@ -15,62 +15,84 @@ import {
   Settings,
   LogOut,
   Eye,
-  EyeOff,
-  Truck,
-  LoaderCircle
+  Truck
 } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useAuth } from './useAuth';
 import { useRouter } from 'next/navigation';
-import { GoogleOneTap, useUser } from '@clerk/clerk-react';
+import { useUser } from '@clerk/clerk-react';
 import Header from '@/components/layout/Header';
 import HomeLoader from '@/components/HomeLoader';
 import { useMutation, useQuery } from 'convex/react';
 import { api } from '@/../convex/_generated/api';
 
+// Local interfaces to replace `any` usages
+interface OrderItem {
+  name: string;
+  size?: string;
+  quantity: number;
+  price: number;
+}
+
+interface Order {
+  _id?: string;
+  id?: string;
+  date?: string;
+  status: string; // could narrow to a union of known statuses
+  items: OrderItem[];
+  total: number;
+  trackingId?: string;
+}
+
+interface UserAddress {
+  street?: string;
+  city?: string;
+  state?: string;
+  pincode?: string;
+}
+
+interface ConvexUser {
+  name?: string;
+  email?: string;
+  phone?: string;
+  address?: UserAddress;
+}
+
+interface WishlistItem {
+  id: string;
+  name: string;
+  price: number;
+  imageUrl?: string;
+}
+
 const AccountPage = () => {
-  const { login, register, logout, loading, verifyEmailOtp } = useAuth();
+  // Only need logout here; others removed to satisfy unused variable lint warnings
+  const { logout } = useAuth();
   const { user, isSignedIn, isLoaded } = useUser();
-  // Clerk Google login handler
-  const handleGoogleLogin = () => {
-    if (typeof window !== 'undefined' && window.Clerk) {
-      window.Clerk.openSignIn({ strategy: 'oauth_google' });
-    } else {
-      // Fallback: redirect to Clerk hosted Google login
-      window.location.href = 'https://clerk.dev/oauth/google';
-    }
-  };
+
   // Convex hooks
   const createUser = useMutation(api.users.users.createUser);
-  const updateUser = useMutation(api.users.users.updateUser);
   const convexUser = useQuery(
     api.users.users.getUserByClerkId,
     user?.id ? { clerkUserId: user.id } : 'skip'
   );
-  // Fetch orders for the signed-in user
-  const userOrders =
-    isSignedIn && useQuery(api.orders.orders.getOrderByClerkId);
+  // Fetch orders for the signed-in user. Always call the hook but skip when
+  // the user isn't signed in to keep hook call order stable.
+  const userOrders = useQuery(
+    api.orders.orders.getOrderByClerkId,
+    isSignedIn ? undefined : 'skip'
+  );
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState('login');
-  const [loginData, setLoginData] = useState({ email: '', password: '' });
-  const [registerData, setRegisterData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    showPassword: false,
-    showConfirmPassword: false
-  });
   const [profileData, setProfileData] = useState({
     name: '',
     email: '',
     phone: '',
     address: { street: '', city: '', state: '', pincode: '' }
   });
-  const [orders, setOrders] = useState<any[]>([]);
-  const [wishlist, setWishlist] = useState<any[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
+  // Only the value is used; ignore the setter to avoid unused var warning
+  const [wishlist] = useState<WishlistItem[]>([]);
 
   // Create user in Convex on sign in
   useEffect(() => {
@@ -95,16 +117,19 @@ const AccountPage = () => {
   // Set profile data from Convex or Clerk user
   useEffect(() => {
     if (isLoaded && isSignedIn && (convexUser || user)) {
-      setProfileData((prev) => ({
-        name: convexUser?.name || user?.fullName || '',
+      const typedConvexUser = convexUser as ConvexUser | undefined;
+      setProfileData(() => ({
+        name: typedConvexUser?.name || user?.fullName || '',
         email:
-          convexUser?.email || user?.emailAddresses?.[0]?.emailAddress || '',
-        phone: convexUser?.phone || '',
+          typedConvexUser?.email ||
+          user?.emailAddresses?.[0]?.emailAddress ||
+          '',
+        phone: typedConvexUser?.phone || '',
         address: {
-          street: convexUser?.address?.street || '',
-          city: convexUser?.address?.city || '',
-          state: convexUser?.address?.state || '',
-          pincode: convexUser?.address?.pincode || ''
+          street: typedConvexUser?.address?.street || '',
+          city: typedConvexUser?.address?.city || '',
+          state: typedConvexUser?.address?.state || '',
+          pincode: typedConvexUser?.address?.pincode || ''
         }
       }));
     }
@@ -116,36 +141,6 @@ const AccountPage = () => {
       setOrders(userOrders);
     }
   }, [isLoaded, isSignedIn, userOrders]);
-
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const success = await login(loginData.email, loginData.password);
-    if (success) {
-      router.push('/account');
-    }
-  };
-
-  const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (registerData.password !== registerData.confirmPassword) {
-      alert("Passwords don't match!");
-      return;
-    }
-    const result = await register({
-      firstName: registerData.firstName,
-      lastName: registerData.lastName,
-      email: registerData.email,
-      password: registerData.password
-    });
-    if (!result.success && result.needsVerification && result.signUpRef) {
-      // Use window.prompt for OTP
-      const code = window.prompt(
-        'Enter the verification code sent to your email:'
-      );
-      if (!code) return;
-      await verifyEmailOtp(result.signUpRef, code);
-    }
-  };
 
   const handleLogout = async () => {
     await logout();
@@ -169,327 +164,23 @@ const AccountPage = () => {
     }
   };
 
+  // Redirect unauthenticated users to the dedicated login page (must be declared before any early return)
+  useEffect(() => {
+    if (isLoaded && !isSignedIn) {
+      router.replace('/account/login');
+    }
+  }, [isLoaded, isSignedIn, router]);
+
   if (!isLoaded) {
     return <HomeLoader />;
   }
 
   if (!isSignedIn) {
-    return (
-      <div className='min-h-dvh !bg-black !text-white'>
-        {/* Header */}
-        <Header />
-        {/* Login/Register Section */}
-        <section className='flex items-center justify-center px-4 py-40 md:py-32'>
-          <div className='w-full max-w-md'>
-            <Card className='border-[#f8d87d] bg-black text-white'>
-              <CardContent className='p-8'>
-                <Tabs
-                  value={activeTab}
-                  onValueChange={setActiveTab}
-                  className='w-full'
-                >
-                  <TabsList className='grid w-full grid-cols-2 border border-[#f8d87d] bg-[#222]'>
-                    <TabsTrigger value='login' className='text-white'>
-                      Login
-                    </TabsTrigger>
-                    <TabsTrigger value='register' className='text-white'>
-                      Register
-                    </TabsTrigger>
-                  </TabsList>
-                  <TabsContent value='login' className='space-y-4'>
-                    <div className='mb-6 text-center'>
-                      <h2 className='text-2xl font-bold text-[#f8d87d]'>
-                        Welcome Back
-                      </h2>
-                      <p className='text-[#f8d87d]'>Sign in to your account</p>
-                    </div>
-                    <form onSubmit={handleLogin} className='space-y-4'>
-                      <div>
-                        <label className='mb-2 block font-medium text-white'>
-                          Email
-                        </label>
-                        <Input
-                          type='email'
-                          value={loginData.email}
-                          onChange={(e) =>
-                            setLoginData({
-                              ...loginData,
-                              email: e.target.value
-                            })
-                          }
-                          className='border-[#f8d87d] bg-black text-white focus:border-[#EEFF00]'
-                          placeholder='your@email.com'
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label className='mb-2 block font-medium text-white'>
-                          Password
-                        </label>
-                        <Input
-                          type='password'
-                          value={loginData.password}
-                          onChange={(e) =>
-                            setLoginData({
-                              ...loginData,
-                              password: e.target.value
-                            })
-                          }
-                          className='border-[#f8d87d] bg-black text-white focus:border-[#EEFF00]'
-                          placeholder='••••••••'
-                          required
-                        />
-                      </div>
-                      <Button
-                        type='button'
-                        className='mb-4 flex w-full items-center justify-center gap-2 bg-[#4285F4] font-bold text-white hover:bg-[#357ae8]'
-                        onClick={handleGoogleLogin}
-                      >
-                        <svg
-                          width='20'
-                          height='20'
-                          viewBox='0 0 48 48'
-                          fill='none'
-                          xmlns='http://www.w3.org/2000/svg'
-                        >
-                          <g>
-                            <path
-                              d='M44.5 20H24V28.5H35.7C34.3 32.1 30.7 34.5 26.5 34.5C21.3 34.5 17 30.2 17 25C17 19.8 21.3 15.5 26.5 15.5C28.7 15.5 30.7 16.3 32.2 17.6L37.2 12.6C34.1 9.8 30.1 8 26.5 8C16.8 8 9 15.8 9 25.5C9 35.2 16.8 43 26.5 43C36.2 43 44 35.2 44 25.5C44 23.7 44.3 21.9 44.5 20Z'
-                              fill='#4285F4'
-                            />
-                            <path
-                              d='M6.3 14.7L12.1 19.1C13.7 16.1 16.8 14 20.5 14C22.7 14 24.7 14.7 26.2 16L31.2 11C28.1 8.2 24.1 6.5 20.5 6.5C12.7 6.5 6.3 12.9 6.3 20.7C6.3 22.5 6.6 24.3 7.1 26L12.1 21C11.7 19.8 11.5 18.6 11.5 17.5C11.5 16.4 11.7 15.2 12.1 14.7Z'
-                              fill='#34A853'
-                            />
-                            <path
-                              d='M24 44.5C28.1 44.5 31.7 43.1 34.5 40.7L29.5 36.7C28.1 37.7 26.4 38.5 24.5 38.5C20.7 38.5 17.6 36.4 16 33.4L10.2 37.8C13.3 41.1 18.1 44.5 24 44.5Z'
-                              fill='#FBBC05'
-                            />
-                            <path
-                              d='M44.5 20H24V28.5H35.7C34.3 32.1 30.7 34.5 26.5 34.5C21.3 34.5 17 30.2 17 25C17 19.8 21.3 15.5 26.5 15.5C28.7 15.5 30.7 16.3 32.2 17.6L37.2 12.6C34.1 9.8 30.1 8 26.5 8C16.8 8 9 15.8 9 25.5C9 35.2 16.8 43 26.5 43C36.2 43 44 35.2 44 25.5C44 23.7 44.3 21.9 44.5 20Z'
-                              fill='#4285F4'
-                            />
-                          </g>
-                        </svg>
-                        Login with Google
-                      </Button>
-                      {typeof window !== 'undefined' && isLoaded && (
-                        <GoogleOneTap />
-                      )}
-                      <Button
-                        type='submit'
-                        className='w-full bg-[#EEFF00] font-bold text-black hover:bg-[#f8d87d]'
-                      >
-                        Sign In
-                      </Button>
-                    </form>
-                  </TabsContent>
-                  <TabsContent value='register' className='space-y-4'>
-                    <div className='mb-6 text-center'>
-                      <h2 className='text-2xl font-bold text-[#f8d87d]'>
-                        Create Account
-                      </h2>
-                      <p className='text-[#f8d87d]'>
-                        Join the {process.env.NEXT_PUBLIC_BRAND_NAME} family
-                      </p>
-                    </div>
-                    <form onSubmit={handleRegister} className='space-y-4'>
-                      <div className='flex gap-4'>
-                        <div>
-                          <label className='mb-2 block font-medium text-white'>
-                            First Name
-                          </label>
-                          <Input
-                            value={registerData.firstName}
-                            onChange={(e) =>
-                              setRegisterData({
-                                ...registerData,
-                                firstName: e.target.value
-                              })
-                            }
-                            className='border-[#f8d87d] bg-black text-white focus:border-[#EEFF00]'
-                            placeholder='Your first name'
-                            required
-                          />
-                        </div>
-                        <div>
-                          <label className='mb-2 block font-medium text-white'>
-                            Last Name
-                          </label>
-                          <Input
-                            value={registerData.lastName}
-                            onChange={(e) =>
-                              setRegisterData({
-                                ...registerData,
-                                lastName: e.target.value
-                              })
-                            }
-                            className='border-[#f8d87d] bg-black text-white focus:border-[#EEFF00]'
-                            placeholder='Your last name'
-                            required
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <label className='mb-2 block font-medium text-white'>
-                          Email
-                        </label>
-                        <Input
-                          type='email'
-                          value={registerData.email}
-                          onChange={(e) =>
-                            setRegisterData({
-                              ...registerData,
-                              email: e.target.value
-                            })
-                          }
-                          className='border-[#f8d87d] bg-black text-white focus:border-[#EEFF00]'
-                          placeholder='your@email.com'
-                          required
-                        />
-                      </div>
-                      <div className='relative'>
-                        <label className='mb-2 block font-medium text-white'>
-                          Password
-                        </label>
-                        <Input
-                          type={registerData.showPassword ? 'text' : 'password'}
-                          value={registerData.password}
-                          onChange={(e) =>
-                            setRegisterData({
-                              ...registerData,
-                              password: e.target.value
-                            })
-                          }
-                          className='border-[#f8d87d] bg-black pr-10 text-white focus:border-[#EEFF00]'
-                          placeholder='••••••••'
-                          required
-                        />
-                        <button
-                          type='button'
-                          className='absolute right-2 top-10 text-[#f8d87d]'
-                          tabIndex={-1}
-                          onClick={() =>
-                            setRegisterData({
-                              ...registerData,
-                              showPassword: !registerData.showPassword
-                            })
-                          }
-                        >
-                          {registerData.showPassword ? (
-                            <EyeOff className='h-5 w-5' />
-                          ) : (
-                            <Eye className='h-5 w-5' />
-                          )}
-                        </button>
-                      </div>
-                      <div className='relative'>
-                        <label className='mb-2 block font-medium text-white'>
-                          Confirm Password
-                        </label>
-                        <Input
-                          type={
-                            registerData.showConfirmPassword
-                              ? 'text'
-                              : 'password'
-                          }
-                          value={registerData.confirmPassword}
-                          onChange={(e) =>
-                            setRegisterData({
-                              ...registerData,
-                              confirmPassword: e.target.value
-                            })
-                          }
-                          className='border-[#f8d87d] bg-black pr-10 text-white focus:border-[#EEFF00]'
-                          placeholder='••••••••'
-                          required
-                        />
-                        <button
-                          type='button'
-                          className='absolute right-2 top-10 text-[#f8d87d]'
-                          tabIndex={-1}
-                          onClick={() =>
-                            setRegisterData({
-                              ...registerData,
-                              showConfirmPassword:
-                                !registerData.showConfirmPassword
-                            })
-                          }
-                        >
-                          {registerData.showConfirmPassword ? (
-                            <EyeOff className='h-5 w-5' />
-                          ) : (
-                            <Eye className='h-5 w-5' />
-                          )}
-                        </button>
-                      </div>
-                      <Button
-                        type='button'
-                        className='mb-4 flex w-full items-center justify-center gap-2 bg-[#4285F4] font-bold text-white hover:bg-[#357ae8]'
-                        onClick={handleGoogleLogin}
-                      >
-                        <svg
-                          width='20'
-                          height='20'
-                          viewBox='0 0 48 48'
-                          fill='none'
-                          xmlns='http://www.w3.org/2000/svg'
-                        >
-                          <g>
-                            <path
-                              d='M44.5 20H24V28.5H35.7C34.3 32.1 30.7 34.5 26.5 34.5C21.3 34.5 17 30.2 17 25C17 19.8 21.3 15.5 26.5 15.5C28.7 15.5 30.7 16.3 32.2 17.6L37.2 12.6C34.1 9.8 30.1 8 26.5 8C16.8 8 9 15.8 9 25.5C9 35.2 16.8 43 26.5 43C36.2 43 44 35.2 44 25.5C44 23.7 44.3 21.9 44.5 20Z'
-                              fill='#4285F4'
-                            />
-                            <path
-                              d='M6.3 14.7L12.1 19.1C13.7 16.1 16.8 14 20.5 14C22.7 14 24.7 14.7 26.2 16L31.2 11C28.1 8.2 24.1 6.5 20.5 6.5C12.7 6.5 6.3 12.9 6.3 20.7C6.3 22.5 6.6 24.3 7.1 26L12.1 21C11.7 19.8 11.5 18.6 11.5 17.5C11.5 16.4 11.7 15.2 12.1 14.7Z'
-                              fill='#34A853'
-                            />
-                            <path
-                              d='M24 44.5C28.1 44.5 31.7 43.1 34.5 40.7L29.5 36.7C28.1 37.7 26.4 38.5 24.5 38.5C20.7 38.5 17.6 36.4 16 33.4L10.2 37.8C13.3 41.1 18.1 44.5 24 44.5Z'
-                              fill='#FBBC05'
-                            />
-                            <path
-                              d='M44.5 20H24V28.5H35.7C34.3 32.1 30.7 34.5 26.5 34.5C21.3 34.5 17 30.2 17 25C17 19.8 21.3 15.5 26.5 15.5C28.7 15.5 30.7 16.3 32.2 17.6L37.2 12.6C34.1 9.8 30.1 8 26.5 8C16.8 8 9 15.8 9 25.5C9 35.2 16.8 43 26.5 43C36.2 43 44 35.2 44 25.5C44 23.7 44.3 21.9 44.5 20Z'
-                              fill='#4285F4'
-                            />
-                          </g>
-                        </svg>
-                        Login with Google Reg
-                      </Button>
-                      <div
-                        id='clerk-captcha'
-                        style={{ marginBottom: '1rem' }}
-                      ></div>
-                      {!loading ? (
-                        <Button
-                          type='submit'
-                          disabled={loading}
-                          className='w-full bg-[#EEFF00] font-bold text-black hover:bg-[#f8d87d]'
-                        >
-                          Create Account
-                        </Button>
-                      ) : (
-                        <Button
-                          type='submit'
-                          disabled={loading}
-                          className='w-full bg-[#EEFF00] font-bold text-black hover:bg-[#f8d87d]'
-                        >
-                          <LoaderCircle className='animate-spin' />
-                        </Button>
-                      )}
-                    </form>
-                  </TabsContent>
-                </Tabs>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
-      </div>
-    );
+    return <HomeLoader />;
   }
 
   return (
-    <div className='min-h-screen bg-black bg-gradient-to-b text-white'>
+    <div className='min-h-screen pt-12 md:pt-0 bg-black bg-gradient-to-b text-white'>
       <div className='min-h-screen bg-black bg-gradient-to-b text-white'>
         {/* Header */}
         <Header />
@@ -712,7 +403,7 @@ const AccountPage = () => {
                       Order History
                     </h2>
                     <div className='space-y-4'>
-                      {orders.map((order, idx) => (
+                      {orders.map((order: Order, idx) => (
                         <Card
                           key={order._id ?? order.id ?? idx}
                           className='border-amber-100'
@@ -734,19 +425,22 @@ const AccountPage = () => {
                             </div>
 
                             <div className='mb-4 space-y-2'>
-                              {order.items.map((item: any, index: number) => (
-                                <div
-                                  key={index}
-                                  className='flex justify-between'
-                                >
-                                  <span className='text-amber-700'>
-                                    {item.name} ({item.size}) x {item.quantity}
-                                  </span>
-                                  <span className='font-medium text-secondary-color'>
-                                    ₹{item.price * item.quantity}
-                                  </span>
-                                </div>
-                              ))}
+                              {order.items.map(
+                                (item: OrderItem, index: number) => (
+                                  <div
+                                    key={index}
+                                    className='flex justify-between'
+                                  >
+                                    <span className='text-amber-700'>
+                                      {item.name} ({item.size}) x{' '}
+                                      {item.quantity}
+                                    </span>
+                                    <span className='font-medium text-secondary-color'>
+                                      ₹{item.price * item.quantity}
+                                    </span>
+                                  </div>
+                                )
+                              )}
                             </div>
 
                             <Separator className='my-4' />

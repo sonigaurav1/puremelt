@@ -1,37 +1,13 @@
 'use client';
 
-import { useCart } from './components/cart-context';
-
 import { Button } from '@/components/ui/button';
 import HomeLoader from '@/components/HomeLoader';
-import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/select';
-import {
-  Star,
-  ShoppingCart,
-  Heart,
-  Leaf,
-  Shield,
-  Award,
-  Users,
-  Instagram,
-  Facebook,
-  Twitter,
-  Package,
-  ArrowRight
-} from 'lucide-react';
+
+import { Star, Heart, Leaf, Shield, Award, Package } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { Input } from '@/components/ui/input';
 import Header from '@/components/layout/Header';
 import ImageSlider from '@/components/ImageSlider';
 import {
@@ -46,54 +22,9 @@ import Footer from '@/components/layout/Footer';
 import FAQ from '@/components/FAQ';
 
 export default function HomePage() {
-  const [newsletterEmail, setNewsletterEmail] = useState('');
-  const [newsletterStatus, setNewsletterStatus] = useState('');
-
   // Show the HomeLoader once per browser session
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [checkedLoader, setCheckedLoader] = useState<boolean>(false);
-
-  const handleNewsletterSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
-    e.preventDefault();
-    if (!newsletterEmail) {
-      setNewsletterStatus('Please enter your email.');
-      return;
-    }
-    setNewsletterStatus('Processing...');
-    try {
-      // You should create a backend API route to avoid exposing your API key
-      const response = await fetch('/api/newsletter-subscribe', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email: newsletterEmail })
-      });
-      if (response.ok) {
-        setNewsletterStatus('Subscribed! Thank you.');
-        setNewsletterEmail('');
-      } else {
-        const data = await response.json();
-        setNewsletterStatus(
-          data?.error || 'Subscription failed. Please try again later.'
-        );
-      }
-    } catch (err) {
-      setNewsletterStatus('Subscription failed. Please try again later.');
-    }
-  };
-
-  const [customerCount, setCustomerCount] = useState(0);
-  const [isClient, setIsClient] = useState(false);
-  const [selectedWeight, setSelectedWeight] = useState('350g');
-  const router = useRouter();
-
-  // Set isClient to true when component mounts
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   // session check for showing loader only once per session
   useEffect(() => {
@@ -104,7 +35,7 @@ export default function HomePage() {
         const t = setTimeout(() => {
           try {
             sessionStorage.setItem('penova_loader_shown', '1');
-          } catch (e) {
+          } catch {
             // ignore session storage errors
           }
           setShowLoader(false);
@@ -112,38 +43,11 @@ export default function HomePage() {
         }, 2000); // show loader for 2s (matches animation)
         return () => clearTimeout(t);
       }
-    } catch (e) {
+    } catch {
       // sessionStorage may be unavailable; continue without loader
     }
     setCheckedLoader(true);
   }, []);
-
-  // Animate customer count only after client-side hydration
-  useEffect(() => {
-    if (!isClient) return;
-
-    const interval = setInterval(() => {
-      setCustomerCount((prev) => {
-        if (prev >= 2500) {
-          clearInterval(interval);
-          return 2500;
-        }
-        return prev + 50;
-      });
-    }, 50);
-
-    return () => clearInterval(interval);
-  }, [isClient]);
-
-  const handleOrderNow = () => {
-    router.push(`/buy-now?weight=${selectedWeight}`);
-  };
-
-  const handleLearnMore = () => {
-    router.push('/about');
-  };
-
-  const { addToCart } = useCart();
 
   // const addToCartHandler = () => {
   //   addToCart({
@@ -464,24 +368,26 @@ export default function HomePage() {
 
               <div className='grid grid-cols-2 items-center justify-center gap-2 md:grid-cols-3 xl:gap-6'>
                 {/* Build product cards from central constants instead of hardcoding */}
-                {Object.values(PRODUCTS)
-                  .map((p) => {
-                    const weight = p.availableWeights?.[0] ?? '350g';
-                    const priceInfo = (PRODUCT_PRICES as any)[p.slug]?.[
-                      weight
-                    ] ?? { original: 399, discounted: 399 };
-                    return {
-                      weight,
-                      productName: p.name,
-                      slug: p.slug,
-                      description: p.shortDescription,
-                      original: priceInfo.original,
-                      price: priceInfo.discounted
-                    };
-                  })
-                  .map((product) => (
-                    <ProductCard key={product.slug} {...product} />
-                  ))}
+                {Object.values(PRODUCTS).map((p) => {
+                  const weight = p.availableWeights?.[0] ?? '350g';
+                  const slug = p.slug as keyof typeof PRODUCT_PRICES;
+                  const pricesForSlug = PRODUCT_PRICES[slug];
+                  const priceInfo =
+                    pricesForSlug && weight in pricesForSlug
+                      ? pricesForSlug[weight as keyof typeof pricesForSlug]
+                      : { original: 399, discounted: 399 };
+                  return (
+                    <ProductCard
+                      key={p.slug}
+                      weight={weight}
+                      productName={p.name}
+                      slug={p.slug}
+                      description={p.shortDescription}
+                      original={priceInfo.original}
+                      price={priceInfo.discounted}
+                    />
+                  );
+                })}
               </div>
             </div>
           </section>
@@ -530,7 +436,7 @@ export default function HomePage() {
             </div>
 
             <div className='mx-auto grid grid-cols-2 gap-4 md:grid-cols-4'>
-              {PRODUCT_INGREDIENTS_DETAILED.map((ingredient, idx) => (
+              {PRODUCT_INGREDIENTS_DETAILED.map((ingredient) => (
                 <div
                   key={ingredient.name}
                   className='flex min-h-[140px] flex-col items-center rounded-xl border-[2.5px] border-[#f8d87d] bg-[#efefef] p-4 text-center shadow-sm'
@@ -616,7 +522,7 @@ export default function HomePage() {
                   title: 'All Nuts in One',
                   description: '7 premium ingredients in every spoon'
                 }
-              ].map((feature, idx) => (
+              ].map((feature) => (
                 <div
                   key={feature.title}
                   className='flex min-h-[140px] flex-col items-center rounded-xl border-[2.5px] border-[#f8d87d] bg-[#efefef] p-4 text-center shadow-sm'
@@ -668,7 +574,7 @@ export default function HomePage() {
                   description: 'Elevate your desserts and treats',
                   image: '🧁'
                 }
-              ].map((usage, idx) => (
+              ].map((usage) => (
                 <div
                   key={usage.title}
                   className='flex min-h-[120px] flex-col items-center rounded-xl border-[2.5px] border-[#f8d87d] bg-[#efefef] p-4 text-center shadow-sm'
@@ -732,7 +638,7 @@ export default function HomePage() {
                   rating: 4.5,
                   text: "The blend of flavors is unique. I've never tasted anything like this before. Highly recommended!"
                 }
-              ].map((testimonial, idx) => (
+              ].map((testimonial) => (
                 <div
                   key={testimonial.name}
                   className='flex min-h-[140px] flex-col items-center rounded-xl border-[2px] border-[#f8d87d] bg-white p-6 text-center shadow-sm'

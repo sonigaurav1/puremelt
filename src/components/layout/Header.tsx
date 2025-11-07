@@ -13,6 +13,16 @@ import {
 } from '@/components/ui/sheet';
 import { useCart } from '@/app/components/cart-context';
 import clsx from 'clsx';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu';
+import { useUser, useClerk } from '@clerk/clerk-react';
+import { useRouter } from 'next/navigation';
 
 // Navigation links
 const navLinks = [
@@ -27,13 +37,11 @@ const navLinks = [
 const NavLinks = ({
   variant,
   pathname,
-  textColor,
   scrolled,
   onClick
 }: {
   variant: 'desktop' | 'mobile';
   pathname: string;
-  textColor: string;
   scrolled: boolean;
   onClick?: () => void;
 }) => (
@@ -83,60 +91,134 @@ const HeaderIcons = ({
   textColor,
   scrolled,
   cartCount,
-  pop
+  pop,
+  isMobile
 }: {
   pathname: string;
   textColor: string;
   scrolled: boolean;
   cartCount: number;
   pop: boolean;
-}) => (
-  <div className='flex items-center gap-3'>
-    {/* Cart */}
-    <Link href='/cart'>
-      <Button
-        variant='ghost'
-        size='sm'
-        className='relative bg-transparent px-2'
-      >
-        <ShoppingCart
-          className={clsx(
-            '!size-5 cursor-pointer',
-            textColor,
-            scrolled && 'text-black',
-            pathname === '/cart' && '!text-amber-700'
-          )}
-          aria-label='View cart'
-        />
-        {cartCount > 0 && (
-          <span
-            className={clsx(
-              'absolute -right-2 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-amber-600 text-xs text-white transition-transform duration-300',
-              pop && 'animate-pop'
-            )}
-          >
-            {cartCount}
-          </span>
-        )}
-      </Button>
-    </Link>
+  isMobile: boolean;
+}) => {
+  const { isSignedIn, user } = useUser();
+  const { signOut } = useClerk();
+  const router = useRouter();
+  const [menuOpen, setMenuOpen] = useState(false);
 
-    {/* User */}
-    <Link href='/account'>
-      <Button variant='ghost' size='sm' className='bg-transparent px-2'>
-        <User
-          className={clsx(
-            '!size-[22px] cursor-pointer transition-transform duration-200 hover:scale-110',
-            textColor,
-            scrolled && 'text-black',
-            pathname === '/account' && '!text-amber-700'
+  const name = user?.fullName || user?.firstName || user?.username || 'User';
+
+  const handleLogout = async () => {
+    await signOut();
+    router.push('/');
+  };
+
+  return (
+    <div className='flex items-center gap-3'>
+      {/* Cart */}
+      <Link href='/cart'>
+        <Button
+          variant='ghost'
+          size='sm'
+          className='relative bg-transparent px-2'
+        >
+          <ShoppingCart
+            className={clsx(
+              '!size-5 cursor-pointer',
+              textColor,
+              scrolled && 'text-black',
+              pathname === '/cart' && '!text-amber-700'
+            )}
+            aria-label='View cart'
+          />
+          {cartCount > 0 && (
+            <span
+              className={clsx(
+                'absolute -right-2 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-amber-600 text-xs text-white transition-transform duration-300',
+                pop && 'animate-pop'
+              )}
+            >
+              {cartCount}
+            </span>
           )}
-          aria-label='User account'
-        />
-      </Button>
-    </Link>
-  </div>
-);
+        </Button>
+      </Link>
+
+      {/* User */}
+      <DropdownMenu open={menuOpen} onOpenChange={setMenuOpen}>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant='ghost'
+            size='sm'
+            className='bg-transparent px-2'
+            onMouseEnter={() => setMenuOpen(true)}
+            aria-label={isSignedIn ? `Hi, ${name}` : 'User account'}
+          >
+            {isSignedIn && !isMobile ? (
+              <span
+                className={clsx(
+                  'text-sm font-medium',
+                  textColor,
+                  scrolled && 'text-black',
+                  pathname === '/account' && '!text-amber-700'
+                )}
+              >
+                Hi, {name.split(' ')[0]}
+              </span>
+            ) : (
+              <User
+                className={clsx(
+                  '!size-[22px] cursor-pointer transition-transform duration-200 hover:scale-110',
+                  textColor,
+                  scrolled && 'text-black',
+                  pathname === '/account' && '!text-amber-700'
+                )}
+              />
+            )}
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent
+          align='end'
+          className='min-w-[12rem]'
+          onMouseEnter={() => setMenuOpen(true)}
+          onMouseLeave={() => setMenuOpen(false)}
+        >
+          {!isSignedIn ? (
+            <>
+              <DropdownMenuLabel>Welcome</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <Link href='/account' className='cursor-pointer'>
+                  Login
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href='/account/register' className='cursor-pointer'>
+                  Register
+                </Link>
+              </DropdownMenuItem>
+            </>
+          ) : (
+            <>
+              <DropdownMenuLabel>Signed in as {name}</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <Link href='/account'>My account</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href='/account'>Order history</Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={handleLogout}>
+                Log out
+              </DropdownMenuItem>
+            </>
+          )}
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
+  );
+};
 
 const Header = () => {
   const pathname = usePathname();
@@ -251,7 +333,10 @@ const Header = () => {
           return { bg: 'bg-white', text: 'text-black' };
         }
       }
-      if (pathname === '/products/[slug]'  || pathname.startsWith('/products/')) {
+      if (
+        pathname === '/products/[slug]' ||
+        pathname.startsWith('/products/')
+      ) {
         if (!scrolled) {
           return { bg: 'bg-transparent', text: 'text-white' };
         } else {
@@ -287,6 +372,13 @@ const Header = () => {
         }
       }
       if (pathname === '/account') {
+        if (!scrolled) {
+          return { bg: 'bg-transparent', text: 'text-white' };
+        } else {
+          return { bg: 'bg-white', text: 'text-black' };
+        }
+      }
+      if (pathname === '/account/[slug]' || pathname.startsWith('/account/')) {
         if (!scrolled) {
           return { bg: 'bg-transparent', text: 'text-white' };
         } else {
@@ -343,7 +435,6 @@ const Header = () => {
                 <NavLinks
                   variant='mobile'
                   pathname={pathname}
-                  textColor={text}
                   scrolled={scrolled}
                 />
               </SheetClose>
@@ -386,12 +477,7 @@ const Header = () => {
 
         {/* Desktop Nav */}
         <nav className='hidden items-center space-x-8 md:flex'>
-          <NavLinks
-            variant='desktop'
-            pathname={pathname}
-            textColor={text}
-            scrolled={scrolled}
-          />
+          <NavLinks variant='desktop' pathname={pathname} scrolled={scrolled} />
         </nav>
 
         {/* Right Icons */}
@@ -401,6 +487,7 @@ const Header = () => {
           scrolled={scrolled}
           cartCount={cartCount}
           pop={pop}
+          isMobile={isMobile}
         />
       </div>
     </header>

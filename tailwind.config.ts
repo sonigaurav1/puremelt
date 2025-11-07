@@ -87,6 +87,10 @@ const config: Config = {
 				sm: 'calc(var(--radius) - 4px)'
 			},
 			keyframes: {
+				"gradient-shift": {
+					"0%": { "background-position": "0% 0%" },
+					"100%": { "background-position": "200% 0%" }
+				},
 				progress: {
 					"0%": { width: "0%" },
 					"100%": { width: "100%" },
@@ -113,6 +117,7 @@ const config: Config = {
 				}
 			},
 			animation: {
+				"gradient-shift": 'gradient-shift 3s linear infinite',
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				progress: "progress 3s linear",

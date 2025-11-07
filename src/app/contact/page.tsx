@@ -68,7 +68,7 @@ const ContactPage = () => {
           'Sorry, there was an error sending your message. Please try again later.'
         );
       }
-    } catch (error) {
+    } catch {
       setError(
         'Sorry, there was an error sending your message. Please try again later.'
       );

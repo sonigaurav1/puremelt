@@ -19,23 +19,27 @@ export function ConvexClientProvider({ children }: { children: ReactNode }) {
     // convexUrl is static at runtime, so empty deps are fine; include for clarity
   }, [convexUrl]);
 
-  // If the Convex URL isn't present (common during build), fall back to
-  // rendering children inside ClerkProvider only so prerendering doesn't fail.
-  // In production you should set NEXT_PUBLIC_CONVEX_URL in Vercel project settings.
+  // Check Clerk publishable key. If it's not set during build, avoid
+  // rendering ClerkProvider (it throws during prerender) — just render
+  // children so the build won't fail. In production set
+  // NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY in Vercel environment variables.
+  const clerkKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY as
+    | string
+    | undefined;
+
+  if (!clerkKey) {
+    // No Clerk key available — avoid initializing Clerk during build.
+    return <>{children}</>;
+  }
+
+  // If Convex is missing but Clerk is present, render Clerk only so auth
+  // stays available client-side while skipping Convex at build time.
   if (!convex) {
-    return (
-      <ClerkProvider
-        publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY as string}
-      >
-        {children}
-      </ClerkProvider>
-    );
+    return <ClerkProvider publishableKey={clerkKey}>{children}</ClerkProvider>;
   }
 
   return (
-    <ClerkProvider
-      publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY as string}
-    >
+    <ClerkProvider publishableKey={clerkKey}>
       <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
         {children}
       </ConvexProviderWithClerk>

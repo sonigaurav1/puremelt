@@ -28,10 +28,8 @@ import {
   Star,
   Truck,
   Shield,
-  RotateCcw,
   Leaf
 } from 'lucide-react';
-import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams, useParams } from 'next/navigation';
@@ -57,7 +55,13 @@ const BuyNowPage = () => {
   // Price map and available weights (intersection of defined prices and listed weights)
   const productPriceMap = PRODUCT_PRICES[productKey] ?? {};
   const availableWeights = (product?.availableWeights || []).filter(
-    (w) => (productPriceMap as any)[w]
+    (w) =>
+      (
+        productPriceMap as Record<
+          string,
+          { original: number; discounted: number }
+        >
+      )[w]
   ) as string[];
 
   // Initial weight from query if valid, else first available or '350g'
@@ -70,7 +74,7 @@ const BuyNowPage = () => {
   const [quantity, setQuantity] = useState(1);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
-  const [lightboxApi, setLightboxApi] = useState<
+  const [_, setLightboxApi] = useState<
     import('@/components/ui/carousel').CarouselApi | null
   >(null);
 
@@ -108,7 +112,6 @@ const BuyNowPage = () => {
     if (!availableWeights.includes(selectedWeight)) {
       setSelectedWeight(availableWeights[0] || '500g');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productKey]);
 
   const addToCartHandler = () => {
@@ -453,7 +456,7 @@ const BuyNowPage = () => {
                       ),
                       label: 'Fast Delivery'
                     }
-                  ].map((feature, idx) => (
+                  ].map((feature) => (
                     <div className='text-center' key={feature.label}>
                       {feature.icon}
                       <p className='text-xs text-primary-color'>
@@ -470,7 +473,7 @@ const BuyNowPage = () => {
                   <h3 className='text-xl font-bold text-primary-color'>
                     Product Description
                   </h3>
-                  <div className='space-y-3 border-b-2 pb-6 border-gray-800'>
+                  <div className='space-y-3 border-b-2 border-gray-800 pb-6'>
                     {String(product.description || '')
                       .split(/\n\s*\n/)
                       .map((para, idx) => (
@@ -483,7 +486,7 @@ const BuyNowPage = () => {
                   </div>
 
                   {/* Features with icons */}
-                  <div className='grid w-full pt-6 grid-cols-2 gap-4'>
+                  <div className='grid w-full grid-cols-2 gap-4 pt-6'>
                     {[
                       {
                         icon: (
@@ -715,7 +718,9 @@ function Lightbox(props: {
               if (open && typeof startIndex === 'number') {
                 try {
                   api.scrollTo(startIndex, true);
-                } catch {}
+                } catch {
+                  // ignore initial scroll failures (carousel may not be ready yet)
+                }
               }
 
               // Subscribe to index changes

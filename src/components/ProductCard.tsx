@@ -3,13 +3,12 @@
 import type React from 'react';
 
 import { useCart } from '@/app/components/cart-context';
-import { PRODUCT_PRICES } from '@/constant';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+// Removed unused React state import (wishlist logic deleted)
 import { Card, CardContent } from './ui/card';
 import Image from 'next/image';
 import { Button } from './ui/button';
-import { Heart, ShoppingCart } from 'lucide-react';
+import { ShoppingCart } from 'lucide-react';
 import Link from 'next/link';
 
 const ProductCard: React.FC<{
@@ -20,7 +19,7 @@ const ProductCard: React.FC<{
   description?: string;
   slug: string;
 }> = ({ weight, productName, original, price, description, slug }) => {
-  const [wish, setWish] = useState(false);
+  // Wishlist logic removed (unused state & handler eliminated to fix lint warnings)
 
   // const price =
   //   PRODUCT_PRICES[weight as keyof typeof PRODUCT_PRICES].discounted;
@@ -43,28 +42,7 @@ const ProductCard: React.FC<{
     router.push('/cart');
   };
 
-  const toggleWishlist = () => {
-    setWish((s) => {
-      const next = !s;
-      try {
-        const key = 'penova_wishlist';
-        const raw = localStorage.getItem(key);
-        const list: string[] = raw ? JSON.parse(raw) : [];
-        if (next) {
-          const setList = Array.from(new Set([...list, weight]));
-          localStorage.setItem(key, JSON.stringify(setList));
-        } else {
-          localStorage.setItem(
-            key,
-            JSON.stringify(list.filter((it) => it !== weight))
-          );
-        }
-      } catch (e) {
-        // ignore localStorage errors
-      }
-      return next;
-    });
-  };
+  // toggleWishlist removed
 
   return (
     <Card className='group relative flex flex-col overflow-hidden border border-amber-600 bg-white bg-gradient-to-b shadow-lg transition-all duration-300 hover:border-amber-500/30 hover:shadow-xl hover:shadow-amber-500/10 md:min-w-80'>
@@ -128,19 +106,7 @@ const ProductCard: React.FC<{
             Add to Cart
           </Button>
 
-          {/* <button
-            type="button"
-            aria-pressed={wish}
-            onClick={toggleWishlist}
-            className="flex items-center justify-center gap-2 rounded text-sm transition-all duration-200 hover:border-rose-500/50 hover:bg-rose-500/5"
-            title={wish ? "Remove from wishlist" : "Add to wishlist"}
-          >
-            <Heart
-              className={`h-5 w-5 transition-colors duration-200 ${
-                wish ? "fill-rose-500 text-rose-500" : "text-zinc-400"
-              }`}
-            />
-          </button> */}
+          {/* Wishlist button intentionally removed */}
         </div>
       </CardContent>
     </Card>

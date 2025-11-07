@@ -1,7 +1,5 @@
 import { Resend } from "resend";
 import { z } from "zod";
-import { ContactEmailTemplate } from "@/app/components/ContactEmailTemplate";
-import React from "react";
 
 export const runtime = "nodejs";
 
@@ -76,21 +74,20 @@ export async function POST(request: Request) {
         if (err instanceof z.ZodError) {
             return jsonResponse({ error: err.errors }, 400);
         }
-
         console.error("Email send error:", err);
         return jsonResponse({ error: "Failed to send email" }, 502);
     }
 }
 
-// ✅ JSON response helper
-function jsonResponse(data: any, status: number) {
+// ✅ JSON response helper (use unknown instead of any)
+function jsonResponse(data: unknown, status: number) {
     return new Response(JSON.stringify(data), {
         status,
         headers: { "Content-Type": "application/json" }
     });
 }
 
-// ✅ Simple logger (can be replaced with external logging service)
-function logEvent(event: string, data: any) {
-    console.log(`[${new Date().toISOString()}] ${event}:`, data);
+// ✅ Simple logger (typed)
+function logEvent(event: string, data: Record<string, unknown> | undefined) {
+    console.log(`[${new Date().toISOString()}] ${event}:`, data ?? {});
 }

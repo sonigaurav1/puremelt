@@ -32,23 +32,35 @@ export default defineSchema({
 
   // orders: Order records for purchases.
   orders: defineTable({
-    addressId: v.string(),
-    createdAt: v.float64(),
-    isDeleted: v.optional(v.boolean()),
-    items: v.any(),
+    userId: v.string(),
+    merchantOrderId: v.optional(v.string()),
+    addressId: v.optional(v.string()),
+    // Array of cart item objects captured at time of order
+    items: v.array(v.object({
+      id: v.string(),
+      name: v.string(),
+      price: v.number(),
+      originalPrice: v.number(),
+      quantity: v.number(),
+      image: v.optional(v.string()),
+      weight: v.optional(v.number()),
+      size: v.optional(v.string()),
+    })),
     payment: v.optional(v.any()),
     paymentId: v.optional(v.string()),
     paymentStatus: v.optional(v.string()),
     pincode: v.optional(v.string()),
     savings: v.optional(v.float64()),
-    shipping: v.optional(v.float64()), // <-- Add here
+    shipping: v.optional(v.float64()),
     shipmentStatus: v.optional(v.string()),
     status: v.string(),
     subtotal: v.optional(v.float64()), // Add this if you send subtotal
     total: v.float64(),
     totalWeight: v.optional(v.float64()), // Add this if you send totalWeight
+
+    createdAt: v.float64(),
     updatedAt: v.float64(),
-    userId: v.string(),
+    isDeleted: v.optional(v.boolean()),
   }),
 
   // products: Store product details.

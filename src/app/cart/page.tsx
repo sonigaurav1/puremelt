@@ -8,33 +8,17 @@ import { Plus, Minus, ShoppingBag, Trash, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
-import { useEffect } from 'react';
 import Header from '@/components/layout/Header';
-import { useMutation } from 'convex/react';
-import { api } from '@/../convex/_generated/api';
-import {
-  sendOTP,
-  setupRecaptcha,
-  verifyOTP
-} from '@/features/auth/lib/phoneAuth';
+
+import { useRouter } from 'next/navigation';
 
 export default function CartPage() {
-  const createOrder = useMutation(api.orders.orders.createOrder);
-  const createPayment = useMutation(api.payments.payments.createPayment);
+  const router = useRouter();
 
-  const {
-    cartItems,
-    updateQuantity,
-    removeFromCart,
-    clearCart,
-    getTotalItems,
-    getTotalPrice
-  } = useCart();
+  const { cartItems, updateQuantity, removeFromCart } = useCart();
 
-  // Pincode state
-  const [pincode, setPincode] = useState('');
   // Shipping charge state (to be set from Delhivery API)
-  const [shippingCharge, setShippingCharge] = useState<number | null>(null);
+  const [shippingCharge] = useState<number | null>(null); // setter unused; remove to satisfy lint
 
   // Calculate total cart weight (assumes item.weight in kg)
   const totalWeight = cartItems.reduce(
@@ -61,79 +45,6 @@ export default function CartPage() {
     shippingCharge !== null ? shippingCharge : subtotal >= 500 ? 0 : 50;
   const total = subtotal + shipping;
 
-  function handleRazorpayPayment(e: React.MouseEvent<HTMLButtonElement>) {
-    e.preventDefault();
-
-    if (
-      typeof window === 'undefined' ||
-      typeof (window as any).Razorpay !== 'function'
-    ) {
-      alert('Payment system not loaded. Please try again in a moment.');
-      return;
-    }
-
-    const options = {
-      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-      amount: total * 100,
-      currency: 'INR',
-      name: 'Penowa',
-      description: 'Order Payment',
-      handler: async (response: any) => {
-        try {
-          const orderData = {
-            cartItems,
-            total,
-            shipping,
-            subtotal,
-            savings,
-            pincode,
-            totalWeight,
-            payment: {
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_signature: response.razorpay_signature
-            },
-            createdAt: Date.now()
-          };
-          const orderId = await createOrder(orderData);
-          alert('Payment successful! Your order has been placed.');
-
-          const paymentData = {
-            gateway: 'razorpay',
-            transactionId: response.razorpay_payment_id,
-            status: 'success',
-            amount: total,
-            currency: 'INR',
-            method: 'upi', // or 'card', 'wallet', etc. if you can detect
-            details: {
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_signature: response.razorpay_signature,
-              pincode,
-              totalWeight,
-              cartItems
-            },
-            createdAt: Date.now(),
-            // Optionally add userId/orderId if available
-            orderId: orderId || ''
-          };
-          await createPayment(paymentData);
-
-          clearCart();
-        } catch (err: any) {
-          alert(
-            'Payment succeeded, but order could not be stored. Please contact support.'
-          );
-        }
-      },
-      theme: { color: '#EEFF00' }
-      // prefill: { email: '', phone_number: '' }
-    };
-
-    const rzp = new (window as any).Razorpay(options);
-    rzp.open();
-  }
-
   return (
     <div className='min-h-screen bg-black'>
       {/* Header */}
@@ -158,7 +69,7 @@ export default function CartPage() {
               <p className='mb-8 text-gray-400'>
                 Add some delicious peanut butter to get started!
               </p>
-              <Link href='/buy-now'>
+              <Link href='/products'>
                 <Button className='rounded-xl bg-amber-500 px-8 py-3 text-lg font-semibold text-white hover:bg-amber-600'>
                   Start Shopping
                 </Button>
@@ -184,7 +95,7 @@ export default function CartPage() {
 
               {/* Cart Items */}
               <div className='divide-y divide-gray-800'>
-                {cartItems.map((item: (typeof cartItems)[0], index: number) => (
+                {cartItems.map((item: (typeof cartItems)[0]) => (
                   <div key={item.id} className='p-4 md:p-6'>
                     <div className='md:grid md:grid-cols-12 md:items-center md:gap-4'>
                       {/* Mobile Layout */}
@@ -370,7 +281,7 @@ export default function CartPage() {
                     )}
 
                     {/* Pincode input for shipping calculation */}
-                    <div className='mb-2 flex items-center gap-2'>
+                    {/* <div className='mb-2 flex items-center gap-2'>
                       <label
                         htmlFor='pincode'
                         className='text-sm text-gray-300'
@@ -391,12 +302,13 @@ export default function CartPage() {
                         variant='ghost'
                         className='rounded-lg border border-amber-400 px-4 py-2 text-sm text-amber-400 hover:bg-amber-400/10'
                         onClick={() => {
-                          /* TODO: Trigger Delhivery API call here */
+                        // TODO: Trigger Delhivery API call here 
                         }}
                       >
                         Apply
                       </Button>
-                    </div>
+                    </div> */}
+
                     <div className='flex justify-between text-gray-300'>
                       <span>Total Weight:</span>
                       <span className='font-semibold text-white'>
@@ -434,12 +346,12 @@ export default function CartPage() {
                   <div id='recaptcha-container'></div>
                   <div className=''>
                     <Button
-                      onClick={handleRazorpayPayment} // Implement payment logic using cartItems from context if needed
-                      className='mb-4 w-full rounded-xl  bg-gradient-to-r from-[hsl(var(--honey))] to-[hsl(var(--amber-rich))] py-4 text-lg font-semibold text-black hover:bg-[#EEFF00]/90'
+                      onClick={() => router.push('/checkout')} // Implement payment logic using cartItems from context if needed
+                      className='mb-4 w-full rounded-xl bg-gradient-to-r from-[hsl(var(--honey))] to-[hsl(var(--amber-rich))] py-4 text-lg font-semibold text-black hover:bg-[#EEFF00]/90'
                     >
                       🔒 Checkout
                     </Button>
-                    <Link href='/buy-now'>
+                    <Link href='/products'>
                       <Button className='w-full rounded-xl bg-transparent py-4 text-lg font-semibold text-white'>
                         Continue Shopping
                         <ArrowRight className='ml-1 h-4 w-4' />

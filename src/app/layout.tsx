@@ -1,6 +1,5 @@
 import type React from 'react';
 // Service worker registration moved to client component
-import RegisterServiceWorker from '../components/RegisterServiceWorker';
 import type { Metadata, Viewport } from 'next';
 import {
   Alex_Brush,
@@ -15,7 +14,6 @@ import { AuthProvider } from './components/auth-context';
 import { ThemeProvider } from '../components/theme-provider';
 import { Toaster } from '../components/ui/sonner';
 import { ConvexClientProvider } from '@/components/providers/ConvexProvider';
-import Script from 'next/script';
 import { PHONE_NUMBER } from '@/constant';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -222,16 +220,6 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <Script
-          src='https://checkout.razorpay.com/v1/checkout.js'
-          strategy='afterInteractive'
-        />
-        <Script
-          src='https://securegw.paytm.in/merchantpgpui/checkoutjs/merchants/{YOUR_MID}.js'
-          type='application/javascript'
-          crossOrigin='anonymous'
-          strategy='afterInteractive'
-        />
         {/* <RegisterServiceWorker /> */}
         <ThemeProvider
           attribute='class'
@@ -242,7 +230,9 @@ export default function RootLayout({
           <Toaster richColors />
           <AuthProvider>
             <ConvexClientProvider>
-              <CartProvider>{children}</CartProvider>
+              <CartProvider>
+                {children}
+              </CartProvider>
             </ConvexClientProvider>
           </AuthProvider>
         </ThemeProvider>

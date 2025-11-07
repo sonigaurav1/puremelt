@@ -1,3 +1,5 @@
+'use client';
+
 import { Facebook, Instagram, Twitter } from 'lucide-react';
 import Link from 'next/link';
 import React, { useState } from 'react';
@@ -38,13 +40,13 @@ const Footer = () => {
           data?.error || 'Subscription failed. Please try again later.'
         );
       }
-    } catch (err) {
+    } catch {
       setNewsletterStatus('Subscription failed. Please try again later.');
     }
   };
 
   return (
-    <footer className='border-t md:border-t-2 border-gray-800 bg-black pb-6 pt-8 text-white md:px-12'>
+    <footer className='border-t border-gray-800 bg-black pb-6 pt-8 text-white md:border-t-2 md:px-12'>
       <div className='md:max-w-8xl container mx-auto px-4'>
         <div className='grid gap-8 md:grid-cols-4'>
           <div>
@@ -250,14 +252,12 @@ const Footer = () => {
             <div className='space-y-2 text-white'>
               <p className='text-sm'>
                 Email:
-                <Link
-                  href={EMAIL_ADDRESS}
-                  className='ml-1 hover:text-white'
-                >
+                <Link href={EMAIL_ADDRESS} className='ml-1 hover:text-white'>
                   {EMAIL_ADDRESS}
                 </Link>
               </p>
-              <p className='text-sm'>Phone:
+              <p className='text-sm'>
+                Phone:
                 <Link
                   href={`tel:${PHONE_NUMBER}`}
                   className='ml-1 hover:text-white'
@@ -270,9 +270,29 @@ const Footer = () => {
         </div>
 
         <div className='mt-12 border-t border-amber-800 pt-8 text-center text-white'>
-          <p>
-            &#174; {new Date().getFullYear()} {process.env.NEXT_PUBLIC_BRAND_NAME}. All rights
-            reserved. | Privacy Policy | Terms of Service
+          <p className='space-x-2'>
+            <span>
+              &#174; {new Date().getFullYear()}{' '}
+              {process.env.NEXT_PUBLIC_BRAND_NAME}. All rights reserved.
+            </span>
+            <span>|</span>
+            <Link
+              href={PATH.PRIVACY}
+              className='underline hover:text-[#EEFF00]'
+            >
+              Privacy Policy
+            </Link>
+            <span>|</span>
+            <Link href={PATH.TERMS} className='underline hover:text-[#EEFF00]'>
+              Terms of Service
+            </Link>
+            <span>|</span>
+            <Link
+              href={PATH.REFUND_CANCELLATION}
+              className='underline hover:text-[#EEFF00]'
+            >
+              Refund & Cancellation
+            </Link>
           </p>
         </div>
       </div>

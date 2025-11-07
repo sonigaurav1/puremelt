@@ -10,4 +10,7 @@ export const PATH = {
     FAQ: '/faq',
     SHIPPING: '/shipping',
     RETURNS: '/returns',
+    PRIVACY: '/privacy-policy',
+    TERMS: '/terms',
+    REFUND_CANCELLATION: '/refund-cancellation-policy',
 }

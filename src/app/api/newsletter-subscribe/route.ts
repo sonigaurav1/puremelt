@@ -30,7 +30,9 @@ export async function POST(req: NextRequest) {
             const data = await response.json();
             return NextResponse.json({ error: data.message || "Failed to subscribe." }, { status: 400 });
         }
-    } catch (err) {
+    } catch {
+        // Log a generic error (removed unused variable to satisfy lint rule)
+        console.error('Newsletter subscribe error');
         return NextResponse.json({ error: "Server error. Please try again later." }, { status: 500 });
     }
 }

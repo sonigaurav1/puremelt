@@ -2,50 +2,12 @@
 
 import ProductCard from '@/components/ProductCard';
 import { PRODUCT_PRICES } from '@/constant';
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { Facebook, Instagram, Twitter } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import Image from 'next/image';
+import React from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 
 const AllProducts = () => {
-  const [newsletterEmail, setNewsletterEmail] = useState('');
-  const [newsletterStatus, setNewsletterStatus] = useState('');
-
-  const handleNewsletterSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
-    e.preventDefault();
-    if (!newsletterEmail) {
-      setNewsletterStatus('Please enter your email.');
-      return;
-    }
-    setNewsletterStatus('Processing...');
-    try {
-      // You should create a backend API route to avoid exposing your API key
-      const response = await fetch('/api/newsletter-subscribe', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email: newsletterEmail })
-      });
-      if (response.ok) {
-        setNewsletterStatus('Subscribed! Thank you.');
-        setNewsletterEmail('');
-      } else {
-        const data = await response.json();
-        setNewsletterStatus(
-          data?.error || 'Subscription failed. Please try again later.'
-        );
-      }
-    } catch (err) {
-      setNewsletterStatus('Subscription failed. Please try again later.');
-    }
-  };
+  // Newsletter subscription logic removed due to being unused (lint warning fix).
 
   return (
     <>

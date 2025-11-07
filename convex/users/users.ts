@@ -122,7 +122,7 @@ export const listUsers = query({
      * @param {{ limit?: number, offset?: number }} args
      */
     handler: async (ctx, args) => {
-        let q = ctx.db.query("users").filter(q => q.eq(q.field("isDeleted"), false));
+        const q = ctx.db.query("users").filter(q => q.eq(q.field("isDeleted"), false));
         if (args.offset || args.limit) {
             const offset = args.offset ?? 0;
             const limit = args.limit ?? 100;
