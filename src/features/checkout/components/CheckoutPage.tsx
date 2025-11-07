@@ -140,7 +140,14 @@ export default function Checkout() {
     setPincodeError('');
   }, [formData.state]);
 
-  const { user, isSignedIn } = useUser();
+  // Guard Clerk hook usage so build can succeed even if Clerk env vars
+  // aren't configured (e.g., preview builds). If publishable key missing,
+  // treat user as unauthenticated without calling the hook.
+  const hasClerk = Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
+  const clerkData = hasClerk
+    ? useUser()
+    : ({} as unknown as { user: undefined; isSignedIn: false });
+  const { user, isSignedIn } = clerkData;
 
   const createOrder = useMutation(api.orders.orders.createOrder);
   const createPayment = useMutation(api.payments.payments.createPayment);

@@ -101,50 +101,22 @@ const HeaderIcons = ({
   pop: boolean;
   isMobile: boolean;
 }) => {
-  const { isSignedIn, user } = useUser();
-  const { signOut } = useClerk();
-  const router = useRouter();
+  const hasClerk = Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
   const [menuOpen, setMenuOpen] = useState(false);
+  const router = useRouter();
 
-  const name = user?.fullName || user?.firstName || user?.username || 'User';
+  // Auth-aware user menu that only calls Clerk hooks when Clerk is configured
+  const UserMenu = () => {
+    const { isSignedIn, user } = useUser();
+    const { signOut } = useClerk();
+    const name = user?.fullName || user?.firstName || user?.username || 'User';
 
-  const handleLogout = async () => {
-    await signOut();
-    router.push('/');
-  };
+    const handleLogout = async () => {
+      await signOut();
+      router.push('/');
+    };
 
-  return (
-    <div className='flex items-center gap-3'>
-      {/* Cart */}
-      <Link href='/cart'>
-        <Button
-          variant='ghost'
-          size='sm'
-          className='relative bg-transparent px-2'
-        >
-          <ShoppingCart
-            className={clsx(
-              '!size-5 cursor-pointer',
-              textColor,
-              scrolled && 'text-black',
-              pathname === '/cart' && '!text-amber-700'
-            )}
-            aria-label='View cart'
-          />
-          {cartCount > 0 && (
-            <span
-              className={clsx(
-                'absolute -right-2 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-amber-600 text-xs text-white transition-transform duration-300',
-                pop && 'animate-pop'
-              )}
-            >
-              {cartCount}
-            </span>
-          )}
-        </Button>
-      </Link>
-
-      {/* User */}
+    return (
       <DropdownMenu open={menuOpen} onOpenChange={setMenuOpen}>
         <DropdownMenuTrigger asChild>
           <Button
@@ -216,6 +188,85 @@ const HeaderIcons = ({
           )}
         </DropdownMenuContent>
       </DropdownMenu>
+    );
+  };
+
+  // Fallback menu when Clerk isn't configured during build — avoids calling Clerk hooks
+  const GuestMenu = () => (
+    <DropdownMenu open={menuOpen} onOpenChange={setMenuOpen}>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant='ghost'
+          size='sm'
+          className='bg-transparent px-2'
+          onMouseEnter={() => setMenuOpen(true)}
+          aria-label='User account'
+        >
+          <User
+            className={clsx(
+              '!size-[22px] cursor-pointer transition-transform duration-200 hover:scale-110',
+              textColor,
+              scrolled && 'text-black',
+              pathname === '/account' && '!text-amber-700'
+            )}
+          />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent
+        align='end'
+        className='min-w-[12rem]'
+        onMouseEnter={() => setMenuOpen(true)}
+        onMouseLeave={() => setMenuOpen(false)}
+      >
+        <DropdownMenuLabel>Welcome</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Link href='/account' className='cursor-pointer'>
+            Login
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href='/account/register' className='cursor-pointer'>
+            Register
+          </Link>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+
+  return (
+    <div className='flex items-center gap-3'>
+      {/* Cart */}
+      <Link href='/cart'>
+        <Button
+          variant='ghost'
+          size='sm'
+          className='relative bg-transparent px-2'
+        >
+          <ShoppingCart
+            className={clsx(
+              '!size-5 cursor-pointer',
+              textColor,
+              scrolled && 'text-black',
+              pathname === '/cart' && '!text-amber-700'
+            )}
+            aria-label='View cart'
+          />
+          {cartCount > 0 && (
+            <span
+              className={clsx(
+                'absolute -right-2 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-amber-600 text-xs text-white transition-transform duration-300',
+                pop && 'animate-pop'
+              )}
+            >
+              {cartCount}
+            </span>
+          )}
+        </Button>
+      </Link>
+
+      {/* User */}
+      {hasClerk ? <UserMenu /> : <GuestMenu />}
     </div>
   );
 };
