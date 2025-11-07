@@ -404,15 +404,25 @@ export default function Checkout() {
       {/* Breadcrumb */}
       <div className='border-b border-gray-200 bg-white'>
         <div className='mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8'>
-          <div className='flex items-center space-x-2 text-sm'>
-            <span
-              onClick={() => router.push('/cart')}
-              className='cursor-pointer text-gray-600'
-            >
-              Cart
-            </span>
-            <ChevronRight className='h-4 w-4 text-gray-400' />
-            <span className='font-medium text-gray-900'>Billing</span>
+          <div className='flex items-center justify-between space-x-2 text-sm'>
+            <div className='flex items-center gap-1'>
+              <span
+                onClick={() => router.push('/cart')}
+                className='cursor-pointer text-gray-600'
+              >
+                Cart
+              </span>
+              <ChevronRight className='h-4 w-4 text-gray-400' />
+              <span className='font-medium text-gray-900'>Billing</span>
+            </div>
+            {!isSignedIn && (
+              <Button
+                variant='link'
+                className='cursor-pointer p-0 text-blue-600 underline'
+              >
+                Sign in
+              </Button>
+            )}
             {/* <ChevronRight className='h-4 w-4 text-gray-400' />
             <span className='text-gray-400'>Shipping</span>
             <ChevronRight className='h-4 w-4 text-gray-400' />
@@ -426,7 +436,11 @@ export default function Checkout() {
         <div className='grid grid-cols-1 gap-8 lg:grid-cols-2'>
           {/* Left Column - Form */}
           <div className='space-y-6'>
-            <form onSubmit={handleSubmit} className='space-y-6'>
+            <form
+              id='checkout-form'
+              onSubmit={handleSubmit}
+              className='space-y-6'
+            >
               {/* Contact Information */}
               <div className='rounded-lg bg-white p-6 shadow-sm'>
                 <h2 className='mb-4 text-xl font-semibold text-gray-900'>
@@ -850,9 +864,10 @@ export default function Checkout() {
 
           <Button
             type='submit'
+            form='checkout-form'
             className='mb-10 w-full rounded-lg bg-red-600 py-6 text-base font-semibold text-white shadow-lg transition-colors hover:bg-red-700 md:hidden'
           >
-            Complete Order
+            Pay Now
           </Button>
         </div>
       </div>
