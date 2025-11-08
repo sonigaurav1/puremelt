@@ -20,6 +20,7 @@ import {
 import ProductCard from '@/components/ProductCard';
 import Footer from '@/components/layout/Footer';
 import FAQ from '@/components/FAQ';
+import { GoogleOneTap } from '@clerk/clerk-react';
 
 export default function HomePage() {
   // Show the HomeLoader once per browser session
@@ -114,6 +115,18 @@ export default function HomePage() {
         <main>
           {/* Header */}
           <Header />
+
+          {
+            <GoogleOneTap
+              // Force redirect targets after successful flows.
+              signInForceRedirectUrl='/account'
+              signUpForceRedirectUrl='/account'
+              // Leave ITP/FedCM support enabled (defaults true) for Safari/iOS.
+              itpSupport
+              fedCmSupport
+              cancelOnTapOutside
+            />
+          }
 
           <div className='md:pt-[76px]'>
             <ImageSlider />

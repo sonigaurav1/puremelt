@@ -111,7 +111,7 @@ export const metadata: Metadata = {
       {
         url:
           (process.env.NEXT_PUBLIC_SITE_URL || 'https://penowa.in') +
-          '/hero-butter.webp',
+          '/penowa.png',
         width: 1200,
         height: 630,
         alt: `${process.env.NEXT_PUBLIC_BRAND_NAME} Premium Peanut Butter`
@@ -127,7 +127,7 @@ export const metadata: Metadata = {
       'Premium healthy peanut butter and nuts butters: blend of peanuts, almonds, cashews, pistachios, dates & honey. Healthier, tastier, organic.',
     images: [
       (process.env.NEXT_PUBLIC_SITE_URL || 'https://penowa.in') +
-        '/hero-butter.webp'
+        '/penowa.png'
     ]
   },
   appleWebApp: {

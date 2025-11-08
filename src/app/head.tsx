@@ -27,7 +27,7 @@ export default function Head() {
       />
       <meta property='og:type' content='website' />
       <meta property='og:url' content='https://penowa.in/' />
-      <meta property='og:image' content='https://penowa.in/hero-butter.webp' />
+      <meta property='og:image' content='https://penowa.in/penowa.png' />
       {/* Twitter Card Tags */}
       <meta name='twitter:card' content='summary_large_image' />
       <meta
@@ -38,7 +38,7 @@ export default function Head() {
         name='twitter:description'
         content="Buy Penowa's premium, organic, and healthy peanut butter. India's best peanut butter for fitness, gym, and health. No palm oil, no refined sugar, only real ingredients!"
       />
-      <meta name='twitter:image' content='https://penowa.in/hero-butter.webp' />
+      <meta name='twitter:image' content='https://penowa.in/penowa.png' />
       {/* JSON-LD Structured Data for Product SEO */}
       <script
         type='application/ld+json'
@@ -51,7 +51,7 @@ export default function Head() {
               ' Premium Peanut Butter',
             image: [
               (process.env.NEXT_PUBLIC_SITE_URL || 'https://penowa.in') +
-                '/hero-butter.webp',
+                '/penowa.png',
               (process.env.NEXT_PUBLIC_SITE_URL || 'https://penowa.in') +
                 '/penowa.png'
             ],

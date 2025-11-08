@@ -85,7 +85,17 @@ const LoginPage = () => {
               </div>
               <form onSubmit={onSubmitLogin} className='space-y-4'>
                 {/* Google One Tap surface (auto appears if enabled in Clerk dashboard) */}
-                {hasClerk && isLoaded && !isSignedIn && <GoogleOneTap />}
+                {hasClerk && isLoaded && !isSignedIn && (
+                  <GoogleOneTap
+                    // Force redirect targets after successful flows.
+                    signInForceRedirectUrl='/account'
+                    signUpForceRedirectUrl='/account'
+                    // Leave ITP/FedCM support enabled (defaults true) for Safari/iOS.
+                    itpSupport
+                    fedCmSupport
+                    cancelOnTapOutside
+                  />
+                )}
                 <div>
                   <label className='mb-2 block text-sm font-medium'>
                     Email
