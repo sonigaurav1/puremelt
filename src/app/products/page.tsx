@@ -1,7 +1,7 @@
 'use client';
 
 import ProductCard from '@/components/ProductCard';
-import { PRODUCT_PRICES } from '@/constant';
+import { PRODUCT_PRICES, PRODUCTS } from '@/constant';
 import React from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -26,31 +26,32 @@ const AllProducts = () => {
                 </h2>
               </div> */}
 
-          <div className='grid grid-cols-2 items-center justify-center gap-2 md:grid-cols-2 md:gap-6 lg:flex lg:flex-wrap lg:items-start lg:justify-start lg:gap-14'>
+          <div className='grid grid-cols-2 items-center justify-center gap-2 md:grid-cols-2 lg:grid-cols-3 md:gap-6 '>
             {/* Map through all products and display them */}
             {[
               {
                 weight: '350g',
-                productName: 'Premium Nuts Butter',
+                productName: PRODUCTS['premium-nuts-butter'].name,
                 slug: 'premium-nuts-butter',
-                description: 'A delicious blend of premium nuts.',
+                description: PRODUCTS['premium-nuts-butter'].shortDescription,
                 original:
                   PRODUCT_PRICES['premium-nuts-butter']['350g'].original,
                 price: PRODUCT_PRICES['premium-nuts-butter']['350g'].discounted
               },
               {
                 weight: '500g',
-                productName: 'Peanut & Dates Butter',
+                productName: PRODUCTS['peanut-date-butter'].name,
                 slug: 'peanut-date-butter',
-                description: 'A delicious blend of peanut and date.',
+                description: PRODUCTS['peanut-date-butter'].shortDescription,
                 original: PRODUCT_PRICES['peanut-date-butter']['500g'].original,
                 price: PRODUCT_PRICES['peanut-date-butter']['500g'].discounted
               },
               {
                 weight: '250g',
-                productName: 'Almond Walnut Cashew Butter',
+                productName: PRODUCTS['almond-walnut-cashew-butter'].name,
                 slug: 'almond-walnut-cashew-butter',
-                description: 'A delicious blend of premium nuts.',
+                description:
+                  PRODUCTS['almond-walnut-cashew-butter'].shortDescription,
                 original:
                   PRODUCT_PRICES['almond-walnut-cashew-butter']['250g']
                     .original,

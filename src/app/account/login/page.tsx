@@ -35,6 +35,9 @@ const LoginPage = () => {
   const { login, googleLogin, loading, startPasswordReset, resetPassword } =
     useAuth();
 
+  // Single guard for One Tap to avoid re-computation scattered in JSX.
+  const showOneTap = hasClerk && isLoaded && !isSignedIn;
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -83,19 +86,19 @@ const LoginPage = () => {
                 <h1 className='text-3xl font-bold'>Sign in</h1>
                 <p className='text-amber-400'>Welcome back</p>
               </div>
-              <form onSubmit={onSubmitLogin} className='space-y-4'>
-                {/* Google One Tap surface (auto appears if enabled in Clerk dashboard) */}
-                {hasClerk && isLoaded && !isSignedIn && (
+              {/* Move Google One Tap outside the form to reduce layout clipping / remount issues */}
+              {showOneTap && (
+                <div>
                   <GoogleOneTap
-                    // Force redirect targets after successful flows.
                     signInForceRedirectUrl='/account'
                     signUpForceRedirectUrl='/account'
-                    // Leave ITP/FedCM support enabled (defaults true) for Safari/iOS.
                     itpSupport
                     fedCmSupport
-                    cancelOnTapOutside
+                    cancelOnTapOutside={false}
                   />
-                )}
+                </div>
+              )}
+              <form onSubmit={onSubmitLogin} className='space-y-4'>
                 <div>
                   <label className='mb-2 block text-sm font-medium'>
                     Email
@@ -107,7 +110,7 @@ const LoginPage = () => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       className='border-amber-200 bg-black pl-9 text-white focus:border-amber-500'
-                      placeholder='you@example.com'
+                      placeholder='Email'
                       required
                     />
                   </div>
@@ -196,7 +199,7 @@ const LoginPage = () => {
                         value={resetEmail || email}
                         onChange={(e) => setResetEmail(e.target.value)}
                         className='border-amber-200 bg-black pl-9 text-white focus:border-amber-500'
-                        placeholder='you@example.com'
+                        placeholder='Email'
                         required
                       />
                     </div>

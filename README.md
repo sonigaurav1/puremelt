@@ -64,7 +64,7 @@ Welcome to Penowa, where the simplest ideas make the boldest impact. In a world 
 
 - **Frontend:** Next.js 15, Tailwind CSS, ShadCN UI
 - **Backend:** Next.js API routes (Convex recommended for eComm logic + auth)
-- **Payment:** Razorpay (UPI, Cards, Wallets, Netbanking)
+- **Payment:** Phonepe (UPI, Cards, Wallets, Netbanking)
 - **SEO & Analytics:** Google Analytics, Meta/Facebook Pixel, schema.org markup, OpenGraph tags
 - **CMS (Recommended):** Sanity or Strapi for dynamic blogs/recipes
 
@@ -75,7 +75,7 @@ Welcome to Penowa, where the simplest ideas make the boldest impact. In a world 
 ```
 app/
   ├── components/         # Contexts, UI, layout, slider
-  ├── api/                # Newsletter, Razorpay, contact
+  ├── api/                # Newsletter, Phonepe, contact
   ├── buy-now/            # Buy Now page
   ├── cart/               # Cart page
   ├── contact/            # Contact page
@@ -102,7 +102,7 @@ public/
 1. **Clone the repository:**
    ```sh
    git clone <repo-url>
-   cd puremelt-website
+   cd penowa-website
    ```
 
 ````

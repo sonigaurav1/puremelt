@@ -21,9 +21,9 @@ export const createOrder = mutation({
     pincode: v.optional(v.string()),
     totalWeight: v.number(),
     payment: v.object({
-      razorpay_payment_id: v.string(),
-      razorpay_order_id: v.optional(v.string()),
-      razorpay_signature: v.optional(v.string()),
+      phonepe_payment_id: v.string(),
+      phonepe_order_id: v.optional(v.string()),
+      phonepe_signature: v.optional(v.string()),
     }),
     addressId: v.optional(v.string()),
     user: v.optional(v.any()),
@@ -42,12 +42,12 @@ export const createOrder = mutation({
       updatedAt: args.createdAt,
       userId,
       // Prefer gateway-provided order id; fallback to payment id
-      merchantOrderId: args.payment.razorpay_order_id ?? args.payment.razorpay_payment_id,
+      merchantOrderId: args.payment.phonepe_order_id ?? args.payment.phonepe_payment_id,
       items: args.cartItems, // matches refined schema validator
       total: args.total,
       status: "pending", // or set as needed
       ...(args.addressId ? { addressId: args.addressId } : {}),
-      paymentId: args.payment.razorpay_payment_id,
+      paymentId: args.payment.phonepe_payment_id,
       paymentStatus: "paid",
       shipmentStatus: "pending",
       isDeleted: false,

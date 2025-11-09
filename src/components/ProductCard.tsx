@@ -31,7 +31,9 @@ const ProductCard: React.FC<{
 
   const handleAddNow = () => {
     addToCart({
-      name: `${process.env.NEXT_PUBLIC_BRAND_NAME} Premium All-in-One Nuts Butter (${weight})`,
+      // Use the actual productName prop instead of hardcoded label so different products
+      // (e.g. Peanut & Dates Butter, Almond • Walnut • Cashew Butter) show correctly in cart.
+      name: `${process.env.NEXT_PUBLIC_BRAND_NAME} ${productName} (${weight})`,
       size: weight,
       price,
       originalPrice: original,

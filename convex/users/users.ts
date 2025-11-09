@@ -48,9 +48,9 @@ export const updateUser = mutation({
         const user = await ctx.db.get(args.userId);
         if (!user || user.isDeleted) throw new Error("User not found");
         await ctx.db.patch(args.userId, {
-            ...(args.email && { email: args.email }),
-            ...(args.name && { name: args.name }),
-            ...(args.imageUrl && { imageUrl: args.imageUrl }),
+            ...(args.email !== undefined && { email: args.email }),
+            ...(args.name !== undefined && { name: args.name }),
+            ...(args.imageUrl !== undefined && { imageUrl: args.imageUrl }),
             updatedAt: Date.now(),
         });
         return { success: true };
@@ -107,6 +107,43 @@ export const getUserByClerkId = query({
         const user = users.find(u => !u.isDeleted);
         return user || null;
     },
+});
+
+// Upsert user by clerk id (create if not exists, update name/email/image if changed)
+export const upsertUserByClerkId = mutation({
+    args: {
+        clerkUserId: v.string(),
+        email: v.string(),
+        name: v.string(),
+        imageUrl: v.optional(v.string()),
+    },
+    handler: async (ctx, args) => {
+        const existing = await ctx.db
+            .query('users')
+            .filter(q => q.eq(q.field('clerkUserId'), args.clerkUserId))
+            .collect();
+        const user = existing.find(u => !u.isDeleted);
+        const now = Date.now();
+        if (!user) {
+            const id = await ctx.db.insert('users', {
+                clerkUserId: args.clerkUserId,
+                email: args.email,
+                name: args.name,
+                imageUrl: args.imageUrl,
+                createdAt: now,
+                updatedAt: now,
+                isDeleted: false,
+            });
+            return { created: true, userId: id };
+        }
+        await ctx.db.patch(user._id, {
+            email: args.email,
+            name: args.name,
+            imageUrl: args.imageUrl,
+            updatedAt: now,
+        });
+        return { created: false, userId: user._id };
+    }
 });
 
 /**

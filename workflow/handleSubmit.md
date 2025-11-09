@@ -24,7 +24,7 @@ On success, capture paytmOrderId and txnToken; otherwise log a warning and conti
 Build payment object (for order creation)
 
 Use Paytm order ID if available; otherwise fall back to a demo txn id:
-paymentObj = { razorpay_payment_id: paytmOrderId ?? demoTxnId, razorpay_order_id: undefined, razorpay_signature: undefined }.
+paymentObj = { phonepe_payment_id: paytmOrderId ?? demoTxnId, phonepe_order_id: undefined, phonpe_signature: undefined }.
 Address auto-create (best-effort)
 
 If signed in, user has zero saved addresses, and form has address:

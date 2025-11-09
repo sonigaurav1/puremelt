@@ -17,7 +17,7 @@ export default function ThankYouPage() {
 
   return (
     <div className='flex min-h-screen items-center justify-center bg-gray-50 p-6'>
-      <div className='w-full max-w-xl rounded-lg bg-white p-8 shadow'>
+      <div className='w-full max-w-xl text-center rounded-lg bg-white p-8 shadow'>
         <h1 className='mb-4 text-2xl font-semibold'>
           Thank you for your order!
         </h1>

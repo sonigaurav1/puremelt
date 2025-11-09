@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://puremelt.in
+Host: https://penowa.in
 
 # Sitemaps
-Sitemap: https://puremelt.in/sitemap.xml
+Sitemap: https://penowa.in/sitemap.xml

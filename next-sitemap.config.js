@@ -1,5 +1,5 @@
 /** @type {import('next-sitemap').IConfig} */
-module.exports = {
-  siteUrl: 'https://puremelt.in',
+export default {
+  siteUrl: 'https://penowa.in',
   generateRobotsTxt: true, // Optional but recommended
 };

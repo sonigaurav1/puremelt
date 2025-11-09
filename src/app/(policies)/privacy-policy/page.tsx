@@ -35,7 +35,7 @@ export default function PrivacyPolicyPage() {
               This Privacy Policy describes how Penowa and its affiliates
               (collectively "Penowa, we, our, us") collect, use, share, protect
               or otherwise process your information/personal data through our
-              website https://puremelt.in (hereinafter referred to as Platform).
+              website https://penowa.in (hereinafter referred to as Platform).
             </p>
             <p>
               Please note that you may be able to browse certain sections of the

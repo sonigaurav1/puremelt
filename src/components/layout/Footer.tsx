@@ -78,7 +78,7 @@ const Footer = () => {
               <form onSubmit={handleNewsletterSubmit} className='space-y-2'>
                 <Input
                   type='email'
-                  placeholder='Enter your email'
+                  placeholder='Email'
                   className='border-amber-700 text-black placeholder:text-slate-400'
                   value={newsletterEmail}
                   onChange={(e) => setNewsletterEmail(e.target.value)}
@@ -215,7 +215,7 @@ const Footer = () => {
               <form onSubmit={handleNewsletterSubmit} className='space-y-2'>
                 <Input
                   type='email'
-                  placeholder='Enter your email'
+                  placeholder='Email'
                   className='border-amber-700 text-black placeholder:text-slate-400'
                   value={newsletterEmail}
                   onChange={(e) => setNewsletterEmail(e.target.value)}

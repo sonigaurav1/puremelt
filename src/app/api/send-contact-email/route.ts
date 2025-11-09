@@ -52,7 +52,7 @@ export async function POST(request: Request) {
 
         // ✅ Send email with JSX template
         await resend.emails.send({
-            from: "Website Contact Form <contact@puremelt.in>",
+            from: "Website Contact Form <contact@penowa.in>",
             to: "soniienterprises372@gmail.com",
             replyTo: email,
             subject: `${subject || "Website Contact Form Submission"} - From ${name} <${email}>`,

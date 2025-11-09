@@ -38,6 +38,19 @@ export const createAddress = mutation({
             isDeleted: false,
         };
 
+        // If setting as default, unset others for this user
+        if (addressDoc.isDefault) {
+            const existing = await ctx.db
+                .query('addresses')
+                .filter((q) => q.eq(q.field('userId'), userId))
+                .collect();
+            await Promise.all(
+                existing
+                    .filter((a) => !a.isDeleted)
+                    .map((a) => ctx.db.patch(a._id, { isDefault: false }))
+            );
+        }
+
         const addressId = await ctx.db.insert('addresses', addressDoc);
         return addressId;
     },
@@ -52,8 +65,109 @@ export const getAddressesForUser = query({
         const userId = identify.subject;
         const addresses = await ctx.db
             .query('addresses')
-            .filter((q) => q.eq(q.field('userId'), userId))
+            .filter((q) => q.and(
+                q.eq(q.field('userId'), userId),
+                q.or(q.eq(q.field('isDeleted'), false), q.eq(q.field('isDeleted'), undefined))
+            ))
             .collect();
         return addresses;
+    },
+});
+
+// Update an address by id
+export const updateAddress = mutation({
+    args: {
+        addressId: v.id('addresses'),
+        label: v.optional(v.string()),
+        addressLine1: v.optional(v.string()),
+        addressLine2: v.optional(v.string()),
+        city: v.optional(v.string()),
+        state: v.optional(v.string()),
+        postalCode: v.optional(v.string()),
+        country: v.optional(v.string()),
+        phone: v.optional(v.string()),
+        isDefault: v.optional(v.boolean()),
+    },
+    handler: async (ctx, args) => {
+        const identify = await ctx.auth.getUserIdentity();
+        if (!identify) throw new Error('Not authenticated');
+        const userId = identify.subject;
+
+        const existing = await ctx.db.get(args.addressId);
+        if (!existing || existing.userId !== userId || existing.isDeleted) {
+            throw new Error('Address not found');
+        }
+
+        // If toggling default on, unset others
+        if (args.isDefault) {
+            const all = await ctx.db
+                .query('addresses')
+                .filter((q) => q.eq(q.field('userId'), userId))
+                .collect();
+            await Promise.all(
+                all
+                    .filter((a) => !a.isDeleted && a._id !== args.addressId)
+                    .map((a) => ctx.db.patch(a._id, { isDefault: false }))
+            );
+        }
+
+        await ctx.db.patch(args.addressId, {
+            ...(args.label !== undefined && { label: args.label }),
+            ...(args.addressLine1 !== undefined && { addressLine1: args.addressLine1 }),
+            ...(args.addressLine2 !== undefined && { addressLine2: args.addressLine2 }),
+            ...(args.city !== undefined && { city: args.city }),
+            ...(args.state !== undefined && { state: args.state }),
+            ...(args.postalCode !== undefined && { postalCode: args.postalCode }),
+            ...(args.country !== undefined && { country: args.country }),
+            ...(args.phone !== undefined && { phone: args.phone }),
+            ...(args.isDefault !== undefined && { isDefault: args.isDefault }),
+            updatedAt: Date.now(),
+        });
+
+        return { success: true };
+    },
+});
+
+// Soft delete an address
+export const deleteAddress = mutation({
+    args: { addressId: v.id('addresses') },
+    handler: async (ctx, args) => {
+        const identify = await ctx.auth.getUserIdentity();
+        if (!identify) throw new Error('Not authenticated');
+        const userId = identify.subject;
+
+        const existing = await ctx.db.get(args.addressId);
+        if (!existing || existing.userId !== userId || existing.isDeleted) {
+            throw new Error('Address not found');
+        }
+
+        await ctx.db.patch(args.addressId, { isDeleted: true, updatedAt: Date.now() });
+        return { success: true };
+    },
+});
+
+// Set an address as default for the user
+export const setDefaultAddress = mutation({
+    args: { addressId: v.id('addresses') },
+    handler: async (ctx, args) => {
+        const identify = await ctx.auth.getUserIdentity();
+        if (!identify) throw new Error('Not authenticated');
+        const userId = identify.subject;
+
+        const target = await ctx.db.get(args.addressId);
+        if (!target || target.userId !== userId || target.isDeleted) {
+            throw new Error('Address not found');
+        }
+
+        const all = await ctx.db
+            .query('addresses')
+            .filter((q) => q.eq(q.field('userId'), userId))
+            .collect();
+        await Promise.all(
+            all
+                .filter((a) => !a.isDeleted)
+                .map((a) => ctx.db.patch(a._id, { isDefault: a._id === args.addressId }))
+        );
+        return { success: true };
     },
 });

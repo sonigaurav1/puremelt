@@ -120,8 +120,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    site: '@puremeltin',
-    creator: '@puremeltin',
+    site: '@penowa.in',
+    creator: '@penowa.in',
     title: `${process.env.NEXT_PUBLIC_BRAND_NAME} | Premium Peanut Butter & Healthy Nuts Butters`,
     description:
       'Premium healthy peanut butter and nuts butters: blend of peanuts, almonds, cashews, pistachios, dates & honey. Healthier, tastier, organic.',
@@ -195,9 +195,9 @@ export default function RootLayout({
                 (process.env.NEXT_PUBLIC_SITE_URL || 'https://penowa.in') +
                 '/placeholder-logo.png',
               sameAs: [
-                'https://www.instagram.com/puremeltin/',
-                'https://www.facebook.com/puremeltin/',
-                'https://twitter.com/puremeltin'
+                'https://www.instagram.com/penowa.in/',
+                'https://www.facebook.com/penowa.in/',
+                'https://twitter.com/penowa.in'
               ],
               contactPoint: [
                 {

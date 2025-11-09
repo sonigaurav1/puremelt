@@ -459,7 +459,7 @@ const Header = () => {
           : `border-[#232323] bg-transparent`
       )}
     >
-      <div className='container mx-auto flex items-center justify-between px-4 py-4 md:max-w-[1500px] md:px-14'>
+      <div className='container mx-auto flex items-center justify-between px-4 py-4 md:max-w-[1500px] md:px-14 lg:px-16'>
         {/* Mobile Menu */}
         <Sheet>
           <SheetTrigger asChild>
