@@ -126,8 +126,7 @@ export const metadata: Metadata = {
     description:
       'Premium healthy peanut butter and nuts butters: blend of peanuts, almonds, cashews, pistachios, dates & honey. Healthier, tastier, organic.',
     images: [
-      (process.env.NEXT_PUBLIC_SITE_URL || 'https://penowa.in') +
-        '/penowa.png'
+      (process.env.NEXT_PUBLIC_SITE_URL || 'https://penowa.in') + '/penowa.png'
     ]
   },
   appleWebApp: {
@@ -182,6 +181,10 @@ export default function RootLayout({
           href={process.env.NEXT_PUBLIC_SITE_URL || 'https://penowa.in'}
         />
         <link rel='manifest' href='/manifest.json' />
+        <meta
+          name='google-site-verification'
+          content='mqrw5ytanki61KRLZuBoD3VRNQp6pYxIWHqizSFOv2o'
+        />
         {/* Organization Structured Data for SEO */}
         <script
           type='application/ld+json'
@@ -230,9 +233,7 @@ export default function RootLayout({
           <Toaster richColors />
           <AuthProvider>
             <ConvexClientProvider>
-              <CartProvider>
-                {children}
-              </CartProvider>
+              <CartProvider>{children}</CartProvider>
             </ConvexClientProvider>
           </AuthProvider>
         </ThemeProvider>
