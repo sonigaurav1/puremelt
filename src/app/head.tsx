@@ -39,6 +39,10 @@ export default function Head() {
         content="Buy Penowa's premium, organic, and healthy peanut butter. India's best peanut butter for fitness, gym, and health. No palm oil, no refined sugar, only real ingredients!"
       />
       <meta name='twitter:image' content='https://penowa.in/penowa.png' />
+      <meta
+        name='google-site-verification'
+        content='mqrw5ytanki61KRLZuBoD3VRNQp6pYxIWHqizSFOv2o'
+      />
       {/* JSON-LD Structured Data for Product SEO */}
       <script
         type='application/ld+json'
