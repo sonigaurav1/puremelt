@@ -198,3 +198,30 @@ This project is licensed under the MIT License.
 ## Credits
 
 Inspired by luxury craft food brands like The Whole Truth and Jimmy’s Cocktails—minimal SKUs, bold storytelling.
+
+---
+
+## Shipping Rate Calculation (Delhivery)
+
+This app includes shipping cost calculation backed by Delhivery:
+
+- Client pages call a shared helper at `src/lib/shipping.ts`.
+- A server route `POST /api/shipping/quote` proxies to Delhivery when `DELHIVERY_API_TOKEN` is set; otherwise it returns a deterministic fallback to keep local/dev unblocked.
+- Cart and Checkout compute total shipment weight from line items (`item.weight * quantity`) and request a live quote using the user's 6‑digit pincode.
+- Free shipping threshold is currently set to ₹600.
+
+Setup:
+
+1. Copy environment template and set your token
+
+```sh
+cp .env.local.example .env.local
+# set DELHIVERY_API_TOKEN=<your-token>
+```
+
+2. Restart the dev server.
+
+Notes:
+
+- If your Delhivery account exposes a different endpoint/parameters, adjust `src/app/api/shipping/quote/route.ts` accordingly.
+- Consider caching quotes server-side if you see rate‑limit pressure.

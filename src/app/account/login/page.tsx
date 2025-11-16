@@ -94,7 +94,7 @@ const LoginPage = () => {
                     signUpForceRedirectUrl='/account'
                     itpSupport
                     fedCmSupport
-                    cancelOnTapOutside={false}
+                    cancelOnTapOutside
                   />
                 </div>
               )}

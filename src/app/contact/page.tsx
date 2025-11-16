@@ -30,6 +30,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle
 } from '@/components/ui/alert-dialog';
+import Footer from '@/components/layout/Footer';
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -179,7 +180,7 @@ const ContactPage = () => {
                   <Button
                     type='submit'
                     disabled={isSubmitting}
-                    className={`flex w-full items-center justify-center bg-[#EEFF00] py-3 text-lg text-black hover:bg-[#f8d87d] ${
+                    className={`flex w-full items-center justify-center bg-primary-color py-3 text-lg text-white ${
                       isSubmitting ? 'cursor-not-allowed opacity-70' : ''
                     }`}
                   >
@@ -266,7 +267,7 @@ const ContactPage = () => {
                         </p>
                         <Link
                           href={EMAIL_ADDRESS}
-                          className='break-all text-base text-[#EEFF00]'
+                          className='break-all text-base text-white'
                         >
                           {EMAIL_ADDRESS}
                         </Link>
@@ -281,7 +282,7 @@ const ContactPage = () => {
                         </p>
                         <Link
                           href={`tel:${PHONE_NUMBER}`}
-                          className='break-all text-base text-[#EEFF00]'
+                          className='break-all text-base text-white'
                         >
                           {PHONE_NUMBER}
                         </Link>
@@ -298,7 +299,7 @@ const ContactPage = () => {
                           href='https://www.google.com/maps/search/?api=1&query=Humayunpur,+Safdarjung,+South+Delhi,+India,+110029'
                           target='_blank'
                           rel='noopener noreferrer'
-                          className='text-base text-[#EEFF00]'
+                          className='text-base text-white'
                         >
                           Humayunpur, Safdarjung
                           <br />
@@ -313,7 +314,7 @@ const ContactPage = () => {
                         <p className='text-base font-medium text-[#f8d87d]'>
                           Business Hours
                         </p>
-                        <p className='text-base text-[#EEFF00]'>
+                        <p className='text-base text-white'>
                           Mon-Fri: 9:00 AM - 6:00 PM IST
                           <br />
                           Sat: 10:00 AM - 4:00 PM IST
@@ -372,7 +373,7 @@ const ContactPage = () => {
                       <p className='mb-1 text-base font-medium text-[#f8d87d]'>
                         How long does shipping take?
                       </p>
-                      <p className='text-base text-[#EEFF00]'>
+                      <p className='text-base text-white'>
                         We ship within 2-3 business days. Delivery takes 3-7
                         days depending on location.
                       </p>
@@ -381,7 +382,7 @@ const ContactPage = () => {
                       <p className='mb-1 text-base font-medium text-[#f8d87d]'>
                         What's the shelf life?
                       </p>
-                      <p className='text-base text-[#EEFF00]'>
+                      <p className='text-base text-white'>
                         {process.env.NEXT_PUBLIC_BRAND_NAME} stays fresh for 12
                         months when stored properly in a cool, dry place.
                       </p>
@@ -390,7 +391,7 @@ const ContactPage = () => {
                       <p className='mb-1 text-base font-medium text-[#f8d87d]'>
                         Do you offer bulk orders?
                       </p>
-                      <p className='text-base text-[#EEFF00]'>
+                      <p className='text-base text-white'>
                         Yes! Contact us for special pricing on orders of 10+
                         jars.
                       </p>
@@ -412,16 +413,18 @@ const ContactPage = () => {
           <p className='mb-8 text-xl opacity-90'>
             Experience the difference that premium ingredients make
           </p>
-          <Link href='/buy-now'>
+          <Link href='/products'>
             <Button
               size='lg'
-              className='bg-[#EEFF00] px-8 py-3 text-lg text-black'
+              className='bg-primary-color px-8 py-3 text-lg text-white'
             >
               Order Your First Jar
             </Button>
           </Link>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 };

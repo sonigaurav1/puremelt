@@ -110,11 +110,11 @@ export default function HomePage() {
   return (
     <>
       <div className='min-h-screen !bg-black !text-white'>
+        {/* Header */}
+        <Header />
         {/* MAIN SECTION */}
+        
         <main>
-          {/* Header */}
-          <Header />
-
           <div className='md:pt-[76px]'>
             <ImageSlider />
           </div>

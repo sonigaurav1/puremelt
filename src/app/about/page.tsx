@@ -6,6 +6,7 @@ import Image from 'next/image';
 
 import Head from 'next/head';
 import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
 
 export default function AboutPage() {
   return (
@@ -285,7 +286,7 @@ export default function AboutPage() {
             <p className='mb-8 text-2xl font-bold'>
               One variant. One jar. Infinite love.
             </p>
-            <Link href='/buy-now'>
+            <Link href='/products'>
               <Button
                 size='lg'
                 className='bg-primary-color px-8 py-3 text-lg text-white'
@@ -295,6 +296,8 @@ export default function AboutPage() {
             </Link>
           </div>
         </section>
+
+        <Footer />
       </div>
     </>
   );

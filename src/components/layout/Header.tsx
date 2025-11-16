@@ -92,7 +92,8 @@ const HeaderIcons = ({
   scrolled,
   cartCount,
   pop,
-  isMobile
+  isMobile,
+  mounted
 }: {
   pathname: string;
   textColor: string;
@@ -100,6 +101,7 @@ const HeaderIcons = ({
   cartCount: number;
   pop: boolean;
   isMobile: boolean;
+  mounted: boolean;
 }) => {
   const hasClerk = Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -252,7 +254,7 @@ const HeaderIcons = ({
             )}
             aria-label='View cart'
           />
-          {cartCount > 0 && (
+          {mounted && cartCount > 0 && (
             <span
               className={clsx(
                 'absolute -right-2 -top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-amber-600 text-xs text-white transition-transform duration-300',
@@ -401,6 +403,13 @@ const Header = () => {
           return { bg: 'bg-white', text: 'text-black' };
         }
       }
+      if (pathname === '/faq') {
+        if (!scrolled) {
+          return { bg: 'bg-transparent', text: 'text-white' };
+        } else {
+          return { bg: 'bg-white', text: 'text-black' };
+        }
+      }
       if (pathname === '/recipes') {
         if (!scrolled) {
           return { bg: 'bg-transparent', text: 'text-white' };
@@ -539,6 +548,7 @@ const Header = () => {
           cartCount={cartCount}
           pop={pop}
           isMobile={isMobile}
+          mounted={mounted}
         />
       </div>
     </header>

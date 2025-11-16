@@ -47,6 +47,7 @@ import {
 } from '@/components/ui/command';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { fetchShippingQuote } from '@/lib/shipping';
 import { useCart } from '@/app/components/cart-context';
 import {
   DropdownMenu,
@@ -109,8 +110,40 @@ export default function Checkout() {
   const orderItems = hydrated ? cartItems : [];
 
   const subtotal = hydrated ? getTotalPrice() : 0;
-  const shipping = formData.shippingMethod === 'express' ? 200 : 0;
-  const total = subtotal + shipping;
+  // Compute cart total weight (kg) for shipping
+  const totalWeightKg = useMemo(() => {
+    if (!hydrated) return 0;
+    try {
+      // Narrow cart item type minimally for weight calc
+      interface CartItemForWeight {
+        weight?: number;
+        quantity?: number;
+      }
+      return orderItems.reduce((sum: number, it: CartItemForWeight) => {
+        const w = Number(it?.weight ?? 0);
+        const q = Number(it?.quantity ?? 1);
+        return (
+          sum + (Number.isFinite(w) ? w : 0) * (Number.isFinite(q) ? q : 1)
+        );
+      }, 0);
+    } catch {
+      return 0;
+    }
+  }, [hydrated, orderItems]);
+
+  const [standardAmount, setStandardAmount] = useState<number | null>(null);
+  const [expressAmount, setExpressAmount] = useState<number | null>(null);
+  const [standardEta, setStandardEta] = useState<number | null>(null);
+  const [expressEta, setExpressEta] = useState<number | null>(null);
+  const [shippingAmount, setShippingAmount] = useState<number>(0);
+  const [shippingLoading, setShippingLoading] = useState(false);
+  const [shippingError, setShippingError] = useState<string | null>(null);
+
+  // Choose shipping amount with free-shipping threshold fallback
+  const shipping = useMemo(() => {
+    if (subtotal >= 600) return 0; // free shipping threshold
+    return shippingAmount;
+  }, [shippingAmount, subtotal]);
 
   // If cart is empty, keep UX consistent by sending users back to cart
   useEffect(() => {
@@ -147,7 +180,97 @@ export default function Checkout() {
     return primary || first || '';
   }, [user]);
 
-  // Sync potential browser autofill for the hidden state input on mount
+  // Fetch Delhivery quotes when pincode/weight/address change
+  React.useEffect(() => {
+    if (!hydrated) return;
+    const snap = getCurrentShippingFields();
+    const pin = String(snap.pincode || '').trim();
+    if (!/^[1-9][0-9]{5}$/.test(pin)) {
+      setShippingError(null);
+      setStandardAmount(null);
+      setExpressAmount(null);
+      setStandardEta(null);
+      setExpressEta(null);
+      return;
+    }
+    let active = true;
+    (async () => {
+      setShippingLoading(true);
+      setShippingError(null);
+      try {
+        const quote = await fetchShippingQuote({
+          toPincode: pin,
+          weightKg: totalWeightKg,
+          orderValue: subtotal
+        });
+        if (process.env.NODE_ENV !== 'production') {
+          console.log('[checkout] quote params', {
+            toPincode: pin,
+            weightKg: totalWeightKg,
+            orderValue: subtotal
+          });
+          console.log('[checkout] quote response', quote);
+          const breakdownAny = quote as unknown as {
+            breakdown?: { _request?: { payload?: unknown } };
+          };
+          if (breakdownAny?.breakdown?._request?.payload) {
+            console.log(
+              '[checkout] server request payload used',
+              breakdownAny.breakdown._request.payload
+            );
+          }
+        }
+        if (!active) return;
+        if (!quote.serviceable) {
+          setShippingError(quote.error || 'Address not serviceable');
+          setStandardAmount(null);
+          setExpressAmount(null);
+          setStandardEta(null);
+          setExpressEta(null);
+          setShippingAmount(0);
+          return;
+        }
+        const stdAmt = quote.standard?.amount ?? null;
+        const expAmt = quote.express?.amount ?? null;
+        setStandardAmount(stdAmt);
+        setExpressAmount(expAmt);
+        setStandardEta(quote.standard?.etaDays ?? null);
+        setExpressEta(quote.express?.etaDays ?? null);
+        // Set current active amount by selected method
+        const chosen =
+          formData.shippingMethod === 'express'
+            ? (expAmt ?? stdAmt)
+            : (stdAmt ?? expAmt);
+        setShippingAmount(Number(chosen ?? 0));
+      } catch (err) {
+        if (!active) return;
+        if (process.env.NODE_ENV !== 'production') {
+          console.log('[checkout] quote error', err);
+        }
+        setShippingError('Could not fetch shipping rates.');
+        setStandardAmount(null);
+        setExpressAmount(null);
+        setStandardEta(null);
+        setExpressEta(null);
+        setShippingAmount(0);
+      } finally {
+        if (active) setShippingLoading(false);
+      }
+    })();
+    return () => {
+      active = false;
+    };
+  }, [
+    hydrated,
+    formData.pincode,
+    formData.state,
+    selectedAddressId,
+    totalWeightKg,
+    subtotal,
+    formData.shippingMethod
+  ]);
+
+  // State autofill sync (separate effect to avoid nesting bugs)
   React.useEffect(() => {
     try {
       const el = document.querySelector(
@@ -156,7 +279,6 @@ export default function Checkout() {
       if (el && el.value && el.value !== formData.state) {
         setFormData((prev) => ({ ...prev, state: el.value }));
       }
-      // Check again shortly after mount as some browsers apply autofill asynchronously
       const t = setTimeout(() => {
         const el2 = document.querySelector(
           'input[name="state"][autocomplete="address-level1"]'
@@ -167,9 +289,9 @@ export default function Checkout() {
       }, 300);
       return () => clearTimeout(t);
     } catch {
-      // ignore
+      // ignore autofill errors
     }
-  }, []);
+  }, [formData.state]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -387,7 +509,7 @@ export default function Checkout() {
 
       const subtotalNumber = Number(subtotal);
       const shippingNumber = Number(shipping);
-      const totalWeight = 0; // compute if you have real weights
+      const totalWeight = totalWeightKg; // computed from cart items
       const savings = 0;
 
       const createdAt = Date.now();
@@ -645,7 +767,7 @@ export default function Checkout() {
                   signUpForceRedirectUrl='/checkout'
                   itpSupport
                   fedCmSupport
-                  cancelOnTapOutside={false}
+                  cancelOnTapOutside
                 />
               </div>
             )}
@@ -1005,7 +1127,9 @@ export default function Checkout() {
                       </div>
                     </div>
                   </label>
-                  <label className='flex cursor-pointer items-center justify-between rounded-lg border-2 border-gray-300 p-4 transition-colors hover:border-red-500'>
+                  <label
+                    className={`flex cursor-pointer items-center justify-between rounded-lg border-2 p-4 transition-colors hover:border-red-500 ${formData.shippingMethod === 'standard' ? 'border-red-500 bg-red-50' : 'border-gray-300'}`}
+                  >
                     <div className='flex items-center'>
                       <input
                         type='radio'
@@ -1141,7 +1265,9 @@ export default function Checkout() {
                   Shipping Method
                 </h2>
                 <div className='space-y-3'>
-                  <label className='flex cursor-pointer items-center justify-between rounded-lg border-2 border-gray-300 p-4 transition-colors hover:border-red-500'>
+                  <label
+                    className={`flex cursor-pointer items-center justify-between rounded-lg border-2 p-4 transition-colors hover:border-red-500 ${formData.shippingMethod === 'standard' ? 'border-red-500 bg-red-50' : 'border-gray-300'}`}
+                  >
                     <div className='flex items-center'>
                       <input
                         type='radio'
@@ -1155,14 +1281,28 @@ export default function Checkout() {
                         <p className='font-medium text-gray-900'>
                           Standard Shipping
                         </p>
-                        <p className='text-sm text-gray-600'>
-                          5-7 business days
+                        <p className='text-xs text-gray-600'>
+                          {shippingLoading
+                            ? 'Fetching ETA…'
+                            : standardEta != null
+                              ? `${standardEta} day${standardEta > 1 ? 's' : ''} ETA`
+                              : 'ETA pending'}
                         </p>
                       </div>
                     </div>
-                    <span className='font-semibold text-green-600'>FREE</span>
+                    <span className='font-semibold text-gray-900'>
+                      {subtotal >= 600
+                        ? 'FREE'
+                        : shippingLoading
+                          ? '…'
+                          : standardAmount != null
+                            ? `₹${standardAmount}`
+                            : '—'}
+                    </span>
                   </label>
-                  <label className='flex cursor-pointer items-center justify-between rounded-lg border-2 border-gray-300 p-4 transition-colors hover:border-red-500'>
+                  <label
+                    className={`flex cursor-pointer items-center justify-between rounded-lg border-2 p-4 transition-colors hover:border-red-500 ${formData.shippingMethod === 'express' ? 'border-red-500 bg-red-50' : 'border-gray-300'}`}
+                  >
                     <div className='flex items-center'>
                       <input
                         type='radio'
@@ -1176,13 +1316,28 @@ export default function Checkout() {
                         <p className='font-medium text-gray-900'>
                           Express Shipping
                         </p>
-                        <p className='text-sm text-gray-600'>
-                          2-3 business days
+                        <p className='text-xs text-gray-600'>
+                          {shippingLoading
+                            ? 'Fetching ETA…'
+                            : expressEta != null
+                              ? `${expressEta} day${expressEta > 1 ? 's' : ''} ETA`
+                              : 'ETA pending'}
                         </p>
                       </div>
                     </div>
-                    <span className='font-semibold text-gray-900'>₹200</span>
+                    <span className='font-semibold text-gray-900'>
+                      {subtotal >= 600
+                        ? 'FREE'
+                        : shippingLoading
+                          ? '…'
+                          : expressAmount != null
+                            ? `₹${expressAmount}`
+                            : '—'}
+                    </span>
                   </label>
+                  {shippingError && (
+                    <p className='text-xs text-red-600'>{shippingError}</p>
+                  )}
                 </div>
               </div>
 
@@ -1347,12 +1502,31 @@ export default function Checkout() {
                       <span>₹{subtotal.toLocaleString()}</span>
                     </div>
                     <div className='flex justify-between text-gray-600'>
-                      <span>Shipping</span>
-                      <span>{shipping === 0 ? 'FREE' : `₹${shipping}`}</span>
+                      <span>
+                        Shipping (
+                        {formData.shippingMethod === 'express'
+                          ? 'Express'
+                          : 'Standard'}
+                        )
+                      </span>
+                      <span>
+                        {subtotal >= 600
+                          ? 'FREE'
+                          : shippingLoading
+                            ? 'Calculating…'
+                            : shippingError
+                              ? '—'
+                              : `₹${shippingAmount}`}
+                      </span>
                     </div>
                     <div className='flex justify-between border-t border-gray-200 pt-3 text-lg font-semibold text-gray-900'>
                       <span>Total</span>
-                      <span>₹{total.toLocaleString()}</span>
+                      <span>
+                        ₹
+                        {(
+                          subtotal + (subtotal >= 600 ? 0 : shippingAmount)
+                        ).toLocaleString()}
+                      </span>
                     </div>
                   </>
                 )}

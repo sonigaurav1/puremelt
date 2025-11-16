@@ -7,18 +7,23 @@ import { Separator } from '@/components/ui/separator';
 import { Plus, Minus, ShoppingBag, Trash, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Header from '@/components/layout/Header';
 
 import { useRouter } from 'next/navigation';
+import { fetchShippingQuote } from '@/lib/shipping';
 
 export default function CartPage() {
   const router = useRouter();
 
   const { cartItems, updateQuantity, removeFromCart } = useCart();
 
-  // Shipping charge state (to be set from Delhivery API)
-  const [shippingCharge] = useState<number | null>(null); // setter unused; remove to satisfy lint
+  // Shipping inputs and results
+  const [pincode, setPincode] = useState<string>('');
+  const [shippingCharge, setShippingCharge] = useState<number | null>(null);
+  const [shippingLoading, setShippingLoading] = useState(false);
+  const [shippingError, setShippingError] = useState<string | null>(null);
+  const inFlight = useRef<AbortController | null>(null);
 
   // Calculate total cart weight (assumes item.weight in kg)
   const totalWeight = cartItems.reduce(
@@ -39,11 +44,73 @@ export default function CartPage() {
   );
   const savings = originalTotal - subtotal;
 
-  // Placeholder: Use Delhivery API to set shippingCharge based on pincode and totalWeight
-  // For now, fallback to free shipping above ₹500, else ₹50
-  const shipping =
-    shippingCharge !== null ? shippingCharge : subtotal >= 500 ? 0 : 50;
+  // Compute shipping with quote when available; otherwise fallback rule
+  const shipping = useMemo(() => {
+    if (shippingCharge !== null) return shippingCharge;
+    // Fallback: free shipping on/above ₹600, else flat ₹50
+    return subtotal >= 600 ? 0 : 50;
+  }, [shippingCharge, subtotal]);
   const total = subtotal + shipping;
+
+  // Load cached pincode (nice UX)
+  useEffect(() => {
+    try {
+      const cached = localStorage.getItem('deliveryPincode');
+      if (cached && /^[1-9][0-9]{5}$/.test(cached)) {
+        setPincode(cached);
+      }
+    } catch (e) {
+      // ignore localStorage access errors (private mode etc.)
+      console.warn('Failed reading cached pincode', e);
+    }
+  }, []);
+
+  // Debounced auto-quote when a valid 6-digit pincode is typed
+  useEffect(() => {
+    if (!/^[1-9][0-9]{5}$/.test(pincode)) return;
+    const t = setTimeout(async () => {
+      await handleQuote();
+    }, 350);
+    return () => clearTimeout(t);
+  }, [pincode, totalWeight]);
+
+  async function handleQuote() {
+    if (!/^[1-9][0-9]{5}$/.test(pincode)) {
+      setShippingError('Enter a valid 6-digit pincode');
+      setShippingCharge(null);
+      return;
+    }
+    setShippingError(null);
+    setShippingLoading(true);
+    // cancel previous
+    inFlight.current?.abort();
+    const ac = new AbortController();
+    inFlight.current = ac;
+    try {
+      const quote = await fetchShippingQuote(
+        { toPincode: pincode, weightKg: totalWeight, orderValue: subtotal },
+        ac.signal
+      );
+      if (!quote.serviceable) {
+        setShippingError(quote.error || 'Address not serviceable');
+        setShippingCharge(null);
+      } else {
+        // Prefer standard amount when available
+        const amt = quote.standard?.amount ?? quote.express?.amount ?? null;
+        setShippingCharge(amt);
+        try {
+          localStorage.setItem('deliveryPincode', pincode);
+        } catch (e) {
+          console.warn('Failed caching pincode', e);
+        }
+      }
+    } catch {
+      setShippingError('Could not fetch shipping rates. Try again.');
+      setShippingCharge(null);
+    } finally {
+      setShippingLoading(false);
+    }
+  }
 
   return (
     <div className='min-h-screen bg-black'>
@@ -281,7 +348,7 @@ export default function CartPage() {
                     )}
 
                     {/* Pincode input for shipping calculation */}
-                    {/* <div className='mb-2 flex items-center gap-2'>
+                    <div className='mb-2 flex flex-wrap items-center gap-2'>
                       <label
                         htmlFor='pincode'
                         className='text-sm text-gray-300'
@@ -290,24 +357,36 @@ export default function CartPage() {
                       </label>
                       <input
                         id='pincode'
-                        type='text'
-                        value={pincode}
-                        onChange={(e) => setPincode(e.target.value)}
-                        className='w-32 rounded-lg border border-gray-600 bg-gray-900 px-3 py-2 text-white focus:outline-none'
-                        placeholder='Enter pincode'
-                        maxLength={6}
+                        inputMode='numeric'
                         pattern='[0-9]{6}'
+                        maxLength={6}
+                        value={pincode}
+                        onChange={(e) =>
+                          setPincode(e.target.value.replace(/\D/g, ''))
+                        }
+                        className='w-32 rounded-lg border border-gray-600 bg-gray-900 px-3 py-2 text-white focus:outline-none'
+                        placeholder='e.g. 560001'
+                        aria-invalid={!!shippingError}
+                        aria-describedby='pincode-help'
                       />
                       <Button
+                        type='button'
                         variant='ghost'
                         className='rounded-lg border border-amber-400 px-4 py-2 text-sm text-amber-400 hover:bg-amber-400/10'
-                        onClick={() => {
-                        // TODO: Trigger Delhivery API call here 
-                        }}
+                        onClick={handleQuote}
+                        disabled={shippingLoading}
                       >
-                        Apply
+                        {shippingLoading ? 'Calculating…' : 'Calculate'}
                       </Button>
-                    </div> */}
+                      <span id='pincode-help' className='text-xs text-gray-400'>
+                        Accurate rates powered by Delhivery
+                      </span>
+                    </div>
+                    {shippingError && (
+                      <div className='-mt-1 mb-2 text-xs text-red-400'>
+                        {shippingError}
+                      </div>
+                    )}
 
                     <div className='flex justify-between text-gray-300'>
                       <span>Total Weight:</span>
@@ -320,11 +399,11 @@ export default function CartPage() {
                       <span>Shipping:</span>
                       <span className='font-semibold text-white'>
                         {shipping === 0 ? 'FREE' : `₹${shipping}`}
-                        {shippingCharge === null && (
-                          <span className='ml-2 text-xs text-gray-400'>
-                            (Delhivery rates will apply)
-                          </span>
-                        )}
+                        <span className='ml-2 text-xs text-gray-400'>
+                          {shippingCharge === null
+                            ? '(Estimated; calculate for exact)'
+                            : '(Delhivery Standard)'}
+                        </span>
                       </span>
                     </div>
 

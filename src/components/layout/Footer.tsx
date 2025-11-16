@@ -118,8 +118,8 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link href={PATH.BLOG} className='hover:text-white'>
-                    Blog
+                  <Link href={PATH.ABOUT} className='hover:text-white'>
+                    About
                   </Link>
                 </li>
               </ul>
@@ -172,8 +172,8 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link href={PATH.BLOG} className='hover:text-white'>
-                    Blog
+                  <Link href={PATH.ABOUT} className='hover:text-white'>
+                    About
                   </Link>
                 </li>
               </ul>

@@ -10,6 +10,7 @@ import Image from 'next/image';
 
 import Head from 'next/head';
 import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
 
 export default function RecipesPage() {
   const recipes = [
@@ -20,7 +21,7 @@ export default function RecipesPage() {
       time: '5 mins',
       serves: '1',
       difficulty: 'Easy',
-      image: '/placeholder.svg?height=300&width=400&text=Power+Smoothie',
+      image: '/power-smoothie.png',
       ingredients: [
         `2 tbsp ${process.env.NEXT_PUBLIC_BRAND_NAME} Nuts Butter`,
         '1 banana',
@@ -41,7 +42,7 @@ export default function RecipesPage() {
       time: '15 mins',
       serves: '12',
       difficulty: 'Easy',
-      image: '/placeholder.svg?height=300&width=400&text=Energy+Balls',
+      image: '/energy-balls.png',
       ingredients: [
         `1/2 cup ${process.env.NEXT_PUBLIC_BRAND_NAME} Nuts Butter`,
         '1 cup oats',
@@ -62,7 +63,7 @@ export default function RecipesPage() {
       time: '10 mins',
       serves: '2',
       difficulty: 'Easy',
-      image: '/placeholder.svg?height=300&width=400&text=Toast+Deluxe',
+      image: '/toast-deluxe.png',
       ingredients: [
         '2 slices whole grain bread',
         `3 tbsp ${process.env.NEXT_PUBLIC_BRAND_NAME} Nuts Butter`,
@@ -84,7 +85,7 @@ export default function RecipesPage() {
       time: '20 mins',
       serves: '4',
       difficulty: 'Medium',
-      image: '/placeholder.svg?height=300&width=400&text=Protein+Pancakes',
+      image: '/protein-pancakes.png',
       ingredients: [
         '1 cup flour',
         '2 eggs',
@@ -107,7 +108,7 @@ export default function RecipesPage() {
       time: '30 mins',
       serves: '24',
       difficulty: 'Medium',
-      image: '/placeholder.svg?height=300&width=400&text=Chocolate+Cookies',
+      image: '/chocolate-cookies.png',
       ingredients: [
         `1/2 cup ${process.env.NEXT_PUBLIC_BRAND_NAME} Nuts Butter`,
         '1/4 cup brown sugar',
@@ -130,7 +131,7 @@ export default function RecipesPage() {
       time: '5 mins prep',
       serves: '1',
       difficulty: 'Easy',
-      image: '/placeholder.svg?height=300&width=400&text=Overnight+Oats',
+      image: '/overnight-oats.png',
       ingredients: [
         '1/2 cup oats',
         `2 tbsp ${process.env.NEXT_PUBLIC_BRAND_NAME} Nuts Butter`,
@@ -273,7 +274,7 @@ export default function RecipesPage() {
                       alt={recipe.title}
                       width={400}
                       height={300}
-                      className='h-48 w-full object-cover'
+                      className='h-80 w-full object-cover'
                     />
                     <Badge className='absolute right-4 top-4 bg-primary-color text-white'>
                       {recipe.difficulty}
@@ -413,16 +414,18 @@ export default function RecipesPage() {
               Get your {process.env.NEXT_PUBLIC_BRAND_NAME} today and start
               creating delicious, healthy meals
             </p>
-            <Link href='/buy-now'>
+            <Link href='/products'>
               <Button
                 size='lg'
-                className='bg-[#EEFF00] px-8 py-3 text-lg text-black'
+                className='bg-primary-color px-8 py-3 text-lg text-white'
               >
                 Order {process.env.NEXT_PUBLIC_BRAND_NAME} Now
               </Button>
             </Link>
           </div>
         </section>
+
+        <Footer />
       </div>
     </>
   );

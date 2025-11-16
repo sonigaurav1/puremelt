@@ -196,7 +196,7 @@ export default function RootLayout({
               url: process.env.NEXT_PUBLIC_SITE_URL || 'https://penowa.in',
               logo:
                 (process.env.NEXT_PUBLIC_SITE_URL || 'https://penowa.in') +
-                '/placeholder-logo.png',
+                '/penowa.png',
               sameAs: [
                 'https://www.instagram.com/penowa.in/',
                 'https://www.facebook.com/penowa.in/',
