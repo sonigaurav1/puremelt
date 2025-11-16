@@ -8,7 +8,7 @@ import { Leaf } from 'lucide-react';
 
 const images = [
   {
-    src: '/penowa.png',
+    src: '/penowa.webp',
     caption: (
       <p className='text-center text-xl font-semibold text-white sm:text-2xl'>
         No Refined Sugar and Palm Oil
@@ -16,7 +16,7 @@ const images = [
     )
   },
   {
-    src: '/penowa.png',
+    src: '/penowa.webp',
     caption: (
       <p className='text-center text-xl font-semibold text-white sm:text-2xl'>
         <Leaf className='mr-2 inline' /> 100% Natural Ingredients
@@ -24,7 +24,7 @@ const images = [
     )
   },
   {
-    src: '/penowa.png',
+    src: '/penowa.webp',
     caption: (
       <div className='space-y-1'>
         <h3 className='text-xl font-bold text-white'>No Preservatives</h3>

@@ -27,7 +27,7 @@ export default function Head() {
       />
       <meta property='og:type' content='website' />
       <meta property='og:url' content='https://penowa.in/' />
-      <meta property='og:image' content='https://penowa.in/penowa.png' />
+      <meta property='og:image' content='https://penowa.in/penowa.webp' />
       {/* Twitter Card Tags */}
       <meta name='twitter:card' content='summary_large_image' />
       <meta
@@ -38,7 +38,7 @@ export default function Head() {
         name='twitter:description'
         content="Buy Penowa's premium, organic, and healthy peanut butter. India's best peanut butter for fitness, gym, and health. No palm oil, no refined sugar, only real ingredients!"
       />
-      <meta name='twitter:image' content='https://penowa.in/penowa.png' />
+      <meta name='twitter:image' content='https://penowa.in/penowa.webp' />
 
       {/* JSON-LD Structured Data for Product SEO */}
       <script
@@ -52,9 +52,9 @@ export default function Head() {
               ' Premium Peanut Butter',
             image: [
               (process.env.NEXT_PUBLIC_SITE_URL || 'https://penowa.in') +
-                '/penowa.png',
+                '/penowa.webp',
               (process.env.NEXT_PUBLIC_SITE_URL || 'https://penowa.in') +
-                '/penowa.png'
+                '/penowa.webp'
             ],
             description:
               'Premium healthy peanut butter and nuts butters: blend of peanuts, almonds, cashews, pistachios, dates & honey. No preservatives, no palm oil, no refined sugar. Healthier, tastier, organic.',

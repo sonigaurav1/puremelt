@@ -21,7 +21,7 @@ export default function RecipesPage() {
       time: '5 mins',
       serves: '1',
       difficulty: 'Easy',
-      image: '/power-smoothie.png',
+      image: '/power-smoothie.webp',
       ingredients: [
         `2 tbsp ${process.env.NEXT_PUBLIC_BRAND_NAME} Nuts Butter`,
         '1 banana',
@@ -42,7 +42,7 @@ export default function RecipesPage() {
       time: '15 mins',
       serves: '12',
       difficulty: 'Easy',
-      image: '/energy-balls.png',
+      image: '/energy-balls.webp',
       ingredients: [
         `1/2 cup ${process.env.NEXT_PUBLIC_BRAND_NAME} Nuts Butter`,
         '1 cup oats',
@@ -63,7 +63,7 @@ export default function RecipesPage() {
       time: '10 mins',
       serves: '2',
       difficulty: 'Easy',
-      image: '/toast-deluxe.png',
+      image: '/toast-deluxe.webp',
       ingredients: [
         '2 slices whole grain bread',
         `3 tbsp ${process.env.NEXT_PUBLIC_BRAND_NAME} Nuts Butter`,
@@ -85,7 +85,7 @@ export default function RecipesPage() {
       time: '20 mins',
       serves: '4',
       difficulty: 'Medium',
-      image: '/protein-pancakes.png',
+      image: '/protein-pancakes.webp',
       ingredients: [
         '1 cup flour',
         '2 eggs',
@@ -108,7 +108,7 @@ export default function RecipesPage() {
       time: '30 mins',
       serves: '24',
       difficulty: 'Medium',
-      image: '/chocolate-cookies.png',
+      image: '/chocolate-cookies.webp',
       ingredients: [
         `1/2 cup ${process.env.NEXT_PUBLIC_BRAND_NAME} Nuts Butter`,
         '1/4 cup brown sugar',
@@ -131,7 +131,7 @@ export default function RecipesPage() {
       time: '5 mins prep',
       serves: '1',
       difficulty: 'Easy',
-      image: '/overnight-oats.png',
+      image: '/overnight-oats.webp',
       ingredients: [
         '1/2 cup oats',
         `2 tbsp ${process.env.NEXT_PUBLIC_BRAND_NAME} Nuts Butter`,

@@ -76,10 +76,10 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: '/favicon/favicon.ico' },
-      { url: '/favicon/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon/favicon-32x32.png', sizes: '32x32', type: 'image/png' }
+      { url: '/favicon/favicon-16x16.webp', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon/favicon-32x32.webp', sizes: '32x32', type: 'image/png' }
     ],
-    apple: [{ url: '/favicon/apple-touch-icon.png' }],
+    apple: [{ url: '/favicon/apple-touch-icon.webp' }],
     other: [{ rel: 'manifest', url: '/manifest.json' }]
   },
   authors: [{ name: 'Gaurav Soni' }],
@@ -111,7 +111,7 @@ export const metadata: Metadata = {
       {
         url:
           (process.env.NEXT_PUBLIC_SITE_URL || 'https://penowa.in') +
-          '/penowa.png',
+          '/penowa.webp',
         width: 1200,
         height: 630,
         alt: `${process.env.NEXT_PUBLIC_BRAND_NAME} Premium Peanut Butter`
@@ -126,7 +126,7 @@ export const metadata: Metadata = {
     description:
       'Premium healthy peanut butter and nuts butters: blend of peanuts, almonds, cashews, pistachios, dates & honey. Healthier, tastier, organic.',
     images: [
-      (process.env.NEXT_PUBLIC_SITE_URL || 'https://penowa.in') + '/penowa.png'
+      (process.env.NEXT_PUBLIC_SITE_URL || 'https://penowa.in') + '/penowa.webp'
     ]
   },
   appleWebApp: {
@@ -196,7 +196,7 @@ export default function RootLayout({
               url: process.env.NEXT_PUBLIC_SITE_URL || 'https://penowa.in',
               logo:
                 (process.env.NEXT_PUBLIC_SITE_URL || 'https://penowa.in') +
-                '/penowa.png',
+                '/penowa.webp',
               sameAs: [
                 'https://www.instagram.com/penowa.in/',
                 'https://www.facebook.com/penowa.in/',

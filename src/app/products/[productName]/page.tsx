@@ -263,7 +263,7 @@ const BuyNowPage = () => {
                       100% Organic
                     </Badge> */}
                     <Image
-                      src={'/organic.png'}
+                      src={'/organic.webp'}
                       alt='Organic Badge'
                       width={100}
                       height={100}

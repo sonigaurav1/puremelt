@@ -53,7 +53,7 @@ const ProductCard: React.FC<{
         <div className='relative h-48 w-full sm:h-56 md:h-64 lg:h-72 xl:h-80 2xl:h-96'>
           <Link href={`/products/${slug}`}>
             <Image
-              src='/penowa.png'
+              src='/penowa.webp'
               alt={`${process.env.NEXT_PUBLIC_BRAND_NAME} ${weight}`}
               fill
               className='object-fit transition-transform duration-300 group-hover:scale-105'

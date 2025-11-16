@@ -113,7 +113,7 @@ export default function HomePage() {
         {/* Header */}
         <Header />
         {/* MAIN SECTION */}
-        
+
         <main>
           <div className='md:pt-[76px]'>
             <ImageSlider />
@@ -208,7 +208,7 @@ export default function HomePage() {
 
                   <div className='relative lg:hidden'>
                     <Image
-                      src='/penowa.png'
+                      src='/penowa.webp'
                       alt='Healthy peanut butter and nuts butter jar - Penowa premium blend, organic peanut butter India'
                       width={500}
                       height={500}
@@ -293,7 +293,7 @@ export default function HomePage() {
                 {/* Image Column  */}
                 <div className='relative order-1 hidden lg:order-2 lg:block'>
                   <Image
-                    src='/penowa.png'
+                    src='/penowa.webp'
                     alt='Healthy peanut butter and nuts butter jar - Penowa premium blend, organic peanut butter India'
                     width={500}
                     height={500}

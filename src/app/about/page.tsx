@@ -109,7 +109,7 @@ export default function AboutPage() {
               </div>
               <div className='relative'>
                 <Image
-                  src='/penowa.png'
+                  src='/penowa.webp'
                   alt={`${process.env.NEXT_PUBLIC_BRAND_NAME} Story`}
                   width={400}
                   height={400}
