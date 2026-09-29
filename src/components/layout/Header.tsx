@@ -177,13 +177,13 @@ const HeaderIcons = ({
               <DropdownMenuLabel>Signed in as {name}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
-                <Link href='/account'>My account</Link>
+                <Link href='/account' className='cursor-pointer'>My account</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link href='/account'>Order history</Link>
+                <Link href='/account' className='cursor-pointer'>Order history</Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={handleLogout}>
+              <DropdownMenuItem className='cursor-pointer' onClick={handleLogout}>
                 Log out
               </DropdownMenuItem>
             </>

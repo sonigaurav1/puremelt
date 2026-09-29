@@ -13,7 +13,7 @@ const AllProducts = () => {
     <>
       <Header />
 
-      <section className='bg-black px-4 pb-8 pt-20 md:px-8 md:py-12 lg:px-12 lg:pb-16 lg:pt-24 xl:pb-20'>
+      <section className='bg-black px-4 pb-8 pt-20 md:px-8 md:py-24 lg:px-12 lg:pb-16 lg:pt-24 xl:pb-20'>
         <div className='container mx-auto max-w-7xl'>
           <h2 className='mb-1 text-2xl font-bold text-white md:mb-1'>
             Our All Products

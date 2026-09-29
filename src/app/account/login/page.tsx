@@ -78,6 +78,8 @@ const LoginPage = () => {
   return (
     <div className='min-h-dvh bg-black pt-12 text-white md:pt-0'>
       <Header />
+      {/* Clerk Smart CAPTCHA widget mount point */}
+      <div id='clerk-captcha' style={{ marginBottom: '1rem' }} />
       <section className='flex items-center justify-center px-4 py-16 md:py-24'>
         <div className='w-full max-w-md'>
           {!resetMode ? (
@@ -145,7 +147,7 @@ const LoginPage = () => {
                   Sign in
                 </Button>
 
-                <div className='animate-gradient-shift relative rounded-[24px] bg-[linear-gradient(90deg,#4285f4_0%,#ea4335_25%,#fbbc04_50%,#34a853_75%,#4285f4_100%)] bg-[length:200%_100%] p-1'>
+                <div className='relative animate-gradient-shift rounded-[24px] bg-[linear-gradient(90deg,#4285f4_0%,#ea4335_25%,#fbbc04_50%,#34a853_75%,#4285f4_100%)] bg-[length:200%_100%] p-1'>
                   <Button
                     onClick={googleLogin}
                     type='button'

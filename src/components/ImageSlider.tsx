@@ -8,27 +8,35 @@ import { Leaf } from 'lucide-react';
 
 const images = [
   {
-    src: '/penowa.webp',
+    src: '/slider_desktop_1.jpg',
+    mobileSrc: '/slider_mobile_1.jpg',
     caption: (
-      <p className='text-center text-xl font-semibold text-white sm:text-2xl'>
-        No Refined Sugar and Palm Oil
-      </p>
+      <div className='flex flex-col items-center sm:items-start text-center sm:text-left space-y-6 max-w-xl mx-auto sm:mx-0 bg-white/40 sm:bg-transparent backdrop-blur-sm sm:backdrop-blur-none p-6 sm:p-0 rounded-2xl'>
+        <h2 className='text-3xl sm:text-5xl md:text-6xl font-bold text-amber-950 leading-tight drop-shadow-sm'>
+          Healthier. Happier.<br className='hidden sm:block' /> And Organic.
+        </h2>
+        <p className='text-lg sm:text-xl text-amber-900 font-medium max-w-md drop-shadow-sm'>
+          Premium all-in-one nuts butter crafted without palm oil, refined sugar, or preservatives.
+        </p>
+        <button className='mt-4 bg-amber-800 text-white px-8 py-3 rounded-full font-semibold hover:bg-amber-900 transition-colors shadow-lg'>
+          Shop Now
+        </button>
+      </div>
     )
   },
   {
-    src: '/penowa.webp',
+    src: '/slider_desktop_2.jpg',
     caption: (
-      <p className='text-center text-xl font-semibold text-white sm:text-2xl'>
-        <Leaf className='mr-2 inline' /> 100% Natural Ingredients
-      </p>
-    )
-  },
-  {
-    src: '/penowa.webp',
-    caption: (
-      <div className='space-y-1'>
-        <h3 className='text-xl font-bold text-white'>No Preservatives</h3>
-        <p className='text-sm text-white'>Just clean, premium nuts.</p>
+      <div className='flex  flex-col items-center sm:items-start text-center sm:text-left space-y-4 max-w-xl mx-auto sm:mx-0 bg-white/40 sm:bg-transparent backdrop-blur-sm sm:backdrop-blur-none p-6 sm:p-0 rounded-2xl'>
+        <h2 className='text-3xl sm:text-5xl md:text-6xl font-bold text-white leading-tight drop-shadow-sm'>
+          Elevate Your<br className='hidden sm:block' /> Daily Nutrition
+        </h2>
+        <p className='text-lg sm:text-xl text-white font-medium max-w-md drop-shadow-sm'>
+          A spoonful of everything good. The perfect companion for your morning toast, smoothies, and desserts.
+        </p>
+        <button className='mt-4 text-amber-800 bg-white px-8 py-3 rounded-full font-semibold hover:bg-amber-900 transition-colors shadow-lg'>
+          Explore Recipes
+        </button>
       </div>
     )
   }
@@ -171,28 +179,48 @@ export default function ImageSlider() {
             key={index}
             className='keen-slider__slide relative h-full w-full'
           >
-            <Image
-              src={img.src}
-              alt={`Slide ${index + 1}`}
-              fill
-              className='object-cover'
-              priority={index === 0}
-              sizes='(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px'
-            />
+            {img.mobileSrc ? (
+              <>
+                <div className="hidden sm:block absolute inset-0">
+                  <Image
+                    src={img.src}
+                    alt={`Slide ${index + 1} Desktop`}
+                    fill
+                    className='object-cover'
+                    priority={index === 0}
+                    sizes='(max-width: 1200px) 80vw, 1200px'
+                  />
+                </div>
+                <div className="block sm:hidden absolute inset-0">
+                  <Image
+                    src={img.mobileSrc}
+                    alt={`Slide ${index + 1} Mobile`}
+                    fill
+                    className='object-cover'
+                    priority={index === 0}
+                    sizes='100vw'
+                  />
+                </div>
+              </>
+            ) : (
+              <Image
+                src={img.src}
+                alt={`Slide ${index + 1}`}
+                fill
+                className='object-cover'
+                priority={index === 0}
+                sizes='(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px'
+              />
+            )}
 
             {/* Caption with improved animations */}
-            {/* <div
-              className={clsx(
-                'absolute bottom-12 left-1/2 z-20 -translate-x-1/2 transform px-2 py-2 sm:bottom-16 sm:px-4 md:bottom-20',
-                'transition-all duration-700 ease-in-out',
-                {
-                  'translate-y-0 opacity-100': currentSlide === index,
-                  'translate-y-4 opacity-0': currentSlide !== index
-                }
-              )}
+            <div
+              className={`absolute top-12 left-0 right-0 px-6 sm:top-1/2 sm:-translate-y-1/2 sm:bottom-auto sm:left-12 md:left-10 sm:right-auto z-20 transition-all duration-700 ease-in-out ${
+                currentSlide === index ? 'translate-y-0 opacity-100 pointer-events-auto' : 'translate-y-4 opacity-0 pointer-events-none'
+              }`}
             >
               {img?.caption}
-            </div> */}
+            </div>
           </div>
         ))}
       </div>

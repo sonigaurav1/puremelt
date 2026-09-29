@@ -63,6 +63,7 @@ import {
 export default function Checkout() {
   // Prevent SSR/CSR markup mismatches by deferring cart-driven UI until mount
   const [hydrated, setHydrated] = useState(false);
+  const isCODAvailable = false; // Toggle COD availability here
   useEffect(() => {
     // Mark as mounted so client-only state (like localStorage cart) can render safely
     setHydrated(true);
@@ -1106,11 +1107,14 @@ export default function Checkout() {
 
               {/* Billing address */}
               <div className='rounded-lg bg-white p-6 shadow-sm'>
-                <h2 className='mb-4 text-xl font-semibold text-gray-900'>
+                <h2 className='mb-4 flex items-center text-xl font-semibold text-gray-900'>
+                  <MapPin className='mr-2 h-5 w-5 text-red-600' />
                   Billing address
                 </h2>
                 <div className='space-y-3'>
-                  <label className='flex cursor-pointer items-center justify-between rounded-lg border-2 border-gray-300 p-4 transition-colors hover:border-red-500'>
+                  <label
+                    className={`flex cursor-pointer items-center justify-between rounded-lg border-2 p-4 transition-colors hover:border-red-500 ${billingSameAsShipping ? 'border-red-500 bg-red-50' : 'border-gray-300'}`}
+                  >
                     <div className='flex items-center'>
                       <input
                         type='radio'
@@ -1128,7 +1132,7 @@ export default function Checkout() {
                     </div>
                   </label>
                   <label
-                    className={`flex cursor-pointer items-center justify-between rounded-lg border-2 p-4 transition-colors hover:border-red-500 ${formData.shippingMethod === 'standard' ? 'border-red-500 bg-red-50' : 'border-gray-300'}`}
+                    className={`flex cursor-pointer items-center justify-between rounded-lg border-2 p-4 transition-colors hover:border-red-500 ${!billingSameAsShipping ? 'border-red-500 bg-red-50' : 'border-gray-300'}`}
                   >
                     <div className='flex items-center'>
                       <input
@@ -1297,7 +1301,7 @@ export default function Checkout() {
                           ? '…'
                           : standardAmount != null
                             ? `₹${standardAmount}`
-                            : '—'}
+                            : '₹—'}
                     </span>
                   </label>
                   <label
@@ -1332,7 +1336,7 @@ export default function Checkout() {
                           ? '…'
                           : expressAmount != null
                             ? `₹${expressAmount}`
-                            : '—'}
+                            : '₹—'}
                     </span>
                   </label>
                   {shippingError && (
@@ -1348,20 +1352,31 @@ export default function Checkout() {
                   Payment Method
                 </h2>
                 <div className='space-y-3'>
-                  <label className='flex items-center rounded-lg border-2 border-gray-300 p-4 transition-colors hover:border-red-500'>
-                    <input
-                      type='radio'
-                      name='paymentMethod'
-                      value='cod'
-                      checked={formData.paymentMethod === 'cod'}
-                      onChange={handleInputChange}
-                      className='h-4 w-4 text-red-600 focus:ring-red-500'
-                    />
-                    <span className='ml-3 font-medium text-gray-900'>
-                      Cash on Delivery (COD)
-                    </span>
-                  </label>
-                  <label className='flex cursor-pointer items-center rounded-lg border-2 border-gray-300 p-4 transition-colors hover:border-red-500'>
+                  {isCODAvailable && (
+                    <label
+                      className={
+                        'flex cursor-pointer items-center rounded-lg border-2 border-gray-300 p-4 transition-colors hover:border-red-500' +
+                        (formData.paymentMethod === 'cod'
+                          ? ' border-red-500 bg-red-50'
+                          : '')
+                      }
+                    >
+                      <input
+                        type='radio'
+                        name='paymentMethod'
+                        value='cod'
+                        checked={formData.paymentMethod === 'cod'}
+                        onChange={handleInputChange}
+                        className='h-4 w-4 text-red-600 focus:ring-red-500'
+                      />
+                      <span className='ml-3 font-medium text-gray-900'>
+                        Cash on Delivery (COD)
+                      </span>
+                    </label>
+                  )}
+                  <label
+                    className={`flex cursor-pointer items-center rounded-lg border-2 p-4 transition-colors hover:border-red-500 ${formData.paymentMethod === 'phonepe' ? 'border-red-500 bg-red-50' : 'border-gray-300'}`}
+                  >
                     <input
                       type='radio'
                       name='paymentMethod'

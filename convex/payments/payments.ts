@@ -1,5 +1,5 @@
 import { v } from "convex/values";
-import { mutation } from "../_generated/server";
+import { mutation, query } from "../_generated/server";
 import type { Doc } from "../_generated/dataModel";
 
 export const createPayment = mutation({
@@ -29,6 +29,11 @@ export const createPayment = mutation({
             userId,
             orderId: args.orderId ?? "",
             updatedAt: now,
+            isDeleted: false,
+            deletedAt: undefined,
+            refunded: false,
+            refundAmount: 0,
+            error: '',
         };
 
         await ctx.db.insert("payments", payment);
@@ -62,5 +67,13 @@ export const updatePaymentStatusByTransactionId = mutation({
             updatedAt: args.updatedAt ?? now,
         });
         return { updated: 1 };
+    },
+});
+
+export const getAllPayments = query({
+    args: {},
+    handler: async (ctx) => {
+        const payments = await ctx.db.query("payments").collect();
+        return payments;
     },
 });

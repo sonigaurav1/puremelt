@@ -96,6 +96,12 @@ const AccountPage = () => {
     // Ensure user exists in Convex
     const ensure = async () => {
       try {
+        // Detect Google sign-in by checking for Google in Clerk's externalAccounts
+        const provider = user?.externalAccounts?.some(
+          (acc) => acc.provider === 'google'
+        )
+          ? 'google'
+          : undefined;
         await upsertUser({
           clerkUserId: user.id,
           email:
@@ -103,7 +109,8 @@ const AccountPage = () => {
             user.emailAddresses[0]?.emailAddress ||
             '',
           name: user.fullName || user.firstName || user.username || 'User',
-          imageUrl: user.imageUrl
+          imageUrl: user.imageUrl,
+          provider: provider
         });
       } catch {
         // noop
@@ -120,7 +127,10 @@ const AccountPage = () => {
     const name = userDoc?.name || user?.fullName || user?.firstName || '';
     const email =
       userDoc?.email || user?.primaryEmailAddress?.emailAddress || '';
-    setProfileData((prev) => ({ ...prev, name, email }));
+    const phone = userDoc?.phone || user?.phoneNumbers[0]?.phoneNumber || '';
+    console.log(phone);
+    
+    setProfileData((prev) => ({ ...prev, name, email, phone }));
   }, [userDoc, user, isClerkLoaded]);
 
   // Map addresses from Convex docs
@@ -148,6 +158,12 @@ const AccountPage = () => {
         isDefault: !!a.isDefault
       })
     );
+    // Move default address to index 0 if exists
+    const defaultIndex = mapped.findIndex(addr => addr.isDefault);
+    if (defaultIndex > 0) {
+      const [defaultAddr] = mapped.splice(defaultIndex, 1);
+      mapped.unshift(defaultAddr);
+    }
     setAddresses(mapped);
   }, [addressDocs]);
 
@@ -203,6 +219,7 @@ const AccountPage = () => {
         await updateUser({
           userId: userDoc._id,
           name: data.name,
+          phone: data.phone ? data.phone : undefined,
           email: data.email
         });
       }
@@ -270,7 +287,7 @@ const AccountPage = () => {
     <div className='min-h-screen bg-black text-white'>
       <Header />
 
-      <section className='px-4 py-8 md:px-8 md:py-12 lg:px-16 lg:pb-16 lg:pt-24'>
+      <section className='px-4 py-20 md:px-8 md:py-24 lg:px-16 lg:pb-16 lg:pt-24'>
         <div className='container mx-auto max-w-7xl'>
           {/* Header Section */}
           <div className='mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-center'>

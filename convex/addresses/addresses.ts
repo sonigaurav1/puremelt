@@ -36,6 +36,7 @@ export const createAddress = mutation({
             createdAt: args.createdAt,
             updatedAt: now,
             isDeleted: false,
+            deletedAt: undefined,
         };
 
         // If setting as default, unset others for this user
@@ -141,7 +142,7 @@ export const deleteAddress = mutation({
             throw new Error('Address not found');
         }
 
-        await ctx.db.patch(args.addressId, { isDeleted: true, updatedAt: Date.now() });
+        await ctx.db.patch(args.addressId, { isDeleted: true, deletedAt: Date.now(), updatedAt: Date.now() });
         return { success: true };
     },
 });
@@ -169,5 +170,16 @@ export const setDefaultAddress = mutation({
                 .map((a) => ctx.db.patch(a._id, { isDefault: a._id === args.addressId }))
         );
         return { success: true };
+    },
+});
+
+export const getAllAddresses = query({
+    args: {},
+    handler: async (ctx) => {
+        const addresses = await ctx.db
+            .query('addresses')
+            .filter((q) => q.eq(q.field('isDeleted'), false))
+            .collect();
+        return addresses;
     },
 });

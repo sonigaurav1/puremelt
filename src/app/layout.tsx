@@ -185,6 +185,8 @@ export default function RootLayout({
           name='google-site-verification'
           content='mqrw5ytanki61KRLZuBoD3VRNQp6pYxIWHqizSFOv2o'
         />
+      </head>
+      <body>
         {/* Organization Structured Data for SEO */}
         <script
           type='application/ld+json'
@@ -221,8 +223,6 @@ export default function RootLayout({
             })
           }}
         />
-      </head>
-      <body>
         {/* <RegisterServiceWorker /> */}
         <ThemeProvider
           attribute='class'

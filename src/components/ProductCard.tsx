@@ -49,18 +49,19 @@ const ProductCard: React.FC<{
   return (
     <Card className='group relative flex flex-col overflow-hidden border border-amber-600 bg-white bg-gradient-to-b shadow-lg transition-all duration-300 hover:border-amber-500/30 hover:shadow-xl hover:shadow-amber-500/10 md:min-w-80'>
       {/* Product Image Container */}
-      <div className='relative overflow-hidden bg-zinc-800/50'>
-        <div className='relative h-48 w-full sm:h-56 md:h-64 lg:h-72 xl:h-80 2xl:h-96'>
-          <Link href={`/products/${slug}`}>
-            <Image
-              src='/penowa.webp'
-              alt={`${process.env.NEXT_PUBLIC_BRAND_NAME} ${weight}`}
-              fill
-              className='object-fit transition-transform duration-300 group-hover:scale-105'
-              loading='lazy'
-            />
-          </Link>
-        </div>
+      <div
+        className='h-48 w-full overflow-hidden bg-zinc-800/50 sm:h-56 md:h-64 lg:h-72 xl:h-80 2xl:h-96'
+        style={{ position: 'relative' }}
+      >
+        <Link href={`/products/${slug}`}>
+          <Image
+            src='/penowa.webp'
+            alt={`${process.env.NEXT_PUBLIC_BRAND_NAME} ${weight}`}
+            fill
+            priority
+            className='object-fit transition-transform duration-300 group-hover:scale-105'
+          />
+        </Link>
       </div>
 
       {/* Content Section */}
